@@ -1,12 +1,20 @@
 {
   "name": "year-of-progress",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "description": "一个优雅的年度进度展示应用，实时显示当前年份的时间进度",
+  "keywords": ["年度进度", "时间管理", "进度条", "year progress", "time tracking", "nextjs", "react"],
+  "author": "Year of Progress",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "type-check": "tsc --noEmit",
+    "preview": "npm run build && npm run start",
+    "clean": "rm -rf .next node_modules/.cache"
   },
   "dependencies": {
     "react": "19.1.0",
