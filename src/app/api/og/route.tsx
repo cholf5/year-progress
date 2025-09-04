@@ -13,10 +13,8 @@ export async function GET() {
     const percentage = Math.round((daysPassed / totalDays) * 100 * 100) / 100;
     
     // Create pixel grid for progress visualization
-    const totalSquares = totalDays; // Use actual days in the year (365 or 366)
     const squaresPerRow = 53; // Weeks in a year
     const rows = 7; // 7 rows to display the grid
-    const filledSquares = daysPassed; // Use actual days passed
     
     return new ImageResponse(
       <div
@@ -122,7 +120,7 @@ export async function GET() {
               marginTop: 20,
             }}
           >
-            It's week {Math.ceil(daysPassed / 7)}, day {daysPassed} of {year}.
+            It&apos;s week {Math.ceil(daysPassed / 7)}, day {daysPassed} of {year}.
           </div>
         </div>
       </div>,
