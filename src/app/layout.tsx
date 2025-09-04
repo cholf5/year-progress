@@ -13,13 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Year of Progress - 年度进度",
+  title: "Year Progress - 年度进度",
   description: "实时展示年度进度，看看今年过去了多少，还剩多少时间。Time waits for no one, cherish every day!",
   keywords: ["年度进度", "时间管理", "进度条", "year progress", "time tracking"],
-  authors: [{ name: "Year of Progress" }],
-  creator: "Year of Progress",
-  publisher: "Year of Progress",
-  metadataBase: new URL('https://year-of-progress.vercel.app'),
+  authors: [{ name: "Year Progress" }],
+  creator: "Year Progress",
+  publisher: "Year Progress",
+  metadataBase: new URL('https://year-progress.vercel.app'),
   alternates: {
     canonical: '/',
   },
@@ -27,23 +27,23 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'zh_CN',
     url: '/',
-    title: 'Year of Progress - 年度进度',
+    title: 'Year Progress - 年度进度',
     description: '实时展示年度进度，看看今年过去了多少，还剩多少时间。Time waits for no one, cherish every day!',
-    siteName: 'Year of Progress',
+    siteName: 'Year Progress',
     images: [
       {
-        url: '/api/og',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Year of Progress - 年度进度卡片',
+        alt: 'Year Progress - 年度进度卡片',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Year of Progress - 年度进度',
+    title: 'Year Progress - 年度进度',
     description: '实时展示年度进度，看看今年过去了多少，还剩多少时间。Time waits for no one, cherish every day!',
-    images: ['/api/og'],
+    images: ['/og-image.png'],
     creator: '@yearofprogress',
   },
   robots: {

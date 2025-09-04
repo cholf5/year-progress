@@ -1,7 +1,7 @@
-# Year of Progress Project Instructions
+# Year Progress Project Instructions
 
 ## Project Overview
-A beautiful Year of Progress web application built with Next.js and TypeScript that displays yearly progress in an elegant card format with social media sharing capabilities.
+A beautiful Year Progress web application built with Next.js and TypeScript that displays yearly progress in an elegant card format with social media sharing capabilities.
 
 ## Features
 - Real-time yearly progress calculation

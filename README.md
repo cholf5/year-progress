@@ -1,4 +1,4 @@
-# Year of Progress - 年度进度
+# Year Progress - 年度进度
 
 一个优雅的年度进度展示应用，实时显示当前年份的时间进度。
 

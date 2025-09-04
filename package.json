@@ -1,10 +1,10 @@
 {
-  "name": "year-of-progress",
+  "name": "year-progress",
   "version": "1.0.0",
   "private": true,
   "description": "一个优雅的年度进度展示应用，实时显示当前年份的时间进度",
   "keywords": ["年度进度", "时间管理", "进度条", "year progress", "time tracking", "nextjs", "react"],
-  "author": "Year of Progress",
+  "author": "Year Progress",
   "license": "MIT",
   "scripts": {
     "dev": "next dev --turbopack",
