@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Year Progress" }],
   creator: "Year Progress",
   publisher: "Year Progress",
-  metadataBase: new URL('https://year-progress.vercel.app'),
+  metadataBase: new URL('https://yearprogressbar.vercel.app'),
   alternates: {
     canonical: '/',
   },
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: 'Year Progress',
     images: [
       {
-        url: '/og-image.png',
+        url: '/og-default.png',
         width: 1200,
         height: 630,
         alt: 'Year Progress - 年度进度卡片',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Year Progress - 年度进度',
     description: '实时展示年度进度，看看今年过去了多少，还剩多少时间。Time waits for no one, cherish every day!',
-    images: ['/og-image.png'],
+    images: ['/og-default.png'],
     creator: '@yearofprogress',
   },
   robots: {
