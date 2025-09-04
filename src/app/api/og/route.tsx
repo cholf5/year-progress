@@ -12,16 +12,22 @@ export async function GET() {
     const totalDays = isLeapYear ? 366 : 365;
     const percentage = Math.round((daysPassed / totalDays) * 100 * 100) / 100;
     
+    // Create pixel grid for progress visualization
+    const totalSquares = totalDays; // Use actual days in the year (365 or 366)
+    const squaresPerRow = 53; // Weeks in a year
+    const rows = 7; // 7 rows to display the grid
+    const filledSquares = daysPassed; // Use actual days passed
+    
     return new ImageResponse(
       <div
         style={{
           height: '100%',
           width: '100%',
           display: 'flex',
-          backgroundColor: '#0a0a0a',
+          backgroundColor: '#000000',
           fontFamily: 'system-ui',
           color: 'white',
-          padding: 40,
+          padding: 60,
         }}
       >
         <div
@@ -37,55 +43,86 @@ export async function GET() {
         >
           <div 
             style={{ 
-              fontSize: 48, 
+              fontSize: 72, 
               fontWeight: 'bold', 
-              color: '#ffffff',
-              display: 'flex'
+              color: 'white',
+              display: 'flex',
+              textAlign: 'center',
+              marginBottom: 20,
             }}
           >
-            {year} PROGRESS
+            {year} is {percentage}% complete.
           </div>
           
           <div
             style={{
-              width: 600,
-              height: 60,
-              backgroundColor: '#1a1a1a',
-              borderRadius: 30,
-              overflow: 'hidden',
               display: 'flex',
-              alignItems: 'center',
+              flexDirection: 'column',
+              gap: 4,
+              padding: 20,
+              backgroundColor: '#1a1a1a',
+              borderRadius: 12,
+              border: '2px solid #333',
             }}
           >
-            <div
-              style={{
-                width: `${percentage}%`,
-                height: '100%',
-                background: 'linear-gradient(90deg, #ef4444, #22c55e)',
-                display: 'flex',
-              }}
-            />
+            {Array.from({ length: rows }, (_, rowIndex) => (
+              <div
+                key={rowIndex}
+                style={{
+                  display: 'flex',
+                  gap: 4,
+                }}
+              >
+                {Array.from({ length: squaresPerRow }, (_, colIndex) => {
+                  // Calculate which day this square represents (column-first order)
+                  // Column 0: days 1-7, Column 1: days 8-14, etc.
+                  const dayNumber = colIndex * rows + rowIndex + 1;
+                  // Check if this day has passed (fill green) or not (fill white)
+                  const isFilled = dayNumber <= daysPassed && dayNumber <= totalDays;
+                  // Don't show squares beyond the total days of the year
+                  const shouldShow = dayNumber <= totalDays;
+                  
+                  if (!shouldShow) {
+                    return (
+                      <div
+                        key={colIndex}
+                        style={{
+                          width: 16,
+                          height: 16,
+                          display: 'flex',
+                        }}
+                      />
+                    );
+                  }
+                  
+                  return (
+                    <div
+                      key={colIndex}
+                      style={{
+                        width: 16,
+                        height: 16,
+                        backgroundColor: isFilled ? '#22c55e' : '#ffffff',
+                        borderRadius: 3,
+                        display: 'flex',
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            ))}
           </div>
           
           <div 
             style={{ 
-              fontSize: 36, 
-              fontWeight: 'bold', 
-              color: '#3b82f6',
-              display: 'flex'
-            }}
-          >
-            {percentage}%
-          </div>
-          
-          <div 
-            style={{ 
-              fontSize: 24, 
+              fontSize: 28, 
               color: '#94a3b8',
-              display: 'flex'
+              display: 'flex',
+              textAlign: 'center',
+              fontWeight: '400',
+              marginTop: 20,
             }}
           >
-            {daysPassed} days passed • {totalDays - daysPassed} days remaining
+            It's week {Math.ceil(daysPassed / 7)}, day {daysPassed} of {year}.
           </div>
         </div>
       </div>,
