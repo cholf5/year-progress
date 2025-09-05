@@ -75,26 +75,26 @@ export default function Home() {
   const daysPassed = progress.daysPassed;
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6 relative">
+    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-3 sm:p-6 relative">
       {/* 语言切换按钮 */}
-      <div className="absolute top-6 right-6 flex gap-2">
+      <div className="absolute top-3 right-3 sm:top-6 sm:right-6 flex gap-2">
         <button
           onClick={() => setLanguage('en')}
-          className={`px-3 py-1 rounded text-sm ${language === 'en' ? 'bg-white text-black' : 'bg-gray-700 text-gray-300'}`}
+          className={`px-2 py-1 sm:px-3 sm:py-1 rounded text-xs sm:text-sm ${language === 'en' ? 'bg-white text-black' : 'bg-gray-700 text-gray-300'}`}
         >
           EN
         </button>
         <button
           onClick={() => setLanguage('zh')}
-          className={`px-3 py-1 rounded text-sm ${language === 'zh' ? 'bg-white text-black' : 'bg-gray-700 text-gray-300'}`}
+          className={`px-2 py-1 sm:px-3 sm:py-1 rounded text-xs sm:text-sm ${language === 'zh' ? 'bg-white text-black' : 'bg-gray-700 text-gray-300'}`}
         >
           中文
         </button>
       </div>
 
-      <div className="text-center space-y-8 max-w-4xl">
+      <div className="text-center space-y-4 sm:space-y-8 max-w-7xl w-full">
         {/* 标题 */}
-        <h1 className="text-6xl md:text-7xl font-bold mb-8">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-8 px-2 leading-tight">
           {language === 'zh' 
             ? `${progress.year}年已过去了${progress.percentage}%`
             : `${progress.year} is ${progress.percentage}% complete.`
@@ -102,18 +102,18 @@ export default function Home() {
         </h1>
         
         {/* 进度网格 */}
-        <div className="flex justify-center mb-8 relative">
-          <div className="bg-gray-900 p-6 rounded-xl border-2 border-gray-700">
-            <div className="flex flex-col gap-1">
+        <div className="flex justify-center mb-4 sm:mb-8 relative overflow-x-auto">
+          <div className="bg-gray-900 p-3 sm:p-6 rounded-xl border-2 border-gray-700 min-w-fit">
+            <div className="flex flex-col gap-0.5 sm:gap-1">
               {Array.from({ length: rows }, (_, rowIndex) => (
-                <div key={rowIndex} className="flex gap-1">
+                <div key={rowIndex} className="flex gap-0.5 sm:gap-1">
                   {Array.from({ length: squaresPerRow }, (_, colIndex) => {
                     const dayNumber = colIndex * rows + rowIndex + 1;
                     const shouldShow = dayNumber <= totalDays;
                     
                     if (!shouldShow) {
                       return (
-                        <div key={colIndex} className="w-3 h-3 md:w-4 md:h-4" />
+                        <div key={colIndex} className="w-2 h-2 sm:w-3 sm:h-3 md:w-4 md:h-4" />
                       );
                     }
 
@@ -131,7 +131,7 @@ export default function Home() {
                     return (
                       <div
                         key={colIndex}
-                        className={`w-3 h-3 md:w-4 md:h-4 rounded-sm ${bgColor} cursor-pointer transition-all hover:scale-110`}
+                        className={`w-2 h-2 sm:w-3 sm:h-3 md:w-4 md:h-4 rounded-sm ${bgColor} cursor-pointer transition-all hover:scale-110 active:scale-95`}
                         onMouseEnter={(e) => {
                           const rect = e.currentTarget.getBoundingClientRect();
                           setHoveredDay({
@@ -141,6 +141,17 @@ export default function Home() {
                           });
                         }}
                         onMouseLeave={() => setHoveredDay(null)}
+                        onClick={(e) => {
+                          // 移动端点击显示提示
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          setHoveredDay({
+                            dayNumber,
+                            x: rect.left + rect.width / 2,
+                            y: rect.top
+                          });
+                          // 3秒后自动隐藏
+                          setTimeout(() => setHoveredDay(null), 3000);
+                        }}
                       />
                     );
                   })}
@@ -149,13 +160,13 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 悬停提示 */}
+          {/* 悬停提示 - 针对移动端优化 */}
           {hoveredDay && (
             <div
-              className="fixed z-50 bg-gray-800 text-white px-3 py-2 rounded-lg shadow-lg border border-gray-600 text-sm pointer-events-none"
+              className="fixed z-50 bg-gray-800 text-white px-3 py-2 rounded-lg shadow-lg border border-gray-600 text-xs sm:text-sm pointer-events-none"
               style={{
-                left: hoveredDay.x,
-                top: hoveredDay.y - 120,
+                left: Math.min(Math.max(hoveredDay.x, 100), window?.innerWidth - 100),
+                top: hoveredDay.y - 140,
                 transform: 'translateX(-50%)',
               }}
             >
@@ -192,21 +203,21 @@ export default function Home() {
         </div>
 
         {/* 颜色图例 */}
-        <div className="flex justify-center gap-6 text-sm">
+        <div className="flex justify-center gap-3 sm:gap-6 text-xs sm:text-sm px-2">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-green-500 rounded-sm"></div>
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-sm"></div>
             <span className="text-gray-400">
               {language === 'zh' ? '已过去' : 'Past'}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-yellow-500 rounded-sm"></div>
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 rounded-sm"></div>
             <span className="text-gray-400">
               {language === 'zh' ? '正在过' : 'Current'}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-white rounded-sm"></div>
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-white rounded-sm"></div>
             <span className="text-gray-400">
               {language === 'zh' ? '未过去' : 'Future'}
             </span>
@@ -214,7 +225,7 @@ export default function Home() {
         </div>
 
         {/* 统计信息 */}
-        <p className="text-xl md:text-2xl text-gray-400">
+        <p className="text-lg sm:text-xl md:text-2xl text-gray-400 px-2">
           {language === 'zh' 
             ? `今天是${progress.year}年第${Math.ceil(daysPassed / 7)}周，第${daysPassed}天`
             : `It's week ${Math.ceil(daysPassed / 7)}, day ${daysPassed} of ${progress.year}.`
@@ -222,30 +233,30 @@ export default function Home() {
         </p>
 
         {/* 分享说明 */}
-        <div className="bg-gray-900 p-6 rounded-xl border border-gray-700 max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold mb-4 text-blue-400">
+        <div className="bg-gray-900 p-4 sm:p-6 rounded-xl border border-gray-700 max-w-2xl mx-auto">
+          <h2 className="text-lg sm:text-xl font-semibold mb-4 text-blue-400">
             📱 {t('shareInstructions')}
           </h2>
-          <div className="flex items-center gap-3 bg-gray-800 p-3 rounded-lg">
-            <span className="text-gray-300 flex-1 text-left font-mono text-sm">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-gray-800 p-3 rounded-lg">
+            <span className="text-gray-300 flex-1 text-left font-mono text-xs sm:text-sm break-all">
               {typeof window !== 'undefined' ? window.location.href : ''}
             </span>
             <button
               onClick={copyToClipboard}
-              className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium transition-colors"
+              className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium transition-colors shrink-0"
             >
               {copySuccess ? t('linkCopied') : t('copyLink')}
             </button>
           </div>
-          <p className="text-gray-400 text-sm mt-3">
+          <p className="text-gray-400 text-xs sm:text-sm mt-3">
             {t('timeWaits')}
           </p>
         </div>
 
         {/* 底部信息 */}
-        <div className="text-center space-y-2 text-gray-500 text-sm">
+        <div className="text-center space-y-2 text-gray-500 text-xs sm:text-sm px-2">
           <p>{t('currentDate')}: {new Date().toLocaleDateString()}</p>
-          <p>
+          <p className="break-words">
             {language === 'zh' 
               ? `已过去${daysPassed}天 • 剩余${totalDays - daysPassed}天`
               : `${daysPassed} days completed • ${totalDays - daysPassed} days remaining`
