@@ -197,7 +197,7 @@ export default function Home() {
                     
                     // 更精确的方块大小计算
                     let squareSize: number;
-                    let gapSize = windowWidth < 640 ? 2 : 4;
+                    const gapSize = windowWidth < 640 ? 2 : 4;
                     
                     if (windowWidth < 400) {
                       // 超小屏幕
