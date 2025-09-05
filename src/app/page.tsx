@@ -2,7 +2,8 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { calculateYearProgress } from '@/lib/yearProgress';
-import { translations, type Language, getTranslation, detectLanguage, getLanguageDisplayName } from '@/lib/i18n';
+import { translations, type Language, getTranslation, getInitialLanguage, saveLanguage, getLanguageDisplayName } from '@/lib/i18n';
+import { type Theme, getInitialTheme, saveTheme, applyTheme, getThemeDisplayName, getSystemTheme, getEffectiveTheme } from '@/lib/theme';
 import {
   TwitterShareButton,
   FacebookShareButton,
@@ -37,12 +38,15 @@ const getDateInfo = (dayNumber: number, year: number, language: Language) => {
 export default function Home() {
   const [progress, setProgress] = useState(calculateYearProgress());
   const [language, setLanguage] = useState<Language>('en');
+  const [theme, setTheme] = useState<Theme>('system');
   const [mounted, setMounted] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [hoveredDay, setHoveredDay] = useState<{dayNumber: number, x: number, y: number} | null>(null);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 375);
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+  const [showThemeMenu, setShowThemeMenu] = useState(false);
   const hideMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hideThemeMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // 显示语言菜单
   const handleShowLanguageMenu = () => {
@@ -58,6 +62,46 @@ export default function Home() {
     hideMenuTimeoutRef.current = setTimeout(() => {
       setShowLanguageMenu(false);
     }, 150); // 150ms 延迟，允许用户移动到下拉列表
+  };
+
+  // 显示主题菜单
+  const handleShowThemeMenu = () => {
+    if (hideThemeMenuTimeoutRef.current) {
+      clearTimeout(hideThemeMenuTimeoutRef.current);
+      hideThemeMenuTimeoutRef.current = null;
+    }
+    setShowThemeMenu(true);
+  };
+
+  // 隐藏主题菜单（带延迟）
+  const handleHideThemeMenu = () => {
+    hideThemeMenuTimeoutRef.current = setTimeout(() => {
+      setShowThemeMenu(false);
+    }, 150);
+  };
+
+  // 切换主题
+  const handleThemeChange = (newTheme: Theme) => {
+    setTheme(newTheme);
+    saveTheme(newTheme);
+    applyTheme(newTheme);
+    setShowThemeMenu(false);
+    
+    // 立即检查DOM状态
+    setTimeout(() => {
+      const htmlClasses = document.documentElement.className;
+      const bodyClasses = document.body.className;
+      console.log('Theme changed to:', newTheme);
+      console.log('HTML classes:', htmlClasses);
+      console.log('Body classes:', bodyClasses);
+    }, 100);
+  };
+
+  // 切换语言
+  const handleLanguageChange = (newLanguage: Language) => {
+    setLanguage(newLanguage);
+    saveLanguage(newLanguage);
+    setShowLanguageMenu(false);
   };
 
   useEffect(() => {
@@ -79,19 +123,50 @@ export default function Home() {
       setProgress(calculateYearProgress());
     }, 60 * 60 * 1000);
 
-    // 检查浏览器语言设置
-    const browserLang = navigator.language;
-    setLanguage(detectLanguage(browserLang));
+    // 初始化语言设置
+    setLanguage(getInitialLanguage());
 
     return () => {
       clearInterval(interval);
       if (hideMenuTimeoutRef.current) {
         clearTimeout(hideMenuTimeoutRef.current);
       }
+      if (hideThemeMenuTimeoutRef.current) {
+        clearTimeout(hideThemeMenuTimeoutRef.current);
+      }
       if (typeof window !== 'undefined') {
         window.removeEventListener('resize', handleResize);
       }
     };
+  }, []);
+
+  // 单独的useEffect用于系统主题监听
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleSystemThemeChange = () => {
+      // 只有当用户选择"跟随系统"时才响应系统主题变化
+      const savedTheme = localStorage.getItem('theme') as Theme;
+      if (savedTheme === 'system' || !savedTheme) {
+        applyTheme('system');
+      }
+    };
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', handleSystemThemeChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleSystemThemeChange);
+    };
+  }, []);
+
+  // 主题初始化 - 只在组件挂载时执行一次
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const initialTheme = getInitialTheme();
+      setTheme(initialTheme);
+      applyTheme(initialTheme);
+    }
   }, []);
 
   const copyToClipboard = async () => {
@@ -106,9 +181,9 @@ export default function Home() {
 
   if (!mounted) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-black">
+      <div className="flex items-center justify-center min-h-screen bg-white dark:bg-gray-900">
         <div className="animate-pulse">
-          <div className="w-96 h-64 bg-gray-800 rounded-lg"></div>
+          <div className="w-96 h-64 bg-gray-100 dark:bg-gray-800 rounded-lg"></div>
         </div>
       </div>
     );
@@ -123,7 +198,44 @@ export default function Home() {
   const daysPassed = progress.daysPassed;
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-3 sm:p-6 relative">
+    <div className="min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center p-3 sm:p-6 relative transition-colors duration-300">
+      {/* 主题切换按钮 */}
+      <div 
+        className="absolute top-3 left-3 sm:top-6 sm:left-6 theme-selector"
+        onMouseEnter={handleShowThemeMenu}
+        onMouseLeave={handleHideThemeMenu}
+      >
+        <button
+          className="px-3 py-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 hover:border-gray-400 rounded-lg text-xs sm:text-sm text-gray-700 hover:text-gray-900 transition-all duration-200 flex items-center gap-2 shadow-lg backdrop-blur-sm"
+        >
+          {theme === 'light' ? '☀️' : theme === 'dark' ? '🌙' : '⚙️'} {getThemeDisplayName(theme, language)}
+          <svg className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 ${showThemeMenu ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        
+        {showThemeMenu && (
+          <div className="absolute top-full left-0 mt-1 w-40 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl shadow-2xl z-50 backdrop-blur-sm">
+            <div className="p-1">
+              {(['light', 'dark', 'system'] as Theme[]).map((themeOption) => (
+                <button
+                  key={themeOption}
+                  onClick={() => handleThemeChange(themeOption)}
+                  className={`w-full px-3 py-2.5 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 text-sm rounded-lg flex items-center gap-2 ${
+                    theme === themeOption 
+                      ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-inner border border-gray-300 dark:border-gray-600' 
+                      : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
+                  }`}
+                >
+                  {themeOption === 'light' ? '☀️' : themeOption === 'dark' ? '🌙' : '⚙️'}
+                  {getThemeDisplayName(themeOption, language)}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* 语言切换按钮 */}
       <div 
         className="absolute top-3 right-3 sm:top-6 sm:right-6 language-selector"
@@ -131,7 +243,7 @@ export default function Home() {
         onMouseLeave={handleHideLanguageMenu}
       >
         <button
-          className="px-3 py-2 bg-gray-900 hover:bg-gray-800 border border-gray-700 hover:border-gray-600 rounded-lg text-xs sm:text-sm text-gray-300 hover:text-white transition-all duration-200 flex items-center gap-2 shadow-lg backdrop-blur-sm"
+          className="px-3 py-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 hover:border-gray-400 rounded-lg text-xs sm:text-sm text-gray-700 hover:text-gray-900 transition-all duration-200 flex items-center gap-2 shadow-lg backdrop-blur-sm language-btn"
         >
           🌐 {getLanguageDisplayName(language)}
           <svg className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 ${showLanguageMenu ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -140,19 +252,16 @@ export default function Home() {
         </button>
         
         {showLanguageMenu && (
-          <div className="absolute top-full right-0 mt-1 w-40 bg-gray-900 border border-gray-700 rounded-xl shadow-2xl z-50 max-h-72 overflow-y-auto backdrop-blur-sm">
+          <div className="absolute top-full right-0 mt-1 w-40 bg-white border border-gray-300 rounded-xl shadow-2xl z-50 max-h-72 overflow-y-auto backdrop-blur-sm language-dropdown">
             <div className="p-1">
               {(Object.keys(translations) as Language[]).map((lang) => (
                 <button
                   key={lang}
-                  onClick={() => {
-                    setLanguage(lang);
-                    setShowLanguageMenu(false);
-                  }}
-                  className={`w-full px-3 py-2.5 text-center hover:bg-gray-800 transition-all duration-200 text-sm rounded-lg ${
+                  onClick={() => handleLanguageChange(lang)}
+                  className={`w-full px-3 py-2.5 text-center hover:bg-gray-100 transition-all duration-200 text-sm rounded-lg language-dropdown-btn ${
                     language === lang 
-                      ? 'bg-gray-800 text-white shadow-inner border border-gray-600' 
-                      : 'text-gray-300 hover:text-white'
+                      ? 'bg-gray-100 text-gray-900 shadow-inner border border-gray-300 active-lang' 
+                      : 'text-gray-700 hover:text-gray-900'
                   }`}
                 >
                   {getLanguageDisplayName(lang)}
@@ -176,7 +285,7 @@ export default function Home() {
         
         {/* 进度网格 */}
         <div className="flex justify-center mb-4 sm:mb-8 relative px-1">
-          <div className="bg-gray-900 p-2 sm:p-3 md:p-6 rounded-xl border-2 border-gray-700 max-w-full overflow-hidden">
+          <div className="bg-gray-100 p-2 sm:p-3 md:p-6 rounded-xl border-2 border-gray-300 max-w-full overflow-hidden transition-colors duration-300">
             <div 
               className="flex flex-col"
               style={{
@@ -247,17 +356,19 @@ export default function Home() {
                     let bgColor: string;
                     
                     if (dayNumber < daysPassed) {
-                      bgColor = 'bg-green-500'; // 已过去 - 绿色
+                      bgColor = 'bg-emerald-500 dark:bg-emerald-400'; // 已过去 - 绿色
                     } else if (dayNumber === daysPassed) {
-                      bgColor = 'bg-yellow-500'; // 正在过 - 黄色
+                      bgColor = 'bg-yellow-500 dark:bg-yellow-400'; // 正在过 - 黄色
                     } else {
-                      bgColor = 'bg-white'; // 未过去 - 白色
+                      bgColor = 'bg-gray-300 dark:bg-gray-600'; // 未过去 - 灰色
                     }
                     
                     return (
                       <div
                         key={colIndex}
-                        className={`rounded-sm ${bgColor} cursor-pointer transition-all hover:scale-110 active:scale-95`}
+                        className={`rounded-sm ${bgColor} cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95 ${
+                          dayNumber < daysPassed ? 'shadow-lg shadow-emerald-500/30' : ''
+                        }`}
                         style={{
                           width: `${squareSize}px`,
                           height: `${squareSize}px`,
@@ -294,7 +405,7 @@ export default function Home() {
           {/* 悬停提示 - 针对移动端优化 */}
           {hoveredDay && (
             <div
-              className="fixed z-50 bg-gray-800 text-white px-3 py-2 rounded-lg shadow-lg border border-gray-600 text-xs sm:text-sm pointer-events-none"
+              className="fixed z-50 bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-3 py-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 text-xs sm:text-sm pointer-events-none transition-colors duration-300"
               style={{
                 left: Math.min(Math.max(hoveredDay.x, 100), windowWidth - 100),
                 top: hoveredDay.y - 140,
@@ -311,16 +422,17 @@ export default function Home() {
                 return (
                   <div className="text-center space-y-1">
                     <div className="font-semibold">{monthDay}</div>
-                    <div className="text-xs text-gray-300">
+                    <div className="text-xs text-gray-500 dark:text-gray-300">
                       {language === 'zh' 
                         ? `全年第${hoveredDay.dayNumber}天 • 第${weekNumber}周`
                         : `Day ${hoveredDay.dayNumber} • Week ${weekNumber}`
                       }
                     </div>
-                    <div className="text-xs text-gray-300">{dayOfWeek}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-300">{dayOfWeek}</div>
                     <div className={`text-xs px-2 py-1 rounded ${
-                      status === 'past' ? 'bg-green-600' :
-                      status === 'current' ? 'bg-yellow-600' : 'bg-gray-600'
+                      status === 'past' ? 'bg-emerald-100 dark:bg-emerald-600 text-emerald-800 dark:text-emerald-100' :
+                      status === 'current' ? 'bg-yellow-100 dark:bg-yellow-600 text-yellow-800 dark:text-yellow-100' : 
+                      'bg-gray-100 dark:bg-gray-600 text-gray-800 dark:text-gray-100'
                     }`}>
                       {statusText}
                     </div>
@@ -334,27 +446,27 @@ export default function Home() {
         {/* 颜色图例 */}
         <div className="flex justify-center gap-3 sm:gap-6 text-xs sm:text-sm px-2">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-sm"></div>
-            <span className="text-gray-400">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-emerald-500 dark:bg-emerald-400 rounded-sm"></div>
+            <span className="text-gray-600 dark:text-gray-400">
               {getTranslation(language, 'past')}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 rounded-sm"></div>
-            <span className="text-gray-400">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 dark:bg-yellow-400 rounded-sm"></div>
+            <span className="text-gray-600 dark:text-gray-400">
               {getTranslation(language, 'current')}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-white rounded-sm"></div>
-            <span className="text-gray-400">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-gray-300 dark:bg-gray-600 rounded-sm"></div>
+            <span className="text-gray-600 dark:text-gray-400">
               {getTranslation(language, 'future')}
             </span>
           </div>
         </div>
 
         {/* 统计信息 */}
-        <p className="text-lg sm:text-xl md:text-2xl text-gray-400 px-2">
+        <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 px-2 transition-colors duration-300">
           {language === 'zh' 
             ? `今天是${progress.year}年第${Math.ceil(daysPassed / 7)}周，第${daysPassed}天`
             : `It's ${t('week')} ${Math.ceil(daysPassed / 7)}, ${t('day')} ${daysPassed} ${t('of')} ${progress.year}.`
@@ -459,12 +571,12 @@ export default function Home() {
           </div>
 
           {/* 备用复制链接 */}
-          <div className="mt-6 pt-4 border-t border-gray-700">
-            <p className="text-gray-500 text-xs text-center mb-3">
+          <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
+            <p className="text-gray-500 dark:text-gray-400 text-xs text-center mb-3 transition-colors duration-300">
               {t('orCopyLink')}
             </p>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-gray-800 p-3 rounded-lg">
-              <span className="text-gray-300 flex-1 text-left font-mono text-xs break-all">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-gray-100 p-3 rounded-lg transition-colors duration-300 copy-container">
+              <span className="text-gray-700 dark:text-gray-300 flex-1 text-left font-mono text-xs break-all transition-colors duration-300">
                 {typeof window !== 'undefined' ? window.location.href : ''}
               </span>
               <button
@@ -476,13 +588,13 @@ export default function Home() {
             </div>
           </div>
 
-          <p className="text-gray-400 text-xs sm:text-sm mt-4 text-center">
+          <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm mt-4 text-center transition-colors duration-300">
             {t('timeWaits')}
           </p>
         </div>
 
         {/* 底部信息 */}
-        <div className="text-center space-y-2 text-gray-500 text-xs sm:text-sm px-2">
+        <div className="text-center space-y-2 text-gray-500 dark:text-gray-400 text-xs sm:text-sm px-2 transition-colors duration-300">
           <p>{t('currentDate')}: {new Date().toLocaleDateString()}</p>
           <p className="break-words">
             {language === 'zh' 

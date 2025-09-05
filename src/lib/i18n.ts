@@ -520,6 +520,26 @@ export function getTranslation(lang: Language, key: keyof typeof translations.en
   return translations[lang][key] || translations.en[key];
 }
 
+export function getInitialLanguage(): Language {
+  if (typeof window === 'undefined') return 'en';
+  
+  // 首先检查本地存储
+  const saved = localStorage.getItem('language') as Language;
+  if (saved && (Object.keys(translations) as Language[]).includes(saved)) {
+    return saved;
+  }
+  
+  // 如果没有保存的语言，检查浏览器语言
+  const browserLang = navigator.language;
+  return detectLanguage(browserLang);
+}
+
+export function saveLanguage(language: Language) {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('language', language);
+  }
+}
+
 export function detectLanguage(browserLang: string): Language {
   const langCode = browserLang.split('-')[0].toLowerCase();
   

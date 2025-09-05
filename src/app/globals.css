@@ -1,38 +1,283 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    color-scheme: dark;
   }
+}
+
+/* 手动定义 dark 模式样式 - 严格按照用户提供的颜色代码 */
+.dark {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* 主要背景和文字 */
+.dark .bg-white {
+  background-color: #000000 !important;
+}
+
+.dark .text-gray-900 {
+  color: #ffffff !important;
+}
+
+/* 进度网格容器 - 使用用户指定的容器背景色 */
+.dark .bg-gray-100,
+.dark .bg-gray-800 {
+  background-color: #101828 !important; /* 用户指定的容器背景 */
+}
+
+.dark .border-gray-300,
+.dark .border-gray-600 {
+  border-color: #374151 !important;
+}
+
+/* 分享区域 - 在浅色模式下调整 */
+:not(.dark) .bg-gray-900 {
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+}
+
+:not(.dark) .text-gray-400 {
+  color: #64748b !important;
+}
+
+:not(.dark) .text-blue-400 {
+  color: #2563eb !important;
+}
+
+:not(.dark) .border-gray-700 {
+  border-color: #cbd5e1 !important;
+}
+
+/* 分享区域 - 深色模式，使用用户指定的容器背景 */
+.dark .bg-gray-900 {
+  background-color: #101828 !important; /* 用户指定的容器背景 */
+}
+
+.dark .text-gray-400 {
+  color: #d1d5db !important;
+}
+
+.dark .text-blue-400 {
+  color: #60a5fa !important;
+}
+
+.dark .border-gray-700 {
+  border-color: #374151 !important;
+}
+
+/* 进度方块颜色 - 严格使用用户指定的颜色 */
+.dark .bg-emerald-500,
+.dark .bg-emerald-400,
+.dark .bg-green-500 {
+  background-color: #00c950 !important; /* 用户指定的绿色 */
+}
+
+.dark .bg-yellow-500,
+.dark .bg-yellow-400 {
+  background-color: #f59e0b !important;
+}
+
+.dark .bg-gray-300,
+.dark .bg-gray-600 {
+  background-color: #ffffff !important; /* 用户指定的纯白色 Future 方块 */
+}
+
+/* 浅色模式的进度方块 */
+:not(.dark) .bg-emerald-500,
+:not(.dark) .bg-green-500 {
+  background-color: #00c950 !important; /* 使用用户指定的绿色 */
+}
+
+:not(.dark) .bg-gray-300,
+:not(.dark) .bg-gray-600 {
+  background-color: #ffffff !important; /* Future方块用纯白色 */
+}
+
+/* 所有文字颜色的覆盖 */
+.dark .text-gray-700,
+.dark .text-gray-300 {
+  color: #e5e7eb !important;
+}
+
+/* 按钮和交互元素 - 使用用户指定的容器背景 */
+.dark button {
+  background-color: #101828 !important; /* 用户指定的容器背景 */
+  color: #e5e7eb !important;
+  border-color: #374151 !important;
+}
+
+.dark button:hover,
+.dark .hover\:bg-gray-200:hover,
+.dark .hover\:bg-gray-700:hover {
+  background-color: #374151 !important;
+  color: #ffffff !important;
+}
+
+/* 排除进度小方块，防止通用hover规则影响 */
+.dark .hover\:scale-110:not(button):hover {
+  background-color: unset !important;
+}
+
+/* 修复复制按钮在暗色主题下的颜色问题 */
+.dark .bg-gray-600 {
+  background-color: #4a5565 !important; /* 复制按钮默认颜色 */
+  color: #ffffff !important;
+}
+
+.dark .bg-gray-600:hover {
+  background-color: #364153 !important; /* 复制按钮悬停颜色 */
+}
+
+/* 修复复制链接容器背景色问题 - 只影响非复制容器元素 */
+.dark .bg-gray-100:not(.copy-container) {
+  background-color: #101828 !important; /* 其他容器背景 */
+}
+
+/* 防止分享按钮出现灰色背景 */
+.dark .hover\:scale-110:hover {
+  background-color: transparent !important;
+}
+
+/* 防止进度小方块悬停时背景色变化 */
+.dark .hover\:scale-110.bg-emerald-500:hover,
+.dark .hover\:scale-110.bg-emerald-400:hover,
+.dark .hover\:scale-110.bg-green-500:hover {
+  background-color: #00c950 !important; /* 保持绿色不变 */
+}
+
+.dark .hover\:scale-110.bg-yellow-500:hover,
+.dark .hover\:scale-110.bg-yellow-400:hover {
+  background-color: #f59e0b !important; /* 保持黄色不变 */
+}
+
+.dark .hover\:scale-110.bg-gray-300:hover,
+.dark .hover\:scale-110.bg-gray-600:hover {
+  background-color: #ffffff !important; /* 保持白色不变 */
+}
+
+/* 复制容器特定覆盖 - 排除复制容器使用通用背景 */
+html.dark div[class*="bg-gray-100"]:not(.copy-container) {
+  background-color: #101828 !important;
+}
+
+/* 自定义语言选择器样式 */
+.language-btn {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+.dark .language-btn {
+  background-color: #101828 !important;
+  border-color: #374151 !important;
+  color: #e5e7eb !important;
+}
+
+.dark .language-btn:hover {
+  background-color: #374151 !important;
+  border-color: #4b5563 !important;
+  color: #ffffff !important;
+}
+
+/* 语言下拉菜单样式 */
+.language-dropdown {
+  background-color: #ffffff;
+  border-color: #d1d5db;
+}
+
+.dark .language-dropdown {
+  background-color: #101828 !important;
+  border-color: #374151 !important;
+}
+
+/* 语言下拉菜单按钮样式 */
+.language-dropdown-btn {
+  color: #374151;
+}
+
+.dark .language-dropdown-btn {
+  color: #e5e7eb !important;
+}
+
+.dark .language-dropdown-btn:hover {
+  background-color: #374151 !important;
+  color: #ffffff !important;
+}
+
+.dark .language-dropdown-btn.active-lang {
+  background-color: #374151 !important;
+  border-color: #4b5563 !important;
+  color: #ffffff !important;
+}
+
+/* 复制容器样式 */
+.copy-container {
+  background-color: #f3f4f6;
+}
+
+.dark .copy-container {
+  background-color: #1e2939 !important; /* 恢复复制容器的背景色 */
+}
+
+:root,
+.light {
+  /* 明亮主题变量 - 真正的浅色模式 */
+  --background: #ffffff;
+  --foreground: #1f2937;
+  --card-bg: #f9fafb;
+  --card-border: #e5e7eb;
+  --text-muted: #6b7280;
+  --text-primary: #111827;
+  --progress-past: #10b981;
+  --progress-current: #f59e0b;
+  --progress-future: #d1d5db;
+  --hover-bg: #f3f4f6;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark {
+  color-scheme: dark;
+  /* 暗黑主题变量 */
+  --background: #111827;
+  --foreground: #f9fafb;
+  --card-bg: #374151;
+  --card-border: #4b5563;
+  --text-muted: #9ca3af;
+  --text-primary: #f3f4f6;
+  --progress-past: #10b981;
+  --progress-current: #f59e0b;
+  --progress-future: #6b7280;
+  --hover-bg: #4b5563;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+/* 确保 dark 模式正确应用 */
+html:not(.dark),
+html.light {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-family: system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* 自定义滚动条 */
+/* 自定义滚动条 - 明亮主题 */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--card-bg);
   border-radius: 4px;
 }
 
@@ -45,6 +290,19 @@ body {
   background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
 }
 
+/* 暗黑主题滚动条 */
+.dark ::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%);
+}
+
 /* 平滑滚动 */
 html {
   scroll-behavior: smooth;
@@ -53,7 +311,12 @@ html {
 /* 选择文本样式 */
 ::selection {
   background: rgba(102, 126, 234, 0.2);
-  color: #1e1b4b;
+  color: var(--text-primary);
+}
+
+.dark ::selection {
+  background: rgba(102, 126, 234, 0.3);
+  color: var(--foreground);
 }
 
 /* 动画关键帧 */
