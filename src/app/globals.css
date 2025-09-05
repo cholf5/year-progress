@@ -226,9 +226,13 @@ html.dark div[class*="bg-gray-100"]:not(.copy-container) {
   background-color: #1e2939 !important; /* 恢复复制容器的背景色 */
 }
 
-/* URL文字颜色 */
+/* URL文字颜色和样式 */
 .copy-container span {
-  color: #0f1419 !important; /* 亮色主题下的URL改为白色 */
+  color: #0f1419 !important; /* 亮色主题下的URL颜色 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 12px; /* 左右留出一些空间 */
 }
 
 .dark .copy-container span {

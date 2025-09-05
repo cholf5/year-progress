@@ -575,16 +575,18 @@ export default function Home() {
             <p className="text-gray-500 dark:text-gray-400 text-xs text-center mb-3 transition-colors duration-300">
               {t('orCopyLink')}
             </p>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-gray-100 p-3 rounded-lg transition-colors duration-300 copy-container">
-              <span className="text-gray-700 dark:text-gray-300 flex-1 text-left font-mono text-xs break-all transition-colors duration-300">
-                {typeof window !== 'undefined' ? window.location.href : ''}
-              </span>
-              <button
-                onClick={copyToClipboard}
-                className="bg-gray-600 hover:bg-gray-700 px-3 py-2 rounded text-xs font-medium transition-colors shrink-0"
-              >
-                {copySuccess ? t('copied') : t('copy')}
-              </button>
+            <div className="flex justify-center">
+              <div className="flex items-center gap-3 bg-gray-100 px-4 py-3 rounded-lg transition-colors duration-300 copy-container w-96">
+                <span className="text-gray-700 dark:text-gray-300 font-mono text-xs transition-colors duration-300 flex-1 text-center min-w-0">
+                  {typeof window !== 'undefined' ? window.location.href : ''}
+                </span>
+                <button
+                  onClick={copyToClipboard}
+                  className="bg-gray-600 hover:bg-gray-700 px-3 py-2 rounded text-xs font-medium transition-colors shrink-0"
+                >
+                  {copySuccess ? t('copied') : t('copy')}
+                </button>
+              </div>
             </div>
           </div>
 
