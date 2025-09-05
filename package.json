@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "description": "一个优雅的年度进度展示应用，实时显示当前年份的时间进度",
-  "keywords": ["年度进度", "时间管理", "进度条", "year progress", "time tracking", "nextjs", "react"],
+  "keywords": [
+    "年度进度",
+    "时间管理",
+    "进度条",
+    "year progress",
+    "time tracking",
+    "nextjs",
+    "react"
+  ],
   "author": "Year Progress",
   "license": "MIT",
   "scripts": {
@@ -17,20 +25,22 @@
     "clean": "rm -rf .next node_modules/.cache"
   },
   "dependencies": {
+    "@types/react-share": "^3.0.3",
+    "@vercel/og": "^0.6.2",
+    "next": "15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.2",
-    "@vercel/og": "^0.6.2"
+    "react-share": "^5.2.2"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

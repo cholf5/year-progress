@@ -3,6 +3,18 @@
 import { useEffect, useState } from 'react';
 import { calculateYearProgress } from '@/lib/yearProgress';
 import { translations, type Language, getTranslation } from '@/lib/i18n';
+import {
+  TwitterShareButton,
+  FacebookShareButton,
+  TelegramShareButton,
+  RedditShareButton,
+  WeiboShareButton,
+  TwitterIcon,
+  FacebookIcon,
+  TelegramIcon,
+  RedditIcon,
+  WeiboIcon,
+} from 'react-share';
 
 // 工具函数：获取日期信息
 const getDateInfo = (dayNumber: number, year: number, language: Language) => {
@@ -176,7 +188,7 @@ export default function Home() {
                              hoveredDay.dayNumber === daysPassed ? 'current' : 'future';
                 
                 const statusText = language === 'zh' 
-                  ? { past: '已过去', current: '正在过', future: '未过去' }[status]
+                  ? { past: '过去', current: '现在', future: '将来' }[status]
                   : { past: 'Past', current: 'Current', future: 'Future' }[status];
                 
                 return (
@@ -207,19 +219,19 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-sm"></div>
             <span className="text-gray-400">
-              {language === 'zh' ? '已过去' : 'Past'}
+              {language === 'zh' ? '过去' : 'Past'}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 rounded-sm"></div>
             <span className="text-gray-400">
-              {language === 'zh' ? '正在过' : 'Current'}
+              {language === 'zh' ? '现在' : 'Current'}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 sm:w-3 sm:h-3 bg-white rounded-sm"></div>
             <span className="text-gray-400">
-              {language === 'zh' ? '未过去' : 'Future'}
+              {language === 'zh' ? '将来' : 'Future'}
             </span>
           </div>
         </div>
@@ -234,21 +246,123 @@ export default function Home() {
 
         {/* 分享说明 */}
         <div className="bg-gray-900 p-4 sm:p-6 rounded-xl border border-gray-700 max-w-2xl mx-auto">
-          <h2 className="text-lg sm:text-xl font-semibold mb-4 text-blue-400">
-            📱 {t('shareInstructions')}
+          <h2 className="text-lg sm:text-xl font-semibold mb-4 text-blue-400 text-center">
+            📱 {language === 'zh' ? '分享到社交媒体' : 'Share to Social Media'}
           </h2>
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-gray-800 p-3 rounded-lg">
-            <span className="text-gray-300 flex-1 text-left font-mono text-xs sm:text-sm break-all">
-              {typeof window !== 'undefined' ? window.location.href : ''}
-            </span>
-            <button
-              onClick={copyToClipboard}
-              className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium transition-colors shrink-0"
+          <p className="text-gray-400 text-xs sm:text-sm mb-6 text-center">
+            {language === 'zh' 
+              ? '点击下方按钮分享到社交媒体，生成漂亮的进度卡片！'
+              : 'Click below to share on social media and generate beautiful progress cards!'
+            }
+          </p>
+          
+          {/* 社交媒体分享按钮 */}
+          <div className="flex flex-wrap justify-center items-center gap-3">
+            <TwitterShareButton
+              url={typeof window !== 'undefined' ? window.location.href : ''}
+              title={language === 'zh' 
+                ? `${progress.year}年已过去了${progress.percentage}%`
+                : `${progress.year} is ${progress.percentage}% complete.`
+              }
+              hashtags={language === 'zh' 
+                ? ['年度进度', '时间管理', '进度追踪']
+                : ['yearProgress', 'timeTracking', 'progressBar']
+              }
+              className="hover:scale-110 transition-transform"
             >
-              {copySuccess ? t('linkCopied') : t('copyLink')}
+              <TwitterIcon size={40} round />
+            </TwitterShareButton>
+
+            <FacebookShareButton
+              url={typeof window !== 'undefined' ? window.location.href : ''}
+              className="hover:scale-110 transition-transform"
+            >
+              <FacebookIcon size={40} round />
+            </FacebookShareButton>
+
+            <TelegramShareButton
+              url={typeof window !== 'undefined' ? window.location.href : ''}
+              title={language === 'zh' 
+                ? `${progress.year}年已过去了${progress.percentage}% - 年度进度追踪`
+                : `${progress.year} is ${progress.percentage}% complete - Year Progress Tracker`
+              }
+              className="hover:scale-110 transition-transform"
+            >
+              <TelegramIcon size={40} round />
+            </TelegramShareButton>
+
+            <RedditShareButton
+              url={typeof window !== 'undefined' ? window.location.href : ''}
+              title={language === 'zh' 
+                ? `${progress.year}年已过去了${progress.percentage}% - 年度进度可视化`
+                : `${progress.year} is ${progress.percentage}% complete - Year Progress Visualization`
+              }
+              className="hover:scale-110 transition-transform"
+            >
+              <RedditIcon size={40} round />
+            </RedditShareButton>
+
+            <WeiboShareButton
+              url={typeof window !== 'undefined' ? window.location.href : ''}
+              title={language === 'zh' 
+                ? `${progress.year}年已过去了${progress.percentage}% - 年度进度追踪 #年度进度 #时间管理`
+                : `${progress.year} is ${progress.percentage}% complete - Year Progress Tracker #yearProgress #timeTracking`
+              }
+              className="hover:scale-110 transition-transform"
+            >
+              <WeiboIcon size={40} round />
+            </WeiboShareButton>
+
+            {/* Instagram 分享（使用自定义按钮，因为 react-share 不直接支持 Instagram） */}
+            <button
+              onClick={() => {
+                const text = language === 'zh' 
+                  ? `${progress.year}年已过去了${progress.percentage}%`
+                  : `${progress.year} is ${progress.percentage}% complete.`;
+                const url = typeof window !== 'undefined' ? window.location.href : '';
+                
+                // 检测是否为移动设备
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                
+                if (isMobile) {
+                  // 尝试打开 Instagram App
+                  window.open(`instagram://camera`, '_blank');
+                  // 备用：复制内容到剪贴板
+                  navigator.clipboard.writeText(`${text}\n${url}`);
+                } else {
+                  // 桌面端打开 Instagram 网页版
+                  window.open('https://www.instagram.com/', '_blank');
+                  navigator.clipboard.writeText(`${text}\n${url}`);
+                }
+              }}
+              className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 flex items-center justify-center hover:scale-110 transition-transform"
+              title="Share to Instagram"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
             </button>
           </div>
-          <p className="text-gray-400 text-xs sm:text-sm mt-3">
+
+          {/* 备用复制链接 */}
+          <div className="mt-6 pt-4 border-t border-gray-700">
+            <p className="text-gray-500 text-xs text-center mb-3">
+              {language === 'zh' ? '或复制链接分享' : 'Or copy link to share'}
+            </p>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-gray-800 p-3 rounded-lg">
+              <span className="text-gray-300 flex-1 text-left font-mono text-xs break-all">
+                {typeof window !== 'undefined' ? window.location.href : ''}
+              </span>
+              <button
+                onClick={copyToClipboard}
+                className="bg-gray-600 hover:bg-gray-700 px-3 py-2 rounded text-xs font-medium transition-colors shrink-0"
+              >
+                {copySuccess ? (language === 'zh' ? '已复制!' : 'Copied!') : (language === 'zh' ? '复制' : 'Copy')}
+              </button>
+            </div>
+          </div>
+
+          <p className="text-gray-400 text-xs sm:text-sm mt-4 text-center">
             {t('timeWaits')}
           </p>
         </div>
