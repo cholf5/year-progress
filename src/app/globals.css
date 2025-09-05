@@ -95,6 +95,11 @@
   background-color: #ffffff !important; /* Future方块用纯白色 */
 }
 
+/* 亮色主题进度条背景优化 */
+:not(.dark) .bg-gray-100:not(.copy-container) {
+  background-color: #e2e8f0 !important; /* 更深的背景让白色Future方块更清晰 */
+}
+
 /* 所有文字颜色的覆盖 */
 .dark .text-gray-700,
 .dark .text-gray-300 {
@@ -214,26 +219,35 @@ html.dark div[class*="bg-gray-100"]:not(.copy-container) {
 
 /* 复制容器样式 */
 .copy-container {
-  background-color: #f3f4f6;
+  background-color: #e2e8f0; /* 与进度条背景一致的深色背景 */
 }
 
 .dark .copy-container {
   background-color: #1e2939 !important; /* 恢复复制容器的背景色 */
 }
 
+/* URL文字颜色 */
+.copy-container span {
+  color: #0f1419 !important; /* 亮色主题下的URL改为白色 */
+}
+
+.dark .copy-container span {
+  color: #ffffff !important; /* 暗色主题下的URL颜色改为白色 */
+}
+
 :root,
 .light {
-  /* 明亮主题变量 - 真正的浅色模式 */
-  --background: #ffffff;
+  /* 明亮主题变量 - 更柔和的浅色模式 */
+  --background: #f8fafc; /* 更柔和的背景色，不那么刺眼 */
   --foreground: #1f2937;
-  --card-bg: #f9fafb;
-  --card-border: #e5e7eb;
-  --text-muted: #6b7280;
-  --text-primary: #111827;
+  --card-bg: #f1f5f9; /* 稍微深一点的卡片背景 */
+  --card-border: #e2e8f0;
+  --text-muted: #64748b;
+  --text-primary: #0f172a;
   --progress-past: #10b981;
   --progress-current: #f59e0b;
   --progress-future: #d1d5db;
-  --hover-bg: #f3f4f6;
+  --hover-bg: #e2e8f0; /* 稍微深一点的悬停背景 */
   --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
