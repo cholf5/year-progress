@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Year Progress - 年度进度",
-  description: "实时展示年度进度，看看今年过去了多少，还剩多少时间。Time waits for no one, cherish every day!",
-  keywords: ["年度进度", "时间管理", "进度条", "year progress", "time tracking"],
+  title: "Year Progress - Real-time Yearly Progress Visualization",
+  description: "Real-time yearly progress visualization. See how much of the year has passed and how much time remains. Share on social media to generate beautiful progress cards!",
+  keywords: ["year progress", "time tracking", "progress bar", "yearly progress", "time visualization", "social sharing"],
   authors: [{ name: "Year Progress" }],
   creator: "Year Progress",
   publisher: "Year Progress",
@@ -25,24 +25,24 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    locale: 'zh_CN',
+    locale: 'en_US',
     url: '/',
-    title: 'Year Progress - 年度进度',
-    description: '实时展示年度进度，看看今年过去了多少，还剩多少时间。Time waits for no one, cherish every day!',
+    title: 'Year Progress - Real-time Yearly Progress Visualization',
+    description: 'Real-time yearly progress visualization. See how much of the year has passed and how much time remains. Share to generate beautiful progress cards!',
     siteName: 'Year Progress',
     images: [
       {
         url: '/api/og',
         width: 1200,
         height: 630,
-        alt: 'Year Progress - 年度进度卡片',
+        alt: 'Year Progress - Real-time yearly progress card',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Year Progress - 年度进度',
-    description: '实时展示年度进度，看看今年过去了多少，还剩多少时间。Time waits for no one, cherish every day!',
+    title: 'Year Progress - Real-time Yearly Progress Visualization',
+    description: 'Real-time yearly progress visualization. See how much of the year has passed and how much time remains.',
     images: ['/api/og'],
     creator: '@yearofprogress',
   },
@@ -68,7 +68,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN">
+    <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#667eea" />
