@@ -41,9 +41,22 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [hoveredDay, setHoveredDay] = useState<{dayNumber: number, x: number, y: number} | null>(null);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 375);
 
   useEffect(() => {
     setMounted(true);
+    
+    // 更新窗口宽度
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    // 设置初始窗口宽度
+    if (typeof window !== 'undefined') {
+      setWindowWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);
+    }
+    
     // 每小时更新一次进度
     const interval = setInterval(() => {
       setProgress(calculateYearProgress());
@@ -55,7 +68,12 @@ export default function Home() {
       setLanguage('zh');
     }
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', handleResize);
+      }
+    };
   }, []);
 
   const copyToClipboard = async () => {
@@ -114,18 +132,71 @@ export default function Home() {
         </h1>
         
         {/* 进度网格 */}
-        <div className="flex justify-center mb-4 sm:mb-8 relative overflow-x-auto">
-          <div className="bg-gray-900 p-3 sm:p-6 rounded-xl border-2 border-gray-700 min-w-fit">
-            <div className="flex flex-col gap-0.5 sm:gap-1">
+        <div className="flex justify-center mb-4 sm:mb-8 relative px-1">
+          <div className="bg-gray-900 p-2 sm:p-3 md:p-6 rounded-xl border-2 border-gray-700 max-w-full overflow-hidden">
+            <div 
+              className="flex flex-col"
+              style={{
+                gap: windowWidth < 640 ? '2px' : '4px'
+              }}
+            >
               {Array.from({ length: rows }, (_, rowIndex) => (
-                <div key={rowIndex} className="flex gap-0.5 sm:gap-1">
+                <div 
+                  key={rowIndex} 
+                  className="flex"
+                  style={{
+                    gap: windowWidth < 640 ? '2px' : '4px'
+                  }}
+                >
                   {Array.from({ length: squaresPerRow }, (_, colIndex) => {
                     const dayNumber = colIndex * rows + rowIndex + 1;
                     const shouldShow = dayNumber <= totalDays;
                     
+                    // 更精确的方块大小计算
+                    let squareSize: number;
+                    let gapSize = windowWidth < 640 ? 2 : 4;
+                    
+                    if (windowWidth < 400) {
+                      // 超小屏幕
+                      const availableWidth = windowWidth - 24 - 16; // 外padding + 内padding
+                      const gapTotal = gapSize * (squaresPerRow - 1);
+                      squareSize = Math.max(2, Math.floor((availableWidth - gapTotal) / squaresPerRow));
+                    } else if (windowWidth < 640) {
+                      // 小屏幕
+                      const availableWidth = windowWidth - 24 - 16; // 外padding + 内padding
+                      const gapTotal = gapSize * (squaresPerRow - 1);
+                      squareSize = Math.max(3, Math.floor((availableWidth - gapTotal) / squaresPerRow));
+                    } else if (windowWidth < 768) {
+                      // 中等屏幕
+                      squareSize = 8;
+                    } else if (windowWidth < 1024) {
+                      // 大屏幕
+                      squareSize = 12;
+                    } else {
+                      // 超大屏幕
+                      squareSize = 16;
+                    }
+                    
+                    // 确保总宽度不会超出，做最终调整
+                    const totalWidth = squaresPerRow * squareSize + gapSize * (squaresPerRow - 1);
+                    const containerPadding = windowWidth < 640 ? 16 : windowWidth < 768 ? 24 : 48;
+                    const maxAllowedWidth = windowWidth - 24 - containerPadding - 8; // 留一些安全边距
+                    
+                    if (totalWidth > maxAllowedWidth && maxAllowedWidth > 0) {
+                      const gapTotal = gapSize * (squaresPerRow - 1);
+                      squareSize = Math.max(2, Math.floor((maxAllowedWidth - gapTotal) / squaresPerRow));
+                    }
+                    
                     if (!shouldShow) {
                       return (
-                        <div key={colIndex} className="w-2 h-2 sm:w-3 sm:h-3 md:w-4 md:h-4" />
+                        <div 
+                          key={colIndex} 
+                          style={{
+                            width: `${squareSize}px`,
+                            height: `${squareSize}px`,
+                            flexShrink: 0
+                          }}
+                        />
                       );
                     }
 
@@ -143,7 +214,12 @@ export default function Home() {
                     return (
                       <div
                         key={colIndex}
-                        className={`w-2 h-2 sm:w-3 sm:h-3 md:w-4 md:h-4 rounded-sm ${bgColor} cursor-pointer transition-all hover:scale-110 active:scale-95`}
+                        className={`rounded-sm ${bgColor} cursor-pointer transition-all hover:scale-110 active:scale-95`}
+                        style={{
+                          width: `${squareSize}px`,
+                          height: `${squareSize}px`,
+                          flexShrink: 0
+                        }}
                         onMouseEnter={(e) => {
                           const rect = e.currentTarget.getBoundingClientRect();
                           setHoveredDay({
@@ -177,7 +253,7 @@ export default function Home() {
             <div
               className="fixed z-50 bg-gray-800 text-white px-3 py-2 rounded-lg shadow-lg border border-gray-600 text-xs sm:text-sm pointer-events-none"
               style={{
-                left: Math.min(Math.max(hoveredDay.x, 100), window?.innerWidth - 100),
+                left: Math.min(Math.max(hoveredDay.x, 100), windowWidth - 100),
                 top: hoveredDay.y - 140,
                 transform: 'translateX(-50%)',
               }}
