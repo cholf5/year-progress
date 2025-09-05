@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { calculateYearProgress } from '@/lib/yearProgress';
-import { translations, type Language, getTranslation } from '@/lib/i18n';
+import { translations, type Language, getTranslation, detectLanguage, getLanguageDisplayName } from '@/lib/i18n';
 import {
   TwitterShareButton,
   FacebookShareButton,
@@ -24,13 +24,12 @@ const getDateInfo = (dayNumber: number, year: number, language: Language) => {
   date.setDate(date.getDate() + dayNumber - 1); // dayNumber-1 因为第1天是1月1日
   
   const weekNumber = Math.ceil(dayNumber / 7);
-  const dayOfWeek = language === 'zh' 
-    ? ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][date.getDay()]
-    : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][date.getDay()];
+  const weekDays = getTranslation(language, 'weekDays') as string[];
+  const dayOfWeek = weekDays[date.getDay()];
   
   const monthDay = language === 'zh' 
     ? `${date.getMonth() + 1}月${date.getDate()}日`
-    : `${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+    : date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     
   return { weekNumber, dayOfWeek, monthDay, date };
 };
@@ -42,6 +41,24 @@ export default function Home() {
   const [copySuccess, setCopySuccess] = useState(false);
   const [hoveredDay, setHoveredDay] = useState<{dayNumber: number, x: number, y: number} | null>(null);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 375);
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+  const hideMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 显示语言菜单
+  const handleShowLanguageMenu = () => {
+    if (hideMenuTimeoutRef.current) {
+      clearTimeout(hideMenuTimeoutRef.current);
+      hideMenuTimeoutRef.current = null;
+    }
+    setShowLanguageMenu(true);
+  };
+
+  // 隐藏语言菜单（带延迟）
+  const handleHideLanguageMenu = () => {
+    hideMenuTimeoutRef.current = setTimeout(() => {
+      setShowLanguageMenu(false);
+    }, 150); // 150ms 延迟，允许用户移动到下拉列表
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -63,13 +80,14 @@ export default function Home() {
     }, 60 * 60 * 1000);
 
     // 检查浏览器语言设置
-    const browserLang = navigator.language.toLowerCase();
-    if (browserLang.startsWith('zh')) {
-      setLanguage('zh');
-    }
+    const browserLang = navigator.language;
+    setLanguage(detectLanguage(browserLang));
 
     return () => {
       clearInterval(interval);
+      if (hideMenuTimeoutRef.current) {
+        clearTimeout(hideMenuTimeoutRef.current);
+      }
       if (typeof window !== 'undefined') {
         window.removeEventListener('resize', handleResize);
       }
@@ -107,28 +125,53 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-3 sm:p-6 relative">
       {/* 语言切换按钮 */}
-      <div className="absolute top-3 right-3 sm:top-6 sm:right-6 flex gap-2">
+      <div 
+        className="absolute top-3 right-3 sm:top-6 sm:right-6 language-selector"
+        onMouseEnter={handleShowLanguageMenu}
+        onMouseLeave={handleHideLanguageMenu}
+      >
         <button
-          onClick={() => setLanguage('en')}
-          className={`px-2 py-1 sm:px-3 sm:py-1 rounded text-xs sm:text-sm ${language === 'en' ? 'bg-white text-black' : 'bg-gray-700 text-gray-300'}`}
+          className="px-3 py-2 bg-gray-900 hover:bg-gray-800 border border-gray-700 hover:border-gray-600 rounded-lg text-xs sm:text-sm text-gray-300 hover:text-white transition-all duration-200 flex items-center gap-2 shadow-lg backdrop-blur-sm"
         >
-          EN
+          🌐 {getLanguageDisplayName(language)}
+          <svg className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 ${showLanguageMenu ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
         </button>
-        <button
-          onClick={() => setLanguage('zh')}
-          className={`px-2 py-1 sm:px-3 sm:py-1 rounded text-xs sm:text-sm ${language === 'zh' ? 'bg-white text-black' : 'bg-gray-700 text-gray-300'}`}
-        >
-          中文
-        </button>
+        
+        {showLanguageMenu && (
+          <div className="absolute top-full right-0 mt-1 w-40 bg-gray-900 border border-gray-700 rounded-xl shadow-2xl z-50 max-h-72 overflow-y-auto backdrop-blur-sm">
+            <div className="p-1">
+              {(Object.keys(translations) as Language[]).map((lang) => (
+                <button
+                  key={lang}
+                  onClick={() => {
+                    setLanguage(lang);
+                    setShowLanguageMenu(false);
+                  }}
+                  className={`w-full px-3 py-2.5 text-center hover:bg-gray-800 transition-all duration-200 text-sm rounded-lg ${
+                    language === lang 
+                      ? 'bg-gray-800 text-white shadow-inner border border-gray-600' 
+                      : 'text-gray-300 hover:text-white'
+                  }`}
+                >
+                  {getLanguageDisplayName(lang)}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="text-center space-y-4 sm:space-y-8 max-w-7xl w-full">
         {/* 标题 */}
         <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-8 px-2 leading-tight">
-          {language === 'zh' 
-            ? `${progress.year}年已过去了${progress.percentage}%`
-            : `${progress.year} is ${progress.percentage}% complete.`
-          }
+          {(() => {
+            const template = t('progressTitle') as string;
+            return template
+              .replace('{year}', progress.year.toString())
+              .replace('{percentage}', progress.percentage.toString());
+          })()}
         </h1>
         
         {/* 进度网格 */}
@@ -263,9 +306,7 @@ export default function Home() {
                 const status = hoveredDay.dayNumber < daysPassed ? 'past' : 
                              hoveredDay.dayNumber === daysPassed ? 'current' : 'future';
                 
-                const statusText = language === 'zh' 
-                  ? { past: '过去', current: '现在', future: '将来' }[status]
-                  : { past: 'Past', current: 'Current', future: 'Future' }[status];
+                const statusText = getTranslation(language, status) as string;
                 
                 return (
                   <div className="text-center space-y-1">
@@ -295,19 +336,19 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-sm"></div>
             <span className="text-gray-400">
-              {language === 'zh' ? '过去' : 'Past'}
+              {getTranslation(language, 'past')}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 rounded-sm"></div>
             <span className="text-gray-400">
-              {language === 'zh' ? '现在' : 'Current'}
+              {getTranslation(language, 'current')}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 sm:w-3 sm:h-3 bg-white rounded-sm"></div>
             <span className="text-gray-400">
-              {language === 'zh' ? '将来' : 'Future'}
+              {getTranslation(language, 'future')}
             </span>
           </div>
         </div>
@@ -316,20 +357,17 @@ export default function Home() {
         <p className="text-lg sm:text-xl md:text-2xl text-gray-400 px-2">
           {language === 'zh' 
             ? `今天是${progress.year}年第${Math.ceil(daysPassed / 7)}周，第${daysPassed}天`
-            : `It's week ${Math.ceil(daysPassed / 7)}, day ${daysPassed} of ${progress.year}.`
+            : `It's ${t('week')} ${Math.ceil(daysPassed / 7)}, ${t('day')} ${daysPassed} ${t('of')} ${progress.year}.`
           }
         </p>
 
         {/* 分享说明 */}
         <div className="bg-gray-900 p-4 sm:p-6 rounded-xl border border-gray-700 max-w-2xl mx-auto">
           <h2 className="text-lg sm:text-xl font-semibold mb-4 text-blue-400 text-center">
-            📱 {language === 'zh' ? '分享到社交媒体' : 'Share to Social Media'}
+            📱 {t('shareToSocialMedia')}
           </h2>
           <p className="text-gray-400 text-xs sm:text-sm mb-6 text-center">
-            {language === 'zh' 
-              ? '点击下方按钮分享到社交媒体，生成漂亮的进度卡片！'
-              : 'Click below to share on social media and generate beautiful progress cards!'
-            }
+            {t('clickToShare')}
           </p>
           
           {/* 社交媒体分享按钮 */}
@@ -423,7 +461,7 @@ export default function Home() {
           {/* 备用复制链接 */}
           <div className="mt-6 pt-4 border-t border-gray-700">
             <p className="text-gray-500 text-xs text-center mb-3">
-              {language === 'zh' ? '或复制链接分享' : 'Or copy link to share'}
+              {t('orCopyLink')}
             </p>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-gray-800 p-3 rounded-lg">
               <span className="text-gray-300 flex-1 text-left font-mono text-xs break-all">
@@ -433,7 +471,7 @@ export default function Home() {
                 onClick={copyToClipboard}
                 className="bg-gray-600 hover:bg-gray-700 px-3 py-2 rounded text-xs font-medium transition-colors shrink-0"
               >
-                {copySuccess ? (language === 'zh' ? '已复制!' : 'Copied!') : (language === 'zh' ? '复制' : 'Copy')}
+                {copySuccess ? t('copied') : t('copy')}
               </button>
             </div>
           </div>
@@ -449,7 +487,7 @@ export default function Home() {
           <p className="break-words">
             {language === 'zh' 
               ? `已过去${daysPassed}天 • 剩余${totalDays - daysPassed}天`
-              : `${daysPassed} days completed • ${totalDays - daysPassed} days remaining`
+              : `${daysPassed} ${t('daysCompleted')} • ${totalDays - daysPassed} ${t('daysRemaining')}`
             }
           </p>
         </div>
