@@ -15,10 +15,10 @@ export function calculateYearProgress(): YearProgress {
   const endOfYear = new Date(year, 11, 31);
   
   // 计算总天数（考虑闰年）
-  const totalDays = Math.ceil((endOfYear.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+  const totalDays = Math.floor((endOfYear.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
   
-  // 计算已过去的天数
-  const daysPassed = Math.ceil((now.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+  // 计算已过去的天数（当前日期是第几天，从1开始计数）
+  const daysPassed = Math.floor((now.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
   
   // 计算进度百分比
   const percentage = Math.round((daysPassed / totalDays) * 100 * 100) / 100; // 保留两位小数

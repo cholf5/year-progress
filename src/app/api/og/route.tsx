@@ -7,6 +7,7 @@ export async function GET() {
     const now = new Date();
     const year = now.getFullYear();
     const startOfYear = new Date(year, 0, 1);
+    // 确保与主页面逻辑一致：当前日期是第几天（从1开始）
     const daysPassed = Math.floor((now.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
     const isLeapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
     const totalDays = isLeapYear ? 366 : 365;

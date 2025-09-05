@@ -4,11 +4,31 @@ import { useEffect, useState } from 'react';
 import { calculateYearProgress } from '@/lib/yearProgress';
 import { translations, type Language, getTranslation } from '@/lib/i18n';
 
+// 工具函数：获取日期信息
+const getDateInfo = (dayNumber: number, year: number, language: Language) => {
+  // 从年初开始计算第 dayNumber 天（dayNumber 从 1 开始）
+  const startOfYear = new Date(year, 0, 1);
+  const date = new Date(startOfYear);
+  date.setDate(date.getDate() + dayNumber - 1); // dayNumber-1 因为第1天是1月1日
+  
+  const weekNumber = Math.ceil(dayNumber / 7);
+  const dayOfWeek = language === 'zh' 
+    ? ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][date.getDay()]
+    : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][date.getDay()];
+  
+  const monthDay = language === 'zh' 
+    ? `${date.getMonth() + 1}月${date.getDate()}日`
+    : `${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+    
+  return { weekNumber, dayOfWeek, monthDay, date };
+};
+
 export default function Home() {
   const [progress, setProgress] = useState(calculateYearProgress());
   const [language, setLanguage] = useState<Language>('en');
   const [mounted, setMounted] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
+  const [hoveredDay, setHoveredDay] = useState<{dayNumber: number, x: number, y: number} | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -82,14 +102,13 @@ export default function Home() {
         </h1>
         
         {/* 进度网格 */}
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-8 relative">
           <div className="bg-gray-900 p-6 rounded-xl border-2 border-gray-700">
             <div className="flex flex-col gap-1">
               {Array.from({ length: rows }, (_, rowIndex) => (
                 <div key={rowIndex} className="flex gap-1">
                   {Array.from({ length: squaresPerRow }, (_, colIndex) => {
                     const dayNumber = colIndex * rows + rowIndex + 1;
-                    const isFilled = dayNumber <= daysPassed && dayNumber <= totalDays;
                     const shouldShow = dayNumber <= totalDays;
                     
                     if (!shouldShow) {
@@ -97,19 +116,100 @@ export default function Home() {
                         <div key={colIndex} className="w-3 h-3 md:w-4 md:h-4" />
                       );
                     }
+
+                    // 判断方块状态并设置颜色
+                    let bgColor: string;
+                    
+                    if (dayNumber < daysPassed) {
+                      bgColor = 'bg-green-500'; // 已过去 - 绿色
+                    } else if (dayNumber === daysPassed) {
+                      bgColor = 'bg-yellow-500'; // 正在过 - 黄色
+                    } else {
+                      bgColor = 'bg-white'; // 未过去 - 白色
+                    }
                     
                     return (
                       <div
                         key={colIndex}
-                        className={`w-3 h-3 md:w-4 md:h-4 rounded-sm ${
-                          isFilled ? 'bg-green-500' : 'bg-white'
-                        }`}
+                        className={`w-3 h-3 md:w-4 md:h-4 rounded-sm ${bgColor} cursor-pointer transition-all hover:scale-110`}
+                        onMouseEnter={(e) => {
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          setHoveredDay({
+                            dayNumber,
+                            x: rect.left + rect.width / 2,
+                            y: rect.top
+                          });
+                        }}
+                        onMouseLeave={() => setHoveredDay(null)}
                       />
                     );
                   })}
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* 悬停提示 */}
+          {hoveredDay && (
+            <div
+              className="fixed z-50 bg-gray-800 text-white px-3 py-2 rounded-lg shadow-lg border border-gray-600 text-sm pointer-events-none"
+              style={{
+                left: hoveredDay.x,
+                top: hoveredDay.y - 120,
+                transform: 'translateX(-50%)',
+              }}
+            >
+              {(() => {
+                const { weekNumber, dayOfWeek, monthDay } = getDateInfo(hoveredDay.dayNumber, progress.year, language);
+                const status = hoveredDay.dayNumber < daysPassed ? 'past' : 
+                             hoveredDay.dayNumber === daysPassed ? 'current' : 'future';
+                
+                const statusText = language === 'zh' 
+                  ? { past: '已过去', current: '正在过', future: '未过去' }[status]
+                  : { past: 'Past', current: 'Current', future: 'Future' }[status];
+                
+                return (
+                  <div className="text-center space-y-1">
+                    <div className="font-semibold">{monthDay}</div>
+                    <div className="text-xs text-gray-300">
+                      {language === 'zh' 
+                        ? `全年第${hoveredDay.dayNumber}天 • 第${weekNumber}周`
+                        : `Day ${hoveredDay.dayNumber} • Week ${weekNumber}`
+                      }
+                    </div>
+                    <div className="text-xs text-gray-300">{dayOfWeek}</div>
+                    <div className={`text-xs px-2 py-1 rounded ${
+                      status === 'past' ? 'bg-green-600' :
+                      status === 'current' ? 'bg-yellow-600' : 'bg-gray-600'
+                    }`}>
+                      {statusText}
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+          )}
+        </div>
+
+        {/* 颜色图例 */}
+        <div className="flex justify-center gap-6 text-sm">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-green-500 rounded-sm"></div>
+            <span className="text-gray-400">
+              {language === 'zh' ? '已过去' : 'Past'}
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-yellow-500 rounded-sm"></div>
+            <span className="text-gray-400">
+              {language === 'zh' ? '正在过' : 'Current'}
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-white rounded-sm"></div>
+            <span className="text-gray-400">
+              {language === 'zh' ? '未过去' : 'Future'}
+            </span>
           </div>
         </div>
 
