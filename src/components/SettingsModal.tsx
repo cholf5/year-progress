@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { type Theme, applyTheme, getThemeDisplayName } from '@/lib/theme';
 import { type Language, getTranslation, getLanguageDisplayName } from '@/lib/i18n';
 import { type Settings, type TwitterIcon, getSettings, saveSettings, getTwitterIconDisplayName } from '@/lib/settings';
@@ -55,7 +56,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
       // 延迟启动打开动画，确保DOM已渲染
       const timer = setTimeout(() => {
         setIsAnimating(true);
-      }, 10);
+      }, 50);  // 增加延迟到50ms
       return () => clearTimeout(timer);
     } else {
       setIsAnimating(false);
@@ -127,7 +128,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
         {/* 模态框内容 - iOS风格弹出动画 */}
         <div 
           className={`
-            relative rounded-2xl shadow-2xl max-w-md w-full
+            relative rounded-2xl shadow-2xl max-w-md w-full overflow-hidden
             text-gray-900 dark:text-white transform-gpu
             transition-all duration-350 cubic-bezier(0.25, 0.46, 0.45, 0.94)
             ${isAnimating 
@@ -140,7 +141,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
           }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* 内容容器 - 移除滚动以防止与下拉框冲突 */}
+          {/* 内容容器 */}
           <div>
           {/* 头部 */}
           <div className="flex items-center justify-between p-6 border-b" 
@@ -245,13 +246,13 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
                 {/* 下拉选项 */}
                 {isLanguageDropdownOpen && (
                   <div 
-                    className="absolute z-50 w-full mt-1 rounded-xl border overflow-hidden transition-all duration-200 ease-out transform origin-top"
+                    className="absolute z-[9999] w-full mt-1 rounded-xl border overflow-hidden transition-all duration-200 ease-out transform origin-top"
                     style={{
                       backgroundColor: isDark ? '#1f2937' : '#ffffff',
                       borderColor: isDark ? '#374151' : '#e5e7eb',
                       boxShadow: !isDark 
-                        ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
-                        : '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
+                        ? '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                        : '0 10px 25px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.25)',
                       animation: 'dropdownSlideIn 0.2s ease-out forwards',
                       maxHeight: '352px' // 8个选项 × 44px = 352px
                     }}
