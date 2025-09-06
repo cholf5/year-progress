@@ -484,3 +484,40 @@ html {
     filter: blur(4px);
   }
 }
+
+/* Switch开关动画 */
+@keyframes switchToggle {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(3px) scale(1.1);
+  }
+  100% {
+    transform: translateX(28px);
+  }
+}
+
+/* 图标预览动画 */
+@keyframes iconFade {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 主题卡片悬浮动画 */
+@keyframes cardHover {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+  100% {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+}
