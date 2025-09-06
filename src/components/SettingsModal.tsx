@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { type Theme, applyTheme, getThemeDisplayName } from '@/lib/theme';
 import { type Language, getTranslation, getLanguageDisplayName } from '@/lib/i18n';
 import { type Settings, type TwitterIcon, getSettings, saveSettings, getTwitterIconDisplayName } from '@/lib/settings';
@@ -17,6 +17,36 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
   const [settings, setSettings] = useState<Settings>(getSettings());
   const [isAnimating, setIsAnimating] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const languages = ['en', 'zh', 'es', 'fr', 'de', 'ja', 'ko', 'pt', 'ru', 'ar', 'hi', 'it', 'nl', 'tr', 'sv', 'pl', 'da', 'no', 'fi'];
+
+  // 获取语言显示名称
+  const getLanguageDisplayName = (lang: string): string => {
+    const names: Record<string, string> = {
+      'en': 'English',
+      'zh': '中文',
+      'es': 'Español', 
+      'fr': 'Français',
+      'de': 'Deutsch',
+      'ja': '日本語',
+      'ko': '한국어',
+      'pt': 'Português',
+      'ru': 'Русский',
+      'ar': 'العربية',
+      'hi': 'हिन्दी',
+      'it': 'Italiano',
+      'nl': 'Nederlands',
+      'tr': 'Türkçe',
+      'sv': 'Svenska',
+      'pl': 'Polski',
+      'da': 'Dansk',
+      'no': 'Norsk',
+      'fi': 'Suomi'
+    };
+    return names[lang] || lang;
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -36,6 +66,20 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
+
+  // 处理点击外部关闭下拉框
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsLanguageDropdownOpen(false);
+      }
+    }
+
+    if (isLanguageDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isLanguageDropdownOpen]);
 
   const handleThemeChange = (theme: Theme) => {
     const newSettings = { ...settings, theme };
@@ -83,7 +127,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
         {/* 模态框内容 - iOS风格弹出动画 */}
         <div 
           className={`
-            relative rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-hidden
+            relative rounded-2xl shadow-2xl max-w-md w-full
             text-gray-900 dark:text-white transform-gpu
             transition-all duration-350 cubic-bezier(0.25, 0.46, 0.45, 0.94)
             ${isAnimating 
@@ -96,8 +140,8 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
           }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* 内容滚动容器 */}
-          <div className="max-h-[80vh] overflow-y-auto">
+          {/* 内容容器 - 移除滚动以防止与下拉框冲突 */}
+          <div>
           {/* 头部 */}
           <div className="flex items-center justify-between p-6 border-b" 
                style={{borderColor: borderColor}}>
@@ -128,18 +172,19 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
                     onClick={() => handleThemeChange(theme)}
                     className={`
                       p-3 rounded-xl border-2 transition-all duration-200 hover:scale-105
-                      ${settings.theme === theme
-                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-500/20 dark:border-blue-400 shadow-md' 
-                        : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
-                      }
                     `}
                     style={{
                       backgroundColor: settings.theme === theme 
-                        ? (isDark ? 'rgba(59, 130, 246, 0.2)' : '#eff6ff')
-                        : (isDark ? '#1f2937' : '#ffffff'),
+                        ? (isDark ? '#2563eb' : '#eff6ff')  // 深色模式：非常明显的蓝色，浅色模式：浅蓝
+                        : (isDark ? '#1f2937' : '#ffffff'),  // 深色模式：深灰色，浅色模式：白色
                       borderColor: settings.theme === theme
-                        ? (isDark ? '#60a5fa' : '#3b82f6')
-                        : (isDark ? '#4b5563' : '#e5e7eb')
+                        ? (isDark ? '#60a5fa' : '#3b82f6')   // 选中：深色模式亮蓝边框，浅色模式蓝色边框
+                        : (isDark ? '#374151' : '#e5e7eb'),  // 未选中：深色模式中灰边框，浅色模式浅灰边框
+                      boxShadow: settings.theme === theme && isDark 
+                        ? '0 0 0 1px #3b82f6, 0 4px 6px -1px rgba(59, 130, 246, 0.3)' 
+                        : !isDark 
+                        ? '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'  // 浅色模式：立体阴影
+                        : undefined
                     }}
                   >
                     {/* 主题图标 */}
@@ -173,29 +218,66 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
               <label className="block text-sm font-medium mb-4" style={{color: isDark ? '#e5e7eb' : '#111827'}}>
                 {t('language')}
               </label>
-              <div className="relative max-w-48">
-                <select
-                  value={settings.language}
-                  onChange={(e) => handleLanguageChange(e.target.value as Language)}
-                  className="w-full px-4 py-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none cursor-pointer"
+              <div className="relative max-w-48" ref={dropdownRef}>
+                <button
+                  onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+                  className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 cursor-pointer text-left flex items-center justify-between"
                   style={{
-                    backgroundColor: isDark ? '#374151' : '#ffffff',
-                    borderColor: isDark ? '#4b5563' : '#d1d5db',
-                    color: isDark ? '#ffffff' : '#111827'
+                    backgroundColor: isDark ? '#1f2937' : '#ffffff',
+                    borderColor: isDark ? '#374151' : '#e5e7eb',
+                    color: isDark ? '#ffffff' : '#111827',
+                    boxShadow: !isDark 
+                      ? '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+                      : undefined
                   }}
                 >
-                  {['en', 'zh', 'es', 'fr', 'de', 'ja', 'ko', 'pt', 'ru', 'ar', 'hi', 'it', 'nl', 'tr', 'sv', 'pl', 'da', 'no', 'fi'].map((lang) => (
-                    <option key={lang} value={lang}>
-                      {getLanguageDisplayName(lang as Language)}
-                    </option>
-                  ))}
-                </select>
-                {/* 自定义下拉箭头 */}
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <span>{getLanguageDisplayName(settings.language)}</span>
+                  <svg 
+                    className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isLanguageDropdownOpen ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
-                </div>
+                </button>
+                
+                {/* 下拉选项 */}
+                {isLanguageDropdownOpen && (
+                  <div 
+                    className="absolute z-50 w-full mt-1 rounded-xl border overflow-hidden transition-all duration-200 ease-out transform origin-top"
+                    style={{
+                      backgroundColor: isDark ? '#1f2937' : '#ffffff',
+                      borderColor: isDark ? '#374151' : '#e5e7eb',
+                      boxShadow: !isDark 
+                        ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                        : '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
+                      animation: 'dropdownSlideIn 0.2s ease-out forwards',
+                      maxHeight: '352px' // 8个选项 × 44px = 352px
+                    }}
+                  >
+                    <div className="overflow-y-auto scrollbar-thin" style={{ maxHeight: '352px' }}>
+                      {languages.map((lang) => (
+                        <button
+                          key={lang}
+                          onClick={() => {
+                            handleLanguageChange(lang as Language);
+                            setIsLanguageDropdownOpen(false);
+                          }}
+                          className={`w-full px-4 py-2.5 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150 ${
+                            settings.language === lang ? 'bg-blue-50 dark:bg-blue-900/30' : ''
+                          }`}
+                          style={{
+                            color: isDark ? '#ffffff' : '#111827',
+                            minHeight: '44px'  // 确保每个选项有足够高度
+                          }}
+                        >
+                          {getLanguageDisplayName(lang)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -207,8 +289,11 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
               <div 
                 className="flex items-center justify-center p-5 rounded-xl border"
                 style={{
-                  backgroundColor: isDark ? '#374151' : '#f9fafb',
-                  borderColor: isDark ? '#4b5563' : '#e5e7eb'
+                  backgroundColor: isDark ? '#1f2937' : '#ffffff',  // 深色模式：深灰蓝背景，浅色模式：纯白
+                  borderColor: isDark ? '#374151' : '#e5e7eb',      // 深色模式：中灰边框，浅色模式：浅灰
+                  boxShadow: !isDark 
+                    ? '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'  // 浅色模式：立体阴影
+                    : undefined
                 }}
               >
                 <div className="flex items-center space-x-6">
@@ -220,7 +305,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
                     onClick={() => handleTwitterIconChange('bird')}
                     style={{
                       backgroundColor: settings.twitterIcon === 'bird' 
-                        ? (isDark ? '#1e3a8a' : '#dbeafe')
+                        ? (isDark ? '#1e40af' : '#dbeafe')  // 深色模式：更鲜艳的蓝色
                         : 'transparent'
                     }}
                   >
@@ -236,13 +321,14 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
                       className="relative inline-flex h-5 w-10 items-center rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
                       style={{
                         backgroundColor: settings.twitterIcon === 'x' 
-                          ? (isDark ? '#4b5563' : '#374151')
-                          : '#3b82f6'
+                          ? (isDark ? '#6b7280' : '#374151')  // 深色模式：更亮的灰色，浅色模式：深灰
+                          : '#3b82f6'  // Twitter选中时：蓝色
                       }}
                     >
                       <span
-                        className="inline-block h-4 w-4 transform rounded-full bg-white shadow-md transition-all duration-300 ease-in-out"
+                        className="inline-block h-4 w-4 transform rounded-full shadow-md transition-all duration-300 ease-in-out"
                         style={{
+                          backgroundColor: isDark ? '#f9fafb' : '#ffffff',  // 深色模式：浅灰白色滑块，浅色模式：纯白
                           transform: settings.twitterIcon === 'x' ? 'translateX(22px)' : 'translateX(2px)'
                         }}
                       />
