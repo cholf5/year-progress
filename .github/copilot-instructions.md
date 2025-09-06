@@ -151,7 +151,7 @@ const updateDropdownPosition = () => {
 - **robots.txt generation**: Next.js 15 MetadataRoute.Robots with crawl rules and sitemap reference
 - **sitemap.xml generation**: Automatic sitemap with all 18 languages and yearly variations
 - **PWA manifest**: Complete manifest.webmanifest for app installation support
-- **Production domain**: `https://yearprogress.org` (centralized in `src/lib/utils/baseUrl.ts`)
+- **Production domain**: `https://www.yearprogress.org` (centralized in `src/lib/utils/baseUrl.ts`)
 
 #### Dynamic Domain Management (`src/lib/utils/baseUrl.ts`)
 - **DRY principle**: Single `PRODUCTION_URL` constant to avoid duplication
@@ -286,7 +286,7 @@ const portalDropdown = document.getElementById('language-dropdown-portal');
 ### SEO Configuration Pattern
 ```typescript
 // ✅ CORRECT: Centralized domain management
-const PRODUCTION_URL = 'https://yearprogress.org' // Single source of truth
+const PRODUCTION_URL = 'https://www.yearprogress.org' // Single source of truth
 
 export async function robots(): Promise<MetadataRoute.Robots> {
   const baseUrl = await getBaseUrlAsync() // Dynamic detection
@@ -300,7 +300,7 @@ export async function robots(): Promise<MetadataRoute.Robots> {
 
 ### Environment-Specific Domain Logic
 - **Development**: Use `localhost:3000` for local testing
-- **Production**: Always use `https://yearprogress.org`
+- **Production**: Always use `https://www.yearprogress.org`
 - **Vercel Preview**: Redirect to production domain for SEO consistency  
 - **Custom domains**: Support via `NEXT_PUBLIC_SITE_URL` environment variable
 - **Error handling**: Fallback to production domain if headers unavailable during build

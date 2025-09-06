@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 
 const BASE_URL = 'http://localhost:3000';
-const PRODUCTION_URL = 'https://yearprogress.org';
+const PRODUCTION_URL = 'https://www.yearprogress.org';
 
 console.log('🔍 开始 SEO 配置验证...\n');
 

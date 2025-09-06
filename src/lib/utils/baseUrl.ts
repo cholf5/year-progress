@@ -4,7 +4,7 @@
  */
 
 // 生产环境域名常量
-const PRODUCTION_URL = 'https://yearprogress.org'
+const PRODUCTION_URL = 'https://www.yearprogress.org'
 
 /**
  * 获取基础 URL
@@ -36,8 +36,8 @@ export function getBaseUrl(headers?: Headers): string {
       return `${protocol}://${host}`
     }
     
-    // 生产域名
-    if (host === 'yearprogress.org') {
+    // 生产域名（支持 www 和非 www）
+    if (host === 'yearprogress.org' || host === 'www.yearprogress.org') {
       return PRODUCTION_URL
     }
     

@@ -1,19 +1,17 @@
 import { Metadata } from 'next'
-import { getSeoBaseUrl } from '../lib/utils/baseUrl'
-import YearProgressClient from '../components/YearProgressClient'
+import { getSeoBaseUrl } from '@/lib/utils/baseUrl'
 
 interface Props {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const baseUrl = getSeoBaseUrl()
-  const params = await searchParams
   
   // 获取URL参数
-  const year = params.year ? parseInt(params.year as string) : new Date().getFullYear()
-  const day = params.day ? parseInt(params.day as string) : Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 1).getTime()) / (1000 * 60 * 60 * 24)) + 1
-  const lang = (params.lang as string) || 'en'
+  const year = searchParams.year ? parseInt(searchParams.year as string) : new Date().getFullYear()
+  const day = searchParams.day ? parseInt(searchParams.day as string) : Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 1).getTime()) / (1000 * 60 * 60 * 24)) + 1
+  const lang = (searchParams.lang as string) || 'en'
   
   // 构建动态OG图片URL
   const ogImageUrl = `${baseUrl}/api/og?year=${year}&day=${day}&lang=${lang}`
@@ -43,9 +41,4 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       images: [ogImageUrl],
     },
   }
-}
-
-export default async function Page({ searchParams }: Props) {
-  const params = await searchParams
-  return <YearProgressClient searchParams={params} />
 }

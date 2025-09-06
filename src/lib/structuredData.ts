@@ -1,6 +1,6 @@
 // 生成结构化数据的工具函数
 export function generateWebApplicationSchema(language: string = 'en') {
-  const baseUrl = 'https://yearprogress.org'
+  const baseUrl = 'https://www.yearprogress.org'
   
   const descriptions = {
     en: 'Real-time yearly progress visualization. See how much of the year has passed and share beautiful progress cards.',
@@ -49,7 +49,7 @@ export function generateWebApplicationSchema(language: string = 'en') {
 }
 
 export function generateBreadcrumbSchema(language: string = 'en') {
-  const baseUrl = 'https://yearprogress.org'
+  const baseUrl = 'https://www.yearprogress.org'
   
   const homeNames = {
     en: 'Year Progress',

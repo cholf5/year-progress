@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { generateWebApplicationSchema } from "../lib/structuredData";
+import { getSeoBaseUrl } from "../lib/utils/baseUrl";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Year Progress" }],
   creator: "Year Progress",
   publisher: "Year Progress",
-  metadataBase: new URL('https://yearprogress.org'),
+  metadataBase: new URL(getSeoBaseUrl()),
   alternates: {
     canonical: '/',
     languages: {
@@ -48,6 +49,7 @@ export const metadata: Metadata = {
     }
   },
   manifest: '/manifest.webmanifest',
+  // OpenGraph 和 Twitter 卡片信息将在 page.tsx 中动态设置
   // Remove static OG images - they will be set dynamically in page component
   robots: {
     index: true,
