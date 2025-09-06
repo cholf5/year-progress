@@ -145,6 +145,42 @@ const updateDropdownPosition = () => {
 - **Language separation**: URL `lang` parameter only affects OG image, not page UI language
 - **Historical accuracy**: Past shares remain accurate even if accessed later
 
+### SEO System (`src/app/robots.ts`, `src/app/sitemap.ts`, `src/app/manifest.ts`)
+- **Dynamic domain detection**: Automatically uses correct domain based on environment
+- **Multi-environment support**: Localhost for dev, production domain for live/preview environments
+- **robots.txt generation**: Next.js 15 MetadataRoute.Robots with crawl rules and sitemap reference
+- **sitemap.xml generation**: Automatic sitemap with all 18 languages and yearly variations
+- **PWA manifest**: Complete manifest.webmanifest for app installation support
+- **Production domain**: `https://yearprogress.org` (centralized in `src/lib/utils/baseUrl.ts`)
+
+#### Dynamic Domain Management (`src/lib/utils/baseUrl.ts`)
+- **DRY principle**: Single `PRODUCTION_URL` constant to avoid duplication
+- **Environment detection**: Automatic localhost detection for development
+- **Vercel preview handling**: Preview domains redirect to production domain for SEO consistency
+- **Environment variable support**: `NEXT_PUBLIC_SITE_URL` override capability
+- **Three functions**: `getBaseUrl()`, `getBaseUrlAsync()`, `getClientBaseUrl()` for different contexts
+
+#### SEO File Structure
+```
+src/app/
+├── robots.ts          # Dynamic robots.txt generation
+├── sitemap.ts         # Multi-language sitemap with yearly variations
+├── manifest.ts        # PWA manifest for app installation
+└── layout.tsx         # Enhanced metadata with hreflang and structured data
+
+src/lib/
+├── utils/baseUrl.ts   # Centralized domain management utilities
+└── structuredData.ts  # Schema.org JSON-LD structured data generation
+```
+
+#### SEO Best Practices Implemented
+- **Structured data**: Schema.org WebApplication and BreadcrumbList markup
+- **Multi-language hreflang**: All 18 languages properly declared in metadata
+- **Crawl optimization**: Different crawl delays for different search engines
+- **Cache-friendly URLs**: Parameterized OG images prevent social media cache conflicts
+- **Mobile optimization**: PWA manifest with proper icons and display modes
+- **Environment consistency**: Preview domains use production URLs to maintain SEO integrity
+
 ## Common Gotchas & Solutions
 
 ### Tailwind CSS v4 Dark Mode Issues
@@ -174,6 +210,14 @@ const updateDropdownPosition = () => {
 - **Language handling**: URL `lang` parameter only affects OG image language, not page UI language
 - **Historical preservation**: Past shared links remain accurate indefinitely with locked parameters
 
+### SEO Configuration & Domain Management
+- **Hardcoded URLs violation**: Never hardcode production URLs multiple times, use centralized constants
+- **Dynamic domain detection**: robots.txt and sitemap.xml must adapt to current environment automatically
+- **Environment consistency**: Preview domains should redirect to production URLs for SEO integrity
+- **DRY principle**: Extract repeated URLs into constants in `src/lib/utils/baseUrl.ts`
+- **Next.js 15 SEO**: Use MetadataRoute.Robots and MetadataRoute.Sitemap for type-safe generation
+- **Async header handling**: `headers()` returns Promise in Next.js 15, use `await headers()` pattern
+
 ## Key Files to Understand
 - `src/app/page.tsx` - Main component with all state management
 - `src/app/globals.css` - Theme system CSS overrides + dropdown animations
@@ -182,6 +226,11 @@ const updateDropdownPosition = () => {
 - `src/lib/i18n.ts` - 18-language translation system
 - `src/lib/settings.ts` - Settings persistence with cookies
 - `src/app/api/og/route.tsx` - Dynamic social media card generation
+- `src/app/robots.ts` - Dynamic robots.txt with environment-specific domains
+- `src/app/sitemap.ts` - Multi-language sitemap generation
+- `src/app/manifest.ts` - PWA manifest for app installation
+- `src/lib/utils/baseUrl.ts` - Centralized domain management utilities
+- `src/lib/structuredData.ts` - Schema.org structured data generation
 
 When modifying this codebase, always consider theme compatibility, mobile responsiveness, and internationalization impact across all 18 supported languages.
 
@@ -224,3 +273,34 @@ const portalDropdown = document.querySelector('[style*="fixed"][style*="z-index:
 // ✅ CORRECT: Use specific ID for reliable detection
 const portalDropdown = document.getElementById('language-dropdown-portal');
 ```
+
+## SEO System Development Lessons
+1. **Domain Management**: Always use centralized domain utilities, never hardcode URLs multiple times
+2. **Environment Detection**: robots.txt and sitemap.xml must dynamically detect localhost vs production
+3. **Vercel Preview Handling**: Preview domains should use production URLs for consistent SEO
+4. **Next.js 15 Changes**: `headers()` is async, requires `await` for robots.ts and sitemap.ts
+5. **Type Safety**: Use MetadataRoute.Robots and MetadataRoute.Sitemap for compile-time validation
+6. **Multi-language SEO**: Include all 18 languages in hreflang and sitemap generation
+7. **DRY Violations**: Extract repeated domain strings into constants to prevent inconsistencies
+
+### SEO Configuration Pattern
+```typescript
+// ✅ CORRECT: Centralized domain management
+const PRODUCTION_URL = 'https://yearprogress.org' // Single source of truth
+
+export async function robots(): Promise<MetadataRoute.Robots> {
+  const baseUrl = await getBaseUrlAsync() // Dynamic detection
+  return {
+    rules: [...],
+    sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
+  }
+}
+```
+
+### Environment-Specific Domain Logic
+- **Development**: Use `localhost:3000` for local testing
+- **Production**: Always use `https://yearprogress.org`
+- **Vercel Preview**: Redirect to production domain for SEO consistency  
+- **Custom domains**: Support via `NEXT_PUBLIC_SITE_URL` environment variable
+- **Error handling**: Fallback to production domain if headers unavailable during build

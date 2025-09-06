@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { generateWebApplicationSchema } from "../lib/structuredData";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,16 +14,40 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Year Progress - Real-time Yearly Progress Visualization",
+  title: {
+    template: '%s | Year Progress',
+    default: "Year Progress - Real-time Yearly Progress Visualization"
+  },
   description: "Real-time yearly progress visualization. See how much of the year has passed and how much time remains. Share on social media to generate beautiful progress cards!",
-  keywords: ["year progress", "time tracking", "progress bar", "yearly progress", "time visualization", "social sharing"],
+  keywords: ["year progress", "time tracking", "progress bar", "yearly progress", "time visualization", "social sharing", "year tracker", "calendar progress", "time management", "annual progress"],
   authors: [{ name: "Year Progress" }],
   creator: "Year Progress",
   publisher: "Year Progress",
-  metadataBase: new URL('https://yearprogressbar.vercel.app'),
+  metadataBase: new URL('https://yearprogress.org'),
   alternates: {
     canonical: '/',
+    languages: {
+      'en': '/',
+      'zh': '/?lang=zh',
+      'es': '/?lang=es',
+      'ja': '/?lang=ja',
+      'de': '/?lang=de',
+      'fr': '/?lang=fr',
+      'ru': '/?lang=ru',
+      'ko': '/?lang=ko',
+      'ar': '/?lang=ar',
+      'hi': '/?lang=hi',
+      'pt': '/?lang=pt',
+      'it': '/?lang=it',
+      'tr': '/?lang=tr',
+      'vi': '/?lang=vi',
+      'th': '/?lang=th',
+      'pl': '/?lang=pl',
+      'bn': '/?lang=bn',
+      'jv': '/?lang=jv',
+    }
   },
+  manifest: '/manifest.webmanifest',
   // Remove static OG images - they will be set dynamically in page component
   robots: {
     index: true,
@@ -45,6 +70,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // 生成结构化数据
+  const structuredData = generateWebApplicationSchema('en');
+  
   return (
     <html lang="en">
       <head>
@@ -57,6 +85,14 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Year Progress" />
         <meta name="format-detection" content="telephone=no" />
+        
+        {/* 结构化数据 */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
