@@ -22,7 +22,7 @@ export async function GET(request: Request) {
       
       // Basic validation - prevent obviously invalid values
       if (isNaN(year) || isNaN(daysPassed) || 
-          year < 1900 || year > 3000 || 
+          year < 0 || year > 30000 || 
           daysPassed < 1 || daysPassed > 366) {
         throw new Error('Invalid parameters');
       }

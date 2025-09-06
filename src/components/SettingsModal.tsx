@@ -64,7 +64,12 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
 
   useEffect(() => {
     if (isOpen) {
-      setSettings(getSettings());
+      // 不要重新获取设置，使用外部传入的当前设置
+      setSettings({
+        language: currentLanguage,
+        theme: currentTheme,
+        twitterIcon: getSettings().twitterIcon // 只获取 Twitter 图标设置
+      });
       setShouldRender(true);
       // 延迟启动打开动画，确保DOM已渲染
       const timer = setTimeout(() => {
@@ -79,14 +84,23 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
       }, 350);
       return () => clearTimeout(timer);
     }
-  }, [isOpen]);
+  }, [isOpen, currentLanguage, currentTheme]);
+
+  // 同步外部传入的当前设置
+  useEffect(() => {
+    setSettings(prevSettings => ({
+      ...prevSettings,
+      language: currentLanguage,
+      theme: currentTheme
+    }));
+  }, [currentLanguage, currentTheme]);
 
   // 处理点击外部关闭下拉框
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         // 检查点击是否在Portal渲染的下拉框内
-        const portalDropdown = document.querySelector('[style*="fixed"][style*="z-index: 9999"]');
+        const portalDropdown = document.getElementById('language-dropdown-portal');
         if (!portalDropdown || !portalDropdown.contains(event.target as Node)) {
           setIsLanguageDropdownOpen(false);
         }
@@ -95,7 +109,9 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
 
     if (isLanguageDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
     }
   }, [isLanguageDropdownOpen]);
 
@@ -254,7 +270,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
                       : undefined
                   }}
                 >
-                  <span>{getLanguageDisplayName(settings.language)}</span>
+                  <span>{getLanguageDisplayName(currentLanguage)}</span>
                   <svg 
                     className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isLanguageDropdownOpen ? 'rotate-180' : ''}`} 
                     fill="none" 
@@ -354,6 +370,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
       {/* 使用Portal渲染下拉框，避免被modal的overflow-hidden裁剪 */}
       {isLanguageDropdownOpen && typeof window !== 'undefined' && createPortal(
         <div 
+          id="language-dropdown-portal"
           className="fixed z-[9999] rounded-xl border overflow-hidden transition-all duration-200 ease-out transform origin-top"
           style={{
             top: dropdownPosition.top,
@@ -367,12 +384,17 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
             animation: 'dropdownSlideIn 0.2s ease-out forwards',
             maxHeight: '352px' // 8个选项 × 44px = 352px
           }}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
           <div className="overflow-y-auto scrollbar-thin" style={{ maxHeight: '352px' }}>
             {languages.map((lang) => (
               <button
                 key={lang}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
                   handleLanguageChange(lang as Language);
                   setIsLanguageDropdownOpen(false);
                 }}

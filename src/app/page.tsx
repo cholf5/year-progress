@@ -57,14 +57,22 @@ export default function Home() {
   const getShareUrl = () => {
     if (typeof window === 'undefined') return '';
     const baseUrl = window.location.origin + window.location.pathname;
-    return baseUrl;
+    // 添加时间进度参数，确保分享时的OG图片显示正确的进度
+    return `${baseUrl}?year=${progress.year}&day=${progress.daysPassed}&lang=${language}`;
   };
 
   // 生成OG图片URL（带当前进度参数）
   const getOgImageUrl = () => {
     if (typeof window === 'undefined') return '/api/og';
     const baseUrl = window.location.origin;
-    return `${baseUrl}/api/og?year=${progress.year}&day=${progress.daysPassed}&lang=${language}`;
+    
+    // 如果URL中有lang参数（分享链接访问），优先使用它来保持OG图片的语言一致性
+    // 否则使用当前页面的语言设置
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlLang = urlParams.get('lang');
+    const ogLang = urlLang || language;
+    
+    return `${baseUrl}/api/og?year=${progress.year}&day=${progress.daysPassed}&lang=${ogLang}`;
   };
 
   // 处理设置变更
@@ -89,6 +97,51 @@ export default function Home() {
     setTheme(savedSettings.theme);
     applyTheme(savedSettings.theme);
     
+    // 检查URL参数，如果有时间参数则使用，否则使用当前时间
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const yearParam = urlParams.get('year');
+      const dayParam = urlParams.get('day');
+      
+      if (yearParam && dayParam) {
+        // 使用URL中的参数计算进度（这是分享时的固定时间）
+        const year = parseInt(yearParam);
+        const daysPassed = parseInt(dayParam);
+        
+        // 基本验证
+        if (!isNaN(year) && !isNaN(daysPassed) && 
+            year > 0 && year < 30000 && 
+            daysPassed >= 1 && daysPassed <= 366) {
+          
+          const isLeapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+          const totalDays = isLeapYear ? 366 : 365;
+          const percentage = Math.round((daysPassed / totalDays) * 100 * 100) / 100;
+          const remainingDays = totalDays - daysPassed;
+          
+          setProgress({
+            year,
+            totalDays,
+            daysPassed,
+            percentage,
+            remainingDays
+          });
+        }
+      } else {
+        // 没有URL参数，使用当前时间并设置定时更新
+        setProgress(calculateYearProgress());
+        
+        // 每小时更新一次进度（仅在没有URL参数时）
+        const interval = setInterval(() => {
+          setProgress(calculateYearProgress());
+        }, 60 * 60 * 1000);
+        
+        // 清理定时器
+        return () => {
+          clearInterval(interval);
+        };
+      }
+    }
+    
     // 更新窗口宽度
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -99,17 +152,8 @@ export default function Home() {
       setWindowWidth(window.innerWidth);
       window.addEventListener('resize', handleResize);
     }
-    
-    // 每小时更新一次进度
-    const interval = setInterval(() => {
-      setProgress(calculateYearProgress());
-    }, 60 * 60 * 1000);
-
-    // 初始化语言设置
-    setLanguage(getInitialLanguage());
 
     return () => {
-      clearInterval(interval);
       if (typeof window !== 'undefined') {
         window.removeEventListener('resize', handleResize);
       }
