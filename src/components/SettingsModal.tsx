@@ -19,6 +19,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
   const [isAnimating, setIsAnimating] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
   const dropdownRef = useRef<HTMLDivElement>(null);
 
     const languages = ['en', 'zh', 'es', 'fr', 'de', 'ja', 'ko', 'pt', 'ru', 'ar', 'hi', 'it', 'nl', 'tr', 'sv', 'pl', 'da', 'no', 'fi'];
@@ -49,6 +50,18 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
     return names[lang] || lang;
   };
 
+  // 计算下拉框位置
+  const updateDropdownPosition = () => {
+    if (dropdownRef.current) {
+      const rect = dropdownRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + 4,
+        left: rect.left,
+        width: rect.width
+      });
+    }
+  };
+
   useEffect(() => {
     if (isOpen) {
       setSettings(getSettings());
@@ -72,7 +85,11 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsLanguageDropdownOpen(false);
+        // 检查点击是否在Portal渲染的下拉框内
+        const portalDropdown = document.querySelector('[style*="fixed"][style*="z-index: 9999"]');
+        if (!portalDropdown || !portalDropdown.contains(event.target as Node)) {
+          setIsLanguageDropdownOpen(false);
+        }
       }
     }
 
@@ -221,7 +238,12 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
               </label>
               <div className="relative max-w-48" ref={dropdownRef}>
                 <button
-                  onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+                  onClick={() => {
+                    if (!isLanguageDropdownOpen) {
+                      updateDropdownPosition();
+                    }
+                    setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
+                  }}
                   className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 cursor-pointer text-left flex items-center justify-between"
                   style={{
                     backgroundColor: isDark ? '#1f2937' : '#ffffff',
@@ -243,42 +265,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
                   </svg>
                 </button>
                 
-                {/* 下拉选项 */}
-                {isLanguageDropdownOpen && (
-                  <div 
-                    className="absolute z-[9999] w-full mt-1 rounded-xl border overflow-hidden transition-all duration-200 ease-out transform origin-top"
-                    style={{
-                      backgroundColor: isDark ? '#1f2937' : '#ffffff',
-                      borderColor: isDark ? '#374151' : '#e5e7eb',
-                      boxShadow: !isDark 
-                        ? '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
-                        : '0 10px 25px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.25)',
-                      animation: 'dropdownSlideIn 0.2s ease-out forwards',
-                      maxHeight: '352px' // 8个选项 × 44px = 352px
-                    }}
-                  >
-                    <div className="overflow-y-auto scrollbar-thin" style={{ maxHeight: '352px' }}>
-                      {languages.map((lang) => (
-                        <button
-                          key={lang}
-                          onClick={() => {
-                            handleLanguageChange(lang as Language);
-                            setIsLanguageDropdownOpen(false);
-                          }}
-                          className={`w-full px-4 py-2.5 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150 ${
-                            settings.language === lang ? 'bg-blue-50 dark:bg-blue-900/30' : ''
-                          }`}
-                          style={{
-                            color: isDark ? '#ffffff' : '#111827',
-                            minHeight: '44px'  // 确保每个选项有足够高度
-                          }}
-                        >
-                          {getLanguageDisplayName(lang)}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                {/* 原来的下拉选项被移到了Portal中 */}
               </div>
             </div>
 
@@ -363,6 +350,47 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
           </div>
         </div>
       </div>
+
+      {/* 使用Portal渲染下拉框，避免被modal的overflow-hidden裁剪 */}
+      {isLanguageDropdownOpen && typeof window !== 'undefined' && createPortal(
+        <div 
+          className="fixed z-[9999] rounded-xl border overflow-hidden transition-all duration-200 ease-out transform origin-top"
+          style={{
+            top: dropdownPosition.top,
+            left: dropdownPosition.left,
+            width: dropdownPosition.width,
+            backgroundColor: isDark ? '#1f2937' : '#ffffff',
+            borderColor: isDark ? '#374151' : '#e5e7eb',
+            boxShadow: !isDark 
+              ? '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+              : '0 10px 25px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.25)',
+            animation: 'dropdownSlideIn 0.2s ease-out forwards',
+            maxHeight: '352px' // 8个选项 × 44px = 352px
+          }}
+        >
+          <div className="overflow-y-auto scrollbar-thin" style={{ maxHeight: '352px' }}>
+            {languages.map((lang) => (
+              <button
+                key={lang}
+                onClick={() => {
+                  handleLanguageChange(lang as Language);
+                  setIsLanguageDropdownOpen(false);
+                }}
+                className={`w-full px-4 py-2.5 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150 ${
+                  settings.language === lang ? 'bg-blue-50 dark:bg-blue-900/30' : ''
+                }`}
+                style={{
+                  color: isDark ? '#ffffff' : '#111827',
+                  minHeight: '44px'  // 确保每个选项有足够高度
+                }}
+              >
+                {getLanguageDisplayName(lang)}
+              </button>
+            ))}
+          </div>
+        </div>,
+        document.body
+      )}
     </>
   );
 }
