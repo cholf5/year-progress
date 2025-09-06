@@ -1,17 +1,47 @@
 import { ImageResponse } from 'next/og';
+import { translations } from '@/lib/i18n';
 
 export const runtime = 'edge';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const now = new Date();
-    const year = now.getFullYear();
-    const startOfYear = new Date(year, 0, 1);
-    // 确保与主页面逻辑一致：当前日期是第几天（从1开始）
-    const daysPassed = Math.floor((now.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+    // Parse URL parameters
+    const { searchParams } = new URL(request.url);
+    const yearParam = searchParams.get('year');
+    const dayParam = searchParams.get('day');
+    const langParam = searchParams.get('lang') || 'en';
+
+    // Validate and use parameters or fallback to current date
+    let year: number;
+    let daysPassed: number;
+    
+    if (yearParam && dayParam) {
+      // Use provided parameters
+      year = parseInt(yearParam);
+      daysPassed = parseInt(dayParam);
+      
+      // Basic validation - prevent obviously invalid values
+      if (isNaN(year) || isNaN(daysPassed) || 
+          year < 1900 || year > 3000 || 
+          daysPassed < 1 || daysPassed > 366) {
+        throw new Error('Invalid parameters');
+      }
+    } else {
+      // Fallback to current date (backward compatibility)
+      const now = new Date();
+      year = now.getFullYear();
+      const startOfYear = new Date(year, 0, 1);
+      // 确保与主页面逻辑一致：当前日期是第几天（从1开始）
+      daysPassed = Math.floor((now.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+    }
+    
     const isLeapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
     const totalDays = isLeapYear ? 366 : 365;
     const percentage = Math.round((daysPassed / totalDays) * 100 * 100) / 100;
+    
+    // Get translations for the specified language
+    const lang = langParam as keyof typeof translations;
+    const t = translations[lang] || translations.en;
     
     // Create pixel grid for progress visualization
     const squaresPerRow = 53; // Weeks in a year
@@ -50,7 +80,7 @@ export async function GET() {
               marginBottom: 20,
             }}
           >
-            {year} is {percentage}% complete.
+            {t.progressTitle.replace('{year}', year.toString()).replace('{percentage}', percentage.toString())}
           </div>
           
           <div
@@ -121,7 +151,7 @@ export async function GET() {
               marginTop: 20,
             }}
           >
-            It&apos;s week {Math.ceil(daysPassed / 7)}, day {daysPassed} of {year}.
+            It&apos;s {t.week} {Math.ceil(daysPassed / 7)}, {t.day} {daysPassed} {t.of} {year}.
           </div>
         </div>
       </div>,

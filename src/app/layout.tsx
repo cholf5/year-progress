@@ -23,29 +23,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: '/',
-    title: 'Year Progress - Real-time Yearly Progress Visualization',
-    description: 'Real-time yearly progress visualization. See how much of the year has passed and how much time remains. Share to generate beautiful progress cards!',
-    siteName: 'Year Progress',
-    images: [
-      {
-        url: '/api/og',
-        width: 1200,
-        height: 630,
-        alt: 'Year Progress - Real-time yearly progress card',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Year Progress - Real-time Yearly Progress Visualization',
-    description: 'Real-time yearly progress visualization. See how much of the year has passed and how much time remains.',
-    images: ['/api/og'],
-    creator: '@yearofprogress',
-  },
+  // Remove static OG images - they will be set dynamically in page component
   robots: {
     index: true,
     follow: true,

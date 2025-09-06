@@ -53,6 +53,20 @@ export default function Home() {
   // 从设置中获取当前值（用于新功能）
   const twitterIcon = settings.twitterIcon;
 
+  // 生成带进度参数的分享URL
+  const getShareUrl = () => {
+    if (typeof window === 'undefined') return '';
+    const baseUrl = window.location.origin + window.location.pathname;
+    return baseUrl;
+  };
+
+  // 生成OG图片URL（带当前进度参数）
+  const getOgImageUrl = () => {
+    if (typeof window === 'undefined') return '/api/og';
+    const baseUrl = window.location.origin;
+    return `${baseUrl}/api/og?year=${progress.year}&day=${progress.daysPassed}&lang=${language}`;
+  };
+
   // 处理设置变更
   const handleSettingsChange = (newSettings: Settings) => {
     setSettings(newSettings);
@@ -102,6 +116,55 @@ export default function Home() {
     };
   }, []);
 
+  // 动态更新OG meta标签
+  useEffect(() => {
+    if (!mounted || typeof window === 'undefined') return;
+
+    // 更新或创建OG meta标签
+    const updateOrCreateMeta = (property: string, content: string) => {
+      let meta = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement;
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute('property', property);
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', content);
+    };
+
+    // 更新Twitter meta标签
+    const updateOrCreateTwitterMeta = (name: string, content: string) => {
+      let meta = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement;
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute('name', name);
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', content);
+    };
+
+    const ogImageUrl = getOgImageUrl();
+    
+    // 更新OG标签
+    updateOrCreateMeta('og:type', 'website');
+    updateOrCreateMeta('og:locale', language === 'zh' ? 'zh_CN' : 'en_US');
+    updateOrCreateMeta('og:url', window.location.href);
+    updateOrCreateMeta('og:title', getTranslation(language, 'title') as string);
+    updateOrCreateMeta('og:description', getTranslation(language, 'description') as string);
+    updateOrCreateMeta('og:site_name', getTranslation(language, 'yearProgress') as string);
+    updateOrCreateMeta('og:image', ogImageUrl);
+    updateOrCreateMeta('og:image:width', '1200');
+    updateOrCreateMeta('og:image:height', '630');
+    updateOrCreateMeta('og:image:alt', (getTranslation(language, 'title') as string) + ' - Real-time yearly progress card');
+
+    // 更新Twitter标签
+    updateOrCreateTwitterMeta('twitter:card', 'summary_large_image');
+    updateOrCreateTwitterMeta('twitter:title', getTranslation(language, 'title') as string);
+    updateOrCreateTwitterMeta('twitter:description', getTranslation(language, 'description') as string);
+    updateOrCreateTwitterMeta('twitter:image', ogImageUrl);
+    updateOrCreateTwitterMeta('twitter:creator', '@yearofprogress');
+
+  }, [mounted, language, progress.year, progress.daysPassed]);
+
   // 单独的useEffect用于系统主题监听
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -133,7 +196,7 @@ export default function Home() {
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(getShareUrl());
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
     } catch (err) {
@@ -389,7 +452,7 @@ export default function Home() {
           {/* 社交媒体分享按钮 */}
           <div className="flex flex-wrap justify-center items-center gap-3">
             <TwitterShareButton
-              url={typeof window !== 'undefined' ? window.location.href : ''}
+              url={getShareUrl()}
               title={language === 'zh' 
                 ? `${progress.year}年已过去了${progress.percentage}%`
                 : `${progress.year} is ${progress.percentage}% complete.`
@@ -404,14 +467,14 @@ export default function Home() {
             </TwitterShareButton>
 
             <FacebookShareButton
-              url={typeof window !== 'undefined' ? window.location.href : ''}
+              url={getShareUrl()}
               className="hover:scale-110 transition-transform"
             >
               <FacebookIcon size={40} round />
             </FacebookShareButton>
 
             <TelegramShareButton
-              url={typeof window !== 'undefined' ? window.location.href : ''}
+              url={getShareUrl()}
               title={language === 'zh' 
                 ? `${progress.year}年已过去了${progress.percentage}% - 年度进度追踪`
                 : `${progress.year} is ${progress.percentage}% complete - Year Progress Tracker`
@@ -422,7 +485,7 @@ export default function Home() {
             </TelegramShareButton>
 
             <RedditShareButton
-              url={typeof window !== 'undefined' ? window.location.href : ''}
+              url={getShareUrl()}
               title={language === 'zh' 
                 ? `${progress.year}年已过去了${progress.percentage}% - 年度进度可视化`
                 : `${progress.year} is ${progress.percentage}% complete - Year Progress Visualization`
@@ -433,7 +496,7 @@ export default function Home() {
             </RedditShareButton>
 
             <WeiboShareButton
-              url={typeof window !== 'undefined' ? window.location.href : ''}
+              url={getShareUrl()}
               title={language === 'zh' 
                 ? `${progress.year}年已过去了${progress.percentage}% - 年度进度追踪 #年度进度 #时间管理`
                 : `${progress.year} is ${progress.percentage}% complete - Year Progress Tracker #yearProgress #timeTracking`
@@ -449,7 +512,7 @@ export default function Home() {
                 const text = language === 'zh' 
                   ? `${progress.year}年已过去了${progress.percentage}%`
                   : `${progress.year} is ${progress.percentage}% complete.`;
-                const url = typeof window !== 'undefined' ? window.location.href : '';
+                const url = getShareUrl();
                 
                 // 检测是否为移动设备
                 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -482,7 +545,7 @@ export default function Home() {
             <div className="flex justify-center">
               <div className="flex items-center gap-3 bg-gray-100 px-4 py-3 rounded-lg transition-colors duration-300 copy-container w-96">
                 <span className="text-gray-700 dark:text-gray-300 font-mono text-xs transition-colors duration-300 flex-1 text-center min-w-0">
-                  {typeof window !== 'undefined' ? window.location.href : ''}
+                  {getShareUrl()}
                 </span>
                 <button
                   onClick={copyToClipboard}
