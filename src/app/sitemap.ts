@@ -1,8 +1,8 @@
 import { MetadataRoute } from 'next'
-import { getBaseUrlAsync } from '../lib/utils/baseUrl'
+import { getSeoBaseUrl } from '../lib/utils/baseUrl'
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = await getBaseUrlAsync()
+export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = getSeoBaseUrl()
   
   // 支持的18种语言
   const languages = [

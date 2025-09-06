@@ -65,6 +65,11 @@ export async function getBaseUrlAsync(): Promise<string> {
     return process.env.NEXT_PUBLIC_SITE_URL
   }
   
+  // 在生产构建时，直接使用生产域名，不依赖 headers
+  if (process.env.NODE_ENV === 'production' && process.env.VERCEL === '1') {
+    return PRODUCTION_URL
+  }
+  
   try {
     // 尝试获取请求头信息
     const { headers } = await import('next/headers')
@@ -89,4 +94,31 @@ export function getClientBaseUrl(): string {
   
   // 客户端，使用当前 origin
   return window.location.origin
+}
+
+/**
+ * 专门用于静态 SEO 文件的域名获取（sitemap, robots）
+ * 在构建时保证使用生产域名，避免 localhost 泄露
+ * @returns 基础 URL 字符串
+ */
+export function getSeoBaseUrl(): string {
+  // 优先使用环境变量
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL
+  }
+  
+  // 在 Vercel 生产环境中，强制使用生产域名
+  if (process.env.VERCEL === '1' && process.env.NODE_ENV === 'production') {
+    return PRODUCTION_URL
+  }
+  
+  // 开发环境才允许使用 localhost
+  if (process.env.NODE_ENV === 'development') {
+    // 尝试从环境变量获取开发服务器端口
+    const port = process.env.PORT || '3000'
+    return `http://localhost:${port}`
+  }
+  
+  // 默认使用生产域名
+  return PRODUCTION_URL
 }
