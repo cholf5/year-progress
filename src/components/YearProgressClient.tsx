@@ -31,6 +31,14 @@ const isChinese = (lang: Language): boolean => {
   return lang === 'zh-cn' || lang === 'zh-tw';
 };
 
+// 辅助函数：格式化进度标题
+const formatProgressTitle = (language: Language, year: number, percentage: number): string => {
+  const template = getTranslation(language, 'progressTitle') as string;
+  return template
+    .replace('{year}', year.toString())
+    .replace('{percentage}', percentage.toString());
+};
+
 // 工具函数：获取日期信息
 const getDateInfo = (dayNumber: number, year: number, language: Language) => {
   // 从年初开始计算第 dayNumber 天（dayNumber 从 1 开始）
@@ -322,12 +330,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
       <div className="text-center space-y-4 sm:space-y-8 max-w-7xl w-full">
         {/* 标题 */}
         <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-8 px-2 leading-tight">
-          {(() => {
-            const template = t('progressTitle') as string;
-            return template
-              .replace('{year}', progress.year.toString())
-              .replace('{percentage}', progress.percentage.toString());
-          })()}
+          {formatProgressTitle(language, progress.year, progress.percentage)}
         </h1>
         
         {/* 进度网格 */}
@@ -533,10 +536,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
           <div id="social-share-buttons" className="flex flex-wrap justify-center items-center gap-3">
             <TwitterShareButton
               url={getShareUrl()}
-              title={isChinese(language) 
-                ? `${progress.year}年已过去了${progress.percentage}%`
-                : `${progress.year} is ${progress.percentage}% complete.`
-              }
+              title={formatProgressTitle(language, progress.year, progress.percentage)}
               hashtags={[...COMMON_HASHTAGS, ...getTranslation(language, 'socialHashtags') as string[]]}
               className="hover:scale-110 transition-transform social-share-button"
             >
@@ -552,10 +552,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
             <TelegramShareButton
               url={getShareUrl()}
-              title={isChinese(language) 
-                ? `${progress.year}年已过去了${progress.percentage}% - 年度进度追踪`
-                : `${progress.year} is ${progress.percentage}% complete - Year Progress Tracker`
-              }
+              title={formatProgressTitle(language, progress.year, progress.percentage)}
               className="hover:scale-110 transition-transform social-share-button"
             >
               <TelegramIcon size={40} round />
@@ -563,10 +560,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
             <RedditShareButton
               url={getShareUrl()}
-              title={isChinese(language) 
-                ? `${progress.year}年已过去了${progress.percentage}% - 年度进度可视化`
-                : `${progress.year} is ${progress.percentage}% complete - Year Progress Visualization`
-              }
+              title={formatProgressTitle(language, progress.year, progress.percentage)}
               className="hover:scale-110 transition-transform social-share-button"
             >
               <RedditIcon size={40} round />
@@ -574,10 +568,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
             <WeiboShareButton
               url={getShareUrl()}
-              title={isChinese(language) 
-                ? `${progress.year}年已过去了${progress.percentage}% - 年度进度追踪 #年度进度 #时间管理`
-                : `${progress.year} is ${progress.percentage}% complete - Year Progress Tracker #yearProgress #timeTracking`
-              }
+              title={`${formatProgressTitle(language, progress.year, progress.percentage)} ${getTranslation(language, 'socialHashtags') ? '#' + (getTranslation(language, 'socialHashtags') as string[]).join(' #') : ''}`}
               className="hover:scale-110 transition-transform social-share-button"
             >
               <WeiboIcon size={40} round />
@@ -586,9 +577,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
             {/* Instagram 分享（使用自定义按钮，因为 react-share 不直接支持 Instagram） */}
             <button
               onClick={() => {
-                const text = isChinese(language) 
-                  ? `${progress.year}年已过去了${progress.percentage}%`
-                  : `${progress.year} is ${progress.percentage}% complete.`;
+                const text = formatProgressTitle(language, progress.year, progress.percentage);
                 const url = getShareUrl();
                 
                 // 检测是否为移动设备

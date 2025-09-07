@@ -58,6 +58,31 @@ A real-time yearly progress visualization app built with Next.js 15, TypeScript,
 - **Animation consistency**: Use same timing as SettingsModal (50ms open delay, 350ms close duration)
 - **Content management**: Pass content dynamically rather than hard-coding different modal components
 
+### Social Media Sharing Internationalization
+- **Centralized text source**: Always use `progressTitle` from `i18n.ts` instead of hardcoded strings
+- **Helper function pattern**: Create `formatProgressTitle(language, year, percentage)` for consistent formatting
+- **Template replacement**: Use `getTranslation(language, 'progressTitle')` with `.replace('{year}', year).replace('{percentage}', percentage)`
+- **Platform consistency**: Apply same localized text across Twitter, Facebook, Telegram, Reddit, Weibo, Instagram
+- **Avoid hardcoded conditionals**: Replace `isChinese(language) ? '中文文本' : 'English text'` patterns with i18n system
+- **Social hashtags integration**: Use `getTranslation(language, 'socialHashtags')` for platform-specific hashtags
+
+#### Social Media Multilingual Refactoring Pattern
+```typescript
+// ❌ WRONG: Hardcoded language-specific text
+title={isChinese(language) 
+  ? `${progress.year}年已过去了${progress.percentage}%`
+  : `${progress.year} is ${progress.percentage}% complete.`
+}
+
+// ✅ CORRECT: Use centralized i18n system
+const formatProgressTitle = (language: Language, year: number, percentage: number): string => {
+  const template = getTranslation(language, 'progressTitle') as string;
+  return template.replace('{year}', year.toString()).replace('{percentage}', percentage.toString());
+};
+
+title={formatProgressTitle(language, progress.year, progress.percentage)}
+```
+
 A real-time yearly progress visualization app built with Next.js 15, TypeScript, and Tailwind CSS v4. Features 19-language internationalization, custom theme system, social sharing, and dynamic OG image generation.
 
 ## Architecture & Key Systems
@@ -237,6 +262,9 @@ const updateDropdownPosition = () => {
 - **OG image consistency**: Shared links always show progress from the moment they were shared
 - **Language separation**: URL `lang` parameter only affects OG image, not page UI language
 - **Historical accuracy**: Past shares remain accurate even if accessed later
+- **Multi-language share text**: All social media platforms use `progressTitle` from `i18n.ts` for consistent localized sharing content
+- **Centralized text formatting**: `formatProgressTitle()` helper function ensures consistent progress text across UI and social sharing
+- **Social platform support**: Twitter/X, Facebook, Telegram, Reddit, Weibo, Instagram with localized content
 
 ### SEO System (`src/app/robots.ts`, `src/app/sitemap.ts`, `src/app/manifest.ts`)
 - **Dynamic domain detection**: Automatically uses correct domain based on environment
@@ -350,8 +378,9 @@ When restructuring language codes (e.g., splitting `zh` into `zh-cn`/`zh-tw`):
 - `src/app/globals.css` - Theme system CSS overrides + centralized color management
 - `src/components/SettingsModal.tsx` - Complete settings system with Portal dropdowns
 - `src/components/InfoModal.tsx` - Generic text-display modal for About/Help content
+- `src/components/YearProgressClient.tsx` - Main UI component with social sharing implementation using `formatProgressTitle()` helper
 - `src/lib/theme.ts` - Theme utilities and localStorage integration
-- `src/lib/i18n.ts` - 18-language translation system
+- `src/lib/i18n.ts` - 19-language translation system with `progressTitle` template strings
 - `src/lib/settings.ts` - Settings persistence with cookies
 - `src/app/api/og/route.tsx` - Dynamic social media card generation
 - `src/app/robots.ts` - Dynamic robots.txt with environment-specific domains
@@ -546,3 +575,38 @@ When adding/modifying languages, these files MUST be updated:
 - `src/lib/structuredData.ts` (SEO metadata)
 
 When modifying this codebase, always consider theme compatibility, mobile responsiveness, and internationalization impact across all supported languages.
+
+## Social Media Sharing Multilingual Refactoring Experience (2025-09-07)
+
+### Problem Identified
+Social media sharing buttons were using hardcoded language-specific text instead of the centralized `progressTitle` from `i18n.ts`, creating maintenance issues and inconsistency with UI text.
+
+### Solution Implemented
+1. **Created helper function**: `formatProgressTitle(language, year, percentage)` to centralize progress title formatting
+2. **Refactored all social platforms**: Twitter, Facebook, Telegram, Reddit, Weibo, Instagram to use `formatProgressTitle()`
+3. **Eliminated hardcoded conditionals**: Replaced `isChinese(language) ? '中文文本' : 'English text'` patterns
+4. **Unified title generation**: Both UI `<h1>` and social sharing now use the same helper function
+
+### Files Modified
+- `src/components/YearProgressClient.tsx`: Added `formatProgressTitle()` helper and updated all social sharing buttons
+- `.github/copilot-instructions.md`: Documented patterns and anti-patterns for future reference
+
+### Key Lessons Learned
+1. **DRY Principle**: Never duplicate text generation logic between UI and social sharing
+2. **Template System**: Leverage existing `progressTitle` templates across all languages instead of recreating text
+3. **Helper Functions**: Create reusable formatters for consistent text generation across components
+4. **Anti-pattern Recognition**: Hardcoded language conditionals violate i18n architecture principles
+5. **Maintenance Benefits**: Centralized text changes now automatically apply to both UI and social sharing
+
+### Critical Success Pattern for Multi-Language Features
+```typescript
+// ✅ CORRECT: Centralized, reusable, maintainable
+const formatProgressTitle = (language: Language, year: number, percentage: number): string => {
+  const template = getTranslation(language, 'progressTitle') as string;
+  return template.replace('{year}', year.toString()).replace('{percentage}', percentage.toString());
+};
+
+// Use everywhere: UI titles, social sharing, OG images, etc.
+<h1>{formatProgressTitle(language, progress.year, progress.percentage)}</h1>
+<TwitterShareButton title={formatProgressTitle(language, progress.year, progress.percentage)} />
+```
