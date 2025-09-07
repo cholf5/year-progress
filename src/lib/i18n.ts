@@ -30,6 +30,7 @@ export const translations = {
     twitterIcon: 'Twitter Icon',
     close: 'Close',
     weekDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    socialHashtags: [],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'About',
@@ -83,6 +84,7 @@ We do not collect any personal information. All preferences (such as theme and l
     twitterIcon: 'Twitter 图标',
     close: '关闭',
     weekDays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+    socialHashtags: ['年度进度'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: '关于',
@@ -135,6 +137,7 @@ We do not collect any personal information. All preferences (such as theme and l
     twitterIcon: 'Twitter 圖示',
     close: '關閉',
     weekDays: ['週日', '週一', '週二', '週三', '週四', '週五', '週六'],
+    socialHashtags: ['年度進度'],
     // 版權和法律資訊
     copyright: '© {year} YearProgress.org',
     aboutSite: '關於',
@@ -187,6 +190,7 @@ We do not collect any personal information. All preferences (such as theme and l
     twitterIcon: 'Icono de Twitter',
     close: 'Cerrar',
     weekDays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    socialHashtags: ['ProgresoAnual'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'Acerca',
@@ -236,6 +240,7 @@ Este proyecto es de código abierto y está diseñado para ser un recordatorio �
     twitterIcon: 'Icône Twitter',
     close: 'Fermer',
     weekDays: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+    socialHashtags: ['ProgrèsAnnuel'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'À propos',
@@ -288,6 +293,7 @@ Ce site ne collecte aucune information personnelle. Tous les paramètres (thème
     twitterIcon: 'Twitter-Symbol',
     close: 'Schließen',
     weekDays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+    socialHashtags: ['Jahresfortschritt'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'Über',
@@ -340,6 +346,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
     twitterIcon: 'Twitter アイコン',
     close: '閉じる',
     weekDays: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+    socialHashtags: ['年間進捗'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'について',
@@ -392,6 +399,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
     twitterIcon: 'Twitter 아이콘',
     close: '닫기',
     weekDays: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+    socialHashtags: ['연간진행률'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: '소개',
@@ -444,6 +452,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
     twitterIcon: 'Ícone do Twitter',
     close: 'Fechar',
     weekDays: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+    socialHashtags: ['ProgressoAnual'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'Sobre',
@@ -496,6 +505,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     twitterIcon: 'Иконка Twitter',
     close: 'Закрыть',
     weekDays: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+    socialHashtags: ['ГодовойПрогресс'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'О сайте',
@@ -548,6 +558,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     twitterIcon: 'أيقونة تويتر',
     close: 'إغلاق',
     weekDays: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
+    socialHashtags: ['تقدمالسنة'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'حول',
@@ -600,6 +611,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     twitterIcon: 'ट्विटर आइकन',
     close: 'बंद करें',
     weekDays: ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार'],
+    socialHashtags: ['वार्षिकप्रगति'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'के बारे में',
@@ -652,6 +664,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     twitterIcon: 'Icona Twitter',
     close: 'Chiudi',
     weekDays: ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'],
+    socialHashtags: ['ProgressoAnnuale'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'Informazioni',
@@ -704,6 +717,7 @@ Questo sito non raccoglie alcuna informazione personale. Tutte le impostazioni (
     twitterIcon: 'Twitter Icoon',
     close: 'Sluiten',
     weekDays: ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'],
+    socialHashtags: ['Jaarvoortgang'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'Over',
@@ -756,6 +770,7 @@ Deze site verzamelt geen persoonlijke informatie. Alle instellingen (thema, taal
     twitterIcon: 'Twitter Simgesi',
     close: 'Kapat',
     weekDays: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+    socialHashtags: ['Yıllıkİlerleme'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'Hakkında',
@@ -808,6 +823,7 @@ Bu site hiçbir kişisel bilgi toplamaz. Tüm ayarlar (tema, dil vb.) yalnızca 
     twitterIcon: 'Twitter Ikon',
     close: 'Stäng',
     weekDays: ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'],
+    socialHashtags: ['Årsframsteg'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'Om',
@@ -860,6 +876,7 @@ Denna webbplats samlar inte in någon personlig information. Alla inställningar
     twitterIcon: 'Ikona Twitter',
     close: 'Zamknij',
     weekDays: ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'],
+    socialHashtags: ['PostępRoczny'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'O stronie',
@@ -912,6 +929,7 @@ Ta strona nie zbiera żadnych informacji osobistych. Wszystkie ustawienia (motyw
     twitterIcon: 'Twitter Ikon',
     close: 'Luk',
     weekDays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
+    socialHashtags: ['Årsfremdrift'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'Om',
@@ -964,6 +982,7 @@ Denne side indsamler ingen personlige oplysninger. Alle indstillinger (tema, spr
     twitterIcon: 'Twitter Ikon',
     close: 'Lukk',
     weekDays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
+    socialHashtags: ['Årsframgang'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'Om',
@@ -1016,6 +1035,7 @@ Denne siden samler ikke inn noen personlig informasjon. Alle innstillinger (tema
     twitterIcon: 'Twitter Ikoni',
     close: 'Sulje',
     weekDays: ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai'],
+    socialHashtags: ['Vuosiedistyminen'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
     aboutSite: 'Tietoja',

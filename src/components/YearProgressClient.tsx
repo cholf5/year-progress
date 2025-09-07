@@ -8,6 +8,10 @@ import { type Settings, type TwitterIcon as TwitterIconType, getSettings, saveSe
 import SettingsModal from '@/components/SettingsModal';
 import SettingsButton from '@/components/SettingsButton';
 import InfoModal from '@/components/InfoModal';
+
+// 三个共用的 hashtag 常量
+const COMMON_HASHTAGS = ['YearProgress', 'YearProgressOrg', 'YearProgressBar'];
+
 import {
   TwitterShareButton,
   FacebookShareButton,
@@ -533,10 +537,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
                 ? `${progress.year}年已过去了${progress.percentage}%`
                 : `${progress.year} is ${progress.percentage}% complete.`
               }
-              hashtags={isChinese(language) 
-                ? ['年度进度', '时间管理', '进度追踪']
-                : ['yearProgress', 'timeTracking', 'progressBar']
-              }
+              hashtags={[...COMMON_HASHTAGS, ...getTranslation(language, 'socialHashtags') as string[]]}
               className="hover:scale-110 transition-transform social-share-button"
             >
               {twitterIcon === 'x' ? <XIcon size={40} round /> : <TwitterIcon size={40} round />}
