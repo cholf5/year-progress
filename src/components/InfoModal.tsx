@@ -68,7 +68,7 @@ export default function InfoModal({ isOpen, onClose, title, content }: InfoModal
         <div
           className={`
             rounded-2xl shadow-2xl 
-            max-w-4xl w-full max-h-[80vh] overflow-hidden
+            max-w-2xl w-full max-h-[80vh] overflow-hidden
             transform transition-all duration-350
             ${isAnimating 
               ? 'scale-100 opacity-100' 
