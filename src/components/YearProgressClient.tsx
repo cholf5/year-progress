@@ -22,6 +22,11 @@ import {
   WeiboIcon,
 } from 'react-share';
 
+// 辅助函数：检查是否是中文（简体或繁体）
+const isChinese = (lang: Language): boolean => {
+  return lang === 'zh-cn' || lang === 'zh-tw';
+};
+
 // 工具函数：获取日期信息
 const getDateInfo = (dayNumber: number, year: number, language: Language) => {
   // 从年初开始计算第 dayNumber 天（dayNumber 从 1 开始）
@@ -33,7 +38,7 @@ const getDateInfo = (dayNumber: number, year: number, language: Language) => {
   const weekDays = getTranslation(language, 'weekDays') as string[];
   const dayOfWeek = weekDays[date.getDay()];
   
-  const monthDay = language === 'zh' 
+  const monthDay = isChinese(language) 
     ? `${date.getMonth() + 1}月${date.getDate()}日`
     : date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     
@@ -215,7 +220,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
     
     // 更新OG标签
     updateOrCreateMeta('og:type', 'website');
-    updateOrCreateMeta('og:locale', language === 'zh' ? 'zh_CN' : 'en_US');
+    updateOrCreateMeta('og:locale', language === 'zh-cn' ? 'zh_CN' : language === 'zh-tw' ? 'zh_TW' : 'en_US');
     updateOrCreateMeta('og:url', window.location.href);
     updateOrCreateMeta('og:title', getTranslation(language, 'title') as string);
     updateOrCreateMeta('og:description', getTranslation(language, 'description') as string);
@@ -461,7 +466,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
                   <div className="text-center space-y-1">
                     <div className="font-semibold">{monthDay}</div>
                     <div className="text-xs text-gray-500 dark:text-gray-300">
-                      {language === 'zh' 
+                      {isChinese(language) 
                         ? `全年第${hoveredDay.dayNumber}天 • 第${weekNumber}周`
                         : `Day ${hoveredDay.dayNumber} • Week ${weekNumber}`
                       }
@@ -505,7 +510,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
         {/* 统计信息 */}
         <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 px-2 transition-colors duration-300">
-          {language === 'zh' 
+          {isChinese(language) 
             ? `今天是${progress.year}年第${Math.ceil(daysPassed / 7)}周，第${daysPassed}天`
             : `It's ${t('week')} ${Math.ceil(daysPassed / 7)}, ${t('day')} ${daysPassed} ${t('of')} ${progress.year}.`
           }
@@ -524,11 +529,11 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
           <div className="flex flex-wrap justify-center items-center gap-3">
             <TwitterShareButton
               url={getShareUrl()}
-              title={language === 'zh' 
+              title={isChinese(language) 
                 ? `${progress.year}年已过去了${progress.percentage}%`
                 : `${progress.year} is ${progress.percentage}% complete.`
               }
-              hashtags={language === 'zh' 
+              hashtags={isChinese(language) 
                 ? ['年度进度', '时间管理', '进度追踪']
                 : ['yearProgress', 'timeTracking', 'progressBar']
               }
@@ -546,7 +551,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
             <TelegramShareButton
               url={getShareUrl()}
-              title={language === 'zh' 
+              title={isChinese(language) 
                 ? `${progress.year}年已过去了${progress.percentage}% - 年度进度追踪`
                 : `${progress.year} is ${progress.percentage}% complete - Year Progress Tracker`
               }
@@ -557,7 +562,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
             <RedditShareButton
               url={getShareUrl()}
-              title={language === 'zh' 
+              title={isChinese(language) 
                 ? `${progress.year}年已过去了${progress.percentage}% - 年度进度可视化`
                 : `${progress.year} is ${progress.percentage}% complete - Year Progress Visualization`
               }
@@ -568,7 +573,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
             <WeiboShareButton
               url={getShareUrl()}
-              title={language === 'zh' 
+              title={isChinese(language) 
                 ? `${progress.year}年已过去了${progress.percentage}% - 年度进度追踪 #年度进度 #时间管理`
                 : `${progress.year} is ${progress.percentage}% complete - Year Progress Tracker #yearProgress #timeTracking`
               }
@@ -580,7 +585,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
             {/* Instagram 分享（使用自定义按钮，因为 react-share 不直接支持 Instagram） */}
             <button
               onClick={() => {
-                const text = language === 'zh' 
+                const text = isChinese(language) 
                   ? `${progress.year}年已过去了${progress.percentage}%`
                   : `${progress.year} is ${progress.percentage}% complete.`;
                 const url = getShareUrl();
@@ -637,7 +642,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
         <div className="text-center space-y-2 text-gray-500 dark:text-gray-400 text-xs sm:text-sm px-2 transition-colors duration-300">
           <p>{t('currentDate')}: {new Date().toLocaleDateString()}</p>
           <p className="break-words">
-            {language === 'zh' 
+            {isChinese(language) 
               ? `已过去${daysPassed}天 • 剩余${totalDays - daysPassed}天`
               : `${daysPassed} ${t('daysCompleted')} • ${totalDays - daysPassed} ${t('daysRemaining')}`
             }
@@ -670,7 +675,6 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
         onClose={() => setShowInfoModal(false)}
         title={infoModalTitle}
         content={infoModalContent}
-        closeText={language === 'zh' ? '关闭' : 'Close'}
       />
     </div>
   );

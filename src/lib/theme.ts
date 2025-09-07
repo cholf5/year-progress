@@ -50,7 +50,8 @@ export const getThemeDisplayName = (theme: Theme, language: string): string => {
   const names: { [key in Theme]: { [lang: string]: string } } = {
     light: {
       en: 'Light Mode',
-      zh: '日间模式',
+      'zh-cn': '日间模式',
+      'zh-tw': '日間模式',
       es: 'Modo Claro',
       fr: 'Mode Clair',
       de: 'Heller Modus',
@@ -71,7 +72,8 @@ export const getThemeDisplayName = (theme: Theme, language: string): string => {
     },
     dark: {
       en: 'Dark Mode',
-      zh: '夜间模式',
+      'zh-cn': '夜间模式',
+      'zh-tw': '夜間模式',
       es: 'Modo Oscuro',
       fr: 'Mode Sombre',
       de: 'Dunkler Modus',
@@ -92,7 +94,8 @@ export const getThemeDisplayName = (theme: Theme, language: string): string => {
     },
     system: {
       en: 'Follow System',
-      zh: '跟随系统',
+      'zh-cn': '跟随系统',
+      'zh-tw': '跟隨系統',
       es: 'Seguir Sistema',
       fr: 'Suivre Système',
       de: 'System folgen',

@@ -23,13 +23,14 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const languages = ['en', 'zh', 'es', 'fr', 'de', 'ja', 'ko', 'pt', 'ru', 'ar', 'hi', 'it', 'nl', 'tr', 'sv', 'pl', 'da', 'no', 'fi'];
+    const languages = ['en', 'zh-cn', 'zh-tw', 'es', 'fr', 'de', 'ja', 'ko', 'pt', 'ru', 'ar', 'hi', 'it', 'nl', 'tr', 'sv', 'pl', 'da', 'no', 'fi'];
 
   // 获取语言显示名称
   const getLanguageDisplayName = (lang: string): string => {
     const names: Record<string, string> = {
       'en': 'English',
-      'zh': '中文',
+      'zh-cn': '简体中文',
+      'zh-tw': '繁體中文',
       'es': 'Español', 
       'fr': 'Français',
       'de': 'Deutsch',

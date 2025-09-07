@@ -4,7 +4,8 @@ export function generateWebApplicationSchema(language: string = 'en') {
   
   const descriptions = {
     en: 'Real-time yearly progress visualization. See how much of the year has passed and share beautiful progress cards.',
-    zh: '实时年度进度可视化。查看今年已经过去了多少时间，并分享精美的进度卡片。',
+    'zh-cn': '实时年度进度可视化。查看今年已经过去了多少时间，并分享精美的进度卡片。',
+    'zh-tw': '即時年度進度視覺化。查看今年已經過去了多少時間，並分享精美的進度卡片。',
     es: 'Visualización del progreso anual en tiempo real. Ve cuánto del año ha pasado y comparte tarjetas de progreso hermosas.',
     ja: 'リアルタイムの年次進捗可視化。今年がどれだけ過ぎたかを確認し、美しい進捗カードを共有しましょう。',
     de: 'Echtzeit-Jahresfortschritt-Visualisierung. Sehen Sie, wie viel vom Jahr vergangen ist und teilen Sie schöne Fortschrittskarten.',
@@ -13,7 +14,8 @@ export function generateWebApplicationSchema(language: string = 'en') {
   
   const names = {
     en: 'Year Progress',
-    zh: '年度进度',
+    'zh-cn': '年度进度',
+    'zh-tw': '年度進度',
     es: 'Progreso del Año',
     ja: '年次進捗',
     de: 'Jahresfortschritt',
@@ -39,7 +41,7 @@ export function generateWebApplicationSchema(language: string = 'en') {
       name: 'Year Progress',
     },
     inLanguage: [
-      'en', 'zh', 'es', 'hi', 'ar', 'pt', 'bn', 'ru', 
+      'en', 'zh-cn', 'zh-tw', 'es', 'hi', 'ar', 'pt', 'bn', 'ru', 
       'ja', 'de', 'jv', 'ko', 'fr', 'tr', 'vi', 'it', 'th', 'pl'
     ],
     keywords: 'year progress, time tracking, progress bar, yearly progress, time visualization, social sharing',
@@ -53,7 +55,8 @@ export function generateBreadcrumbSchema(language: string = 'en') {
   
   const homeNames = {
     en: 'Year Progress',
-    zh: '年度进度',
+    'zh-cn': '年度进度',
+    'zh-tw': '年度進度',
     es: 'Progreso del Año',
     ja: '年次進捗',
     de: 'Jahresfortschritt',

@@ -102,7 +102,8 @@ export const getTwitterIconDisplayName = (icon: TwitterIcon, language: string): 
   const names: { [key in TwitterIcon]: { [lang: string]: string } } = {
     x: {
       en: 'X Logo',
-      zh: 'X 标志',
+      'zh-cn': 'X 标志',
+      'zh-tw': 'X 標誌',
       es: 'Logo X',
       fr: 'Logo X',
       de: 'X Logo',
@@ -123,7 +124,8 @@ export const getTwitterIconDisplayName = (icon: TwitterIcon, language: string): 
     },
     bird: {
       en: 'Classic Bird',
-      zh: '经典蓝鸟',
+      'zh-cn': '经典蓝鸟',
+      'zh-tw': '經典藍鳥',
       es: 'Pájaro Clásico',
       fr: 'Oiseau Classique',
       de: 'Klassischer Vogel',

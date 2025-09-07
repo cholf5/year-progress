@@ -1,7 +1,10 @@
 # Year Progress - AI Coding Agent Instructions
 
 ## Project Overview
-A real-time yearly pr### Common Gotchas & Solutions
+
+A real-time yearly progress visualization app built with Next.js 15, TypeScript, and Tailwind CSS v4. Features 19-language internationalization, custom theme system, social sharing, and dynamic OG image generation.
+
+## Common Gotchas & Solutions
 
 ### Tailwind CSS v4 Dark Mode Issues
 - **Problem**: `dark:` prefixes don't work reliably
@@ -53,7 +56,9 @@ A real-time yearly pr### Common Gotchas & Solutions
 - **InfoModal pattern**: Generic text-display modal for About/Help content with consistent animation
 - **Reusable design**: Single InfoModal component handles title, content, and close button text
 - **Animation consistency**: Use same timing as SettingsModal (50ms open delay, 350ms close duration)
-- **Content management**: Pass content dynamically rather than hard-coding different modal components visualization app built with Next.js 15, TypeScript, and Tailwind CSS v4. Features 18-language internationalization, custom theme system, social sharing, and dynamic OG image generation.
+- **Content management**: Pass content dynamically rather than hard-coding different modal components
+
+A real-time yearly progress visualization app built with Next.js 15, TypeScript, and Tailwind CSS v4. Features 19-language internationalization, custom theme system, social sharing, and dynamic OG image generation.
 
 ## Architecture & Key Systems
 
@@ -65,11 +70,65 @@ A real-time yearly pr### Common Gotchas & Solutions
 - Theme state managed in main page component with system theme detection
 
 ### Internationalization (`src/lib/i18n.ts`) 
-- **18 languages** with full translation support including RTL (Arabic)
+- **19 languages** with full translation support including RTL (Arabic)
+- **Chinese variants**: `zh-cn` (Simplified) and `zh-tw` (Traditional) with proper standards
 - **Template strings** with placeholders: `'{year} is {percentage}% complete'`
-- **Browser detection** with localStorage fallback
+- **Browser detection** with localStorage fallback and migration logic
 - **Language-specific formatting** for dates, numbers, and cultural content
 - All UI text must go through `getTranslation(lang, key)` function
+
+#### Language Standards & Migration
+- **Standard codes**: Use BCP 47 language tags (`zh-cn`, `zh-tw`, not just `zh`)
+- **Migration logic**: Automatically converts legacy language codes in `getInitialLanguage()`
+- **Browser detection**: Handles full locale codes (`zh-CN`, `zh-TW`, `zh-HK`, `zh-SG`)
+- **Regional mapping**: `zh-hk` → `zh-tw`, `zh-sg` → `zh-cn` for regional preferences
+
+#### Adding New Languages - Complete Checklist
+When adding a new language (e.g., `pt-br` for Brazilian Portuguese):
+
+1. **Core Translation (`src/lib/i18n.ts`)**
+   - Add new language object to `translations` with all required keys
+   - Update `Language` type to include new code
+   - Add to `languageMap` in `detectLanguage()` function
+   - Add display name in `getLanguageDisplayName()`
+
+2. **Component Files**
+   - **SettingsModal.tsx**: Add to `languages` array and `getLanguageDisplayName()` function
+   - **YearProgressClient.tsx**: Update language-specific logic (if needed)
+   - Consider special formatting needs (RTL, date formats, number formats)
+
+3. **Library Files Updates**
+   - **theme.ts**: Add translations for theme names (`light`, `dark`, `system`)
+   - **settings.ts**: Add translations for TwitterIcon display names (`x`, `bird`)
+   - **structuredData.ts**: Add to `descriptions`, `names`, `homeNames`, and `inLanguage` array
+
+4. **SEO & Metadata**
+   - **sitemap.ts**: Language will be auto-included via `Object.keys(translations)`
+   - **layout.tsx**: Hreflang tags generated automatically
+   - **og/route.tsx**: Consider if OG image needs language-specific formatting
+   - **structuredData.ts**: Update structured data language arrays
+
+5. **Cultural Considerations**
+   - Date formatting preferences (MM/DD vs DD/MM vs YYYY-MM-DD)
+   - Number formatting (comma vs period separators)
+   - RTL support (Arabic, Hebrew) requires CSS direction changes
+   - Cultural content adaptation (holidays, cultural references)
+
+#### Language-Specific Logic Pattern
+```typescript
+// Helper function for language groups
+const isChinese = (lang: Language): boolean => {
+  return lang === 'zh-cn' || lang === 'zh-tw';
+};
+
+// Use in components for special formatting
+const formatDate = (date: Date, language: Language) => {
+  if (isChinese(language)) {
+    return `${date.getMonth() + 1}月${date.getDate()}日`;
+  }
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+};
+```
 
 ### Progress Calculation (`src/lib/yearProgress.ts`)
 - **Precise day counting** from Jan 1st, handling leap years correctly  
@@ -183,7 +242,7 @@ const updateDropdownPosition = () => {
 - **Dynamic domain detection**: Automatically uses correct domain based on environment
 - **Multi-environment support**: Localhost for dev, production domain for live/preview environments
 - **robots.txt generation**: Next.js 15 MetadataRoute.Robots with crawl rules and sitemap reference
-- **sitemap.xml generation**: Automatic sitemap with all 18 languages and yearly variations
+- **sitemap.xml generation**: Automatic sitemap with all 19 languages and yearly variations
 - **PWA manifest**: Complete manifest.webmanifest for app installation support
 - **Production domain**: `https://www.yearprogress.org` (centralized in `src/lib/utils/baseUrl.ts`)
 
@@ -209,7 +268,7 @@ src/lib/
 
 #### SEO Best Practices Implemented
 - **Structured data**: Schema.org WebApplication and BreadcrumbList markup
-- **Multi-language hreflang**: All 18 languages properly declared in metadata
+- **Multi-language hreflang**: All 19 languages properly declared in metadata
 - **Crawl optimization**: Different crawl delays for different search engines
 - **Cache-friendly URLs**: Parameterized OG images prevent social media cache conflicts
 - **Mobile optimization**: PWA manifest with proper icons and display modes
@@ -231,6 +290,40 @@ src/lib/
 - **RTL languages**: Arabic needs special text direction handling
 - **Date formatting**: Use browser's `toLocaleDateString` with locale codes
 - **Template replacement**: Handle pluralization and cultural number formats
+- **Legacy migration**: Always provide migration path for old language codes (e.g., `zh` → `zh-cn`)
+- **Regional variations**: Consider country-specific variants (`zh-hk`, `zh-sg`, `pt-br`, `en-gb`)
+- **Helper functions**: Use language group helpers like `isChinese()` instead of multiple equality checks
+- **OG locale mapping**: Map language codes to proper OpenGraph locales (`zh-cn` → `zh_CN`, `zh-tw` → `zh_TW`)
+
+#### Language Code Migration Pattern
+```typescript
+// Handle legacy settings during initialization
+export function getInitialLanguage(): Language {
+  const saved = localStorage.getItem('language');
+  
+  // Migrate legacy language codes
+  if (saved === 'zh') {
+    const migratedLang = 'zh-cn';
+    localStorage.setItem('language', migratedLang);
+    return migratedLang;
+  }
+  
+  return saved as Language || detectBrowserLanguage();
+}
+```
+
+#### Multi-Language Refactoring Checklist
+When restructuring language codes (e.g., splitting `zh` into `zh-cn`/`zh-tw`):
+
+1. **Update core translations object keys**
+2. **Add migration logic in `getInitialLanguage()`**
+3. **Update `languageMap` in `detectLanguage()`**
+4. **Update `getLanguageDisplayName()` function**
+5. **Replace direct language comparisons with helper functions**
+6. **Update all library files (theme.ts, settings.ts, structuredData.ts)**
+7. **Update component language arrays (SettingsModal, etc.)**
+8. **Test existing user settings migration**
+9. **Verify OG meta tag locale mappings**
 
 ### Mobile Responsiveness
 - **Progress grid**: Calculate square size based on viewport width
@@ -315,7 +408,7 @@ const portalDropdown = document.getElementById('language-dropdown-portal');
 3. **Vercel Preview Handling**: Preview domains should use production URLs for consistent SEO
 4. **Next.js 15 Changes**: `headers()` is async, requires `await` for robots.ts and sitemap.ts
 5. **Type Safety**: Use MetadataRoute.Robots and MetadataRoute.Sitemap for compile-time validation
-6. **Multi-language SEO**: Include all 18 languages in hreflang and sitemap generation
+6. **Multi-language SEO**: Include all 19 languages in hreflang and sitemap generation
 7. **DRY Violations**: Extract repeated domain strings into constants to prevent inconsistencies
 
 ### SEO Configuration Pattern
@@ -339,3 +432,117 @@ export async function robots(): Promise<MetadataRoute.Robots> {
 - **Vercel Preview**: Redirect to production domain for SEO consistency  
 - **Custom domains**: Support via `NEXT_PUBLIC_SITE_URL` environment variable
 - **Error handling**: Fallback to production domain if headers unavailable during build
+
+## Multi-Language System Management
+
+### Language Refactoring & Migration Best Practices
+Based on the `zh` → `zh-cn`/`zh-tw` refactoring experience:
+
+#### Critical Success Patterns
+1. **Backward Compatibility First**: Never break existing user settings
+2. **Migration Logic**: Auto-migrate old language codes in `getInitialLanguage()`
+3. **Helper Functions**: Create language group helpers (`isChinese()`, `isSpanish()`) instead of multiple direct comparisons
+4. **Standard Language Codes**: Always use BCP 47 standards (`zh-cn`, `zh-tw`, `pt-br`)
+5. **Comprehensive Testing**: Test all language-dependent features after changes
+
+#### Complete Language Addition Workflow
+When adding any new language variant (e.g., `pt-br`, `es-mx`, `fr-ca`):
+
+**Phase 1: Core Translation System**
+1. Add complete translation object to `src/lib/i18n.ts`
+2. Update `Language` type definition
+3. Add to `languageMap` in `detectLanguage()` with regional mappings
+4. Update `getLanguageDisplayName()` with native language name
+
+**Phase 2: Component Integration**
+5. Update `SettingsModal.tsx` languages array and display names
+6. Add language-specific logic to `YearProgressClient.tsx` if needed
+7. Consider cultural formatting (dates, numbers, text direction)
+
+**Phase 3: Library Files Synchronization**
+8. Update `src/lib/theme.ts` theme name translations
+9. Update `src/lib/settings.ts` setting option translations
+10. Update `src/lib/structuredData.ts` descriptions, names, and language arrays
+
+**Phase 4: SEO & Metadata**
+11. Verify `src/app/sitemap.ts` auto-includes new language
+12. Check `src/app/layout.tsx` hreflang generation
+13. Test OG image generation for new language
+14. Update structured data language support
+
+**Phase 5: Cultural Adaptation**
+15. Implement region-specific date/number formatting
+16. Add RTL support if needed (Arabic, Hebrew, Persian)
+17. Consider cultural content adaptation
+18. Test browser language detection edge cases
+
+#### Language Group Management Pattern
+```typescript
+// Create language group helpers for maintainability
+const isChinese = (lang: Language): boolean => lang === 'zh-cn' || lang === 'zh-tw';
+const isPortuguese = (lang: Language): boolean => lang === 'pt' || lang === 'pt-br';
+const isSpanish = (lang: Language): boolean => lang === 'es' || lang === 'es-mx' || lang === 'es-ar';
+
+// Use in components instead of multiple equality checks
+const monthDay = isChinese(language) 
+  ? `${date.getMonth() + 1}月${date.getDate()}日`
+  : date.toLocaleDateString(language === 'pt-br' ? 'pt-BR' : 'en-US');
+```
+
+#### Migration Logic Template
+```typescript
+export function getInitialLanguage(): Language {
+  if (typeof window === 'undefined') return 'en';
+  
+  const saved = localStorage.getItem('language');
+  
+  // Handle legacy language codes with migration
+  const migrations: { [key: string]: Language } = {
+    'zh': 'zh-cn',        // Legacy Chinese → Simplified Chinese
+    'pt': 'pt-br',        // Generic Portuguese → Brazilian Portuguese  
+    'es': 'es-mx',        // Generic Spanish → Mexican Spanish
+  };
+  
+  if (saved && migrations[saved]) {
+    const migratedLang = migrations[saved];
+    localStorage.setItem('language', migratedLang);
+    return migratedLang;
+  }
+  
+  if (saved && (Object.keys(translations) as Language[]).includes(saved as Language)) {
+    return saved as Language;
+  }
+  
+  return detectBrowserLanguage();
+}
+```
+
+#### Regional Language Detection
+```typescript
+export function detectLanguage(browserLang: string): Language {
+  const fullLangCode = browserLang.toLowerCase();
+  const baseLangCode = browserLang.split('-')[0].toLowerCase();
+  
+  // Regional mappings for better UX
+  const regionalMappings: { [key: string]: Language } = {
+    'zh-cn': 'zh-cn', 'zh-hans': 'zh-cn', 'zh-sg': 'zh-cn',
+    'zh-tw': 'zh-tw', 'zh-hant': 'zh-tw', 'zh-hk': 'zh-tw', 'zh-mo': 'zh-tw',
+    'pt-br': 'pt-br', 'pt-pt': 'pt',
+    'es-mx': 'es-mx', 'es-ar': 'es-ar', 'es-es': 'es',
+  };
+  
+  // Check full locale first, then base language
+  return regionalMappings[fullLangCode] || regionalMappings[baseLangCode] || 'en';
+}
+```
+
+### Critical Files for Multi-Language Changes
+When adding/modifying languages, these files MUST be updated:
+- `src/lib/i18n.ts` (core translations)
+- `src/components/SettingsModal.tsx` (UI language selector)  
+- `src/components/YearProgressClient.tsx` (language-specific logic)
+- `src/lib/theme.ts` (theme name translations)
+- `src/lib/settings.ts` (setting translations)
+- `src/lib/structuredData.ts` (SEO metadata)
+
+When modifying this codebase, always consider theme compatibility, mobile responsiveness, and internationalization impact across all supported languages.

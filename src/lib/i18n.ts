@@ -52,7 +52,7 @@ Data Policy:
 We do not collect any personal information. All preferences (such as theme and language) are stored locally on your device.
 `,
   },
-  zh: {
+  'zh-cn': {
     title: '年度进度',
     description: '实时展示年度进度，看看今年过去了多少，还剩多少时间。',
     yearProgress: '年度进度',
@@ -103,6 +103,58 @@ We do not collect any personal information. All preferences (such as theme and l
 
 数据说明：
 本站不收集任何个人信息，所有设置（主题、语言等）仅存储在您的设备上。`,
+  },
+  'zh-tw': {
+    title: '年度進度',
+    description: '即時展示年度進度，看看今年過去了多少，還剩多少時間。',
+    yearProgress: '年度進度',
+    complete: '已完成',
+    progressTitle: '{year}年已過去了{percentage}%',
+    week: '第',
+    day: '第',
+    of: '',
+    daysCompleted: '天已過去',
+    daysRemaining: '天剩餘',
+    shareInstructions: '在 X (Twitter) 上分享此連結，即可生成漂亮的進度卡片！',
+    currentDate: '當前日期',
+    timeWaits: '時間不等人，珍惜每一天！',
+    shareUrl: '分享連結',
+    copyLink: '複製連結',
+    linkCopied: '連結已複製到剪貼簿！',
+    past: '過去',
+    current: '現在',
+    future: '將來',
+    shareToSocialMedia: '分享到社交媒體',
+    clickToShare: '點擊下方按鈕分享到社交媒體，生成漂亮的進度卡片！',
+    orCopyLink: '或複製連結分享',
+    copy: '複製',
+    copied: '已複製!',
+    settings: '設定',
+    theme: '主題',
+    language: '語言',
+    twitterIcon: 'Twitter 圖示',
+    close: '關閉',
+    weekDays: ['週日', '週一', '週二', '週三', '週四', '週五', '週六'],
+    // 版權和法律資訊
+    copyright: '© {year} YearProgress.org',
+    aboutSite: '關於',
+    privacyPolicy: '隱私政策',
+    termsOfService: '使用條款',
+    // 關於本站內容
+    aboutSiteTitle: '關於 YearProgress.org',
+    aboutSiteContent: `本站是一個簡潔而優雅的視覺化工具，用來展示當前年度已經過去的時間。我們的目標是幫助人們更直觀地感受時間的流逝，並更好地珍惜和利用每一天。
+
+主要功能：
+• 即時計算年度進度
+• 以美觀網格直觀呈現已過去的天數
+• 支援 18 種語言與多種主題
+• 一鍵分享，自動生成精美進度卡片
+• 簡潔、無干擾的介面設計
+
+無論是反思過往成就、規劃未來目標，還是單純好奇一年已走過多少，這個工具都能為您提供清晰而獨特的時間視角。
+
+資料說明：
+本站不收集任何個人資訊，所有設定（主題、語言等）僅儲存在您的裝置上。`,
   },
   es: {
     title: 'Progreso del Año',
@@ -997,9 +1049,17 @@ export function getInitialLanguage(): Language {
   if (typeof window === 'undefined') return 'en';
   
   // 首先检查本地存储
-  const saved = localStorage.getItem('language') as Language;
-  if (saved && (Object.keys(translations) as Language[]).includes(saved)) {
-    return saved;
+  const saved = localStorage.getItem('language');
+  
+  // 处理旧版本的 'zh' 设置，迁移为 'zh-cn'
+  if (saved === 'zh') {
+    const migratedLang = 'zh-cn';
+    localStorage.setItem('language', migratedLang);
+    return migratedLang;
+  }
+  
+  if (saved && (Object.keys(translations) as Language[]).includes(saved as Language)) {
+    return saved as Language;
   }
   
   // 如果没有保存的语言，检查浏览器语言
@@ -1015,10 +1075,15 @@ export function saveLanguage(language: Language) {
 
 export function detectLanguage(browserLang: string): Language {
   const langCode = browserLang.split('-')[0].toLowerCase();
+  const fullLangCode = browserLang.toLowerCase();
   
   // 支持的语言映射
   const languageMap: { [key: string]: Language } = {
-    'zh': 'zh',
+    'zh': 'zh-cn', // 浏览器语言代码 zh 映射到 zh-cn
+    'zh-cn': 'zh-cn',
+    'zh-tw': 'zh-tw',
+    'zh-hk': 'zh-tw', // 香港使用繁体中文
+    'zh-sg': 'zh-cn', // 新加坡使用简体中文
     'es': 'es',
     'fr': 'fr',
     'de': 'de',
@@ -1038,13 +1103,20 @@ export function detectLanguage(browserLang: string): Language {
     'fi': 'fi',
   };
 
+  // 先检查完整的语言代码（如 zh-tw, zh-cn）
+  if (languageMap[fullLangCode]) {
+    return languageMap[fullLangCode];
+  }
+
+  // 再检查基本语言代码（如 zh）
   return languageMap[langCode] || 'en';
 }
 
 export function getLanguageDisplayName(lang: Language): string {
   const displayNames: { [K in Language]: string } = {
     en: 'English',
-    zh: '中文',
+    'zh-cn': '简体中文',
+    'zh-tw': '繁體中文',
     es: 'Español',
     fr: 'Français',
     de: 'Deutsch',
