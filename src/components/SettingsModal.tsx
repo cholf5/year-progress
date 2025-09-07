@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import { type Theme, applyTheme, getThemeDisplayName } from '@/lib/theme';
 import { type Language, getTranslation, getLanguageDisplayName } from '@/lib/i18n';
 import { type Settings, type TwitterIcon, getSettings, saveSettings, getTwitterIconDisplayName } from '@/lib/settings';
+import CloseButton from './CloseButton';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -182,14 +183,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
             <h2 className="text-xl font-semibold" style={{color: isDark ? '#ffffff' : '#111827'}}>
               {t('settings')}
             </h2>
-            <button
-              onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-all duration-200 hover:scale-110 hover:rotate-90 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+            <CloseButton onClick={onClose} />
           </div>
 
           {/* 设置内容 */}

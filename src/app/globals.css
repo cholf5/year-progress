@@ -65,6 +65,22 @@
   color: #d1d5db !important;
 }
 
+.dark .text-gray-200,
+.dark .text-gray-600.dark\:text-gray-200 {
+  color: #f9fafb !important;
+}
+
+/* InfoModal 文本颜色 */
+:root {
+  --modal-text-color: #374151;
+  --modal-bg-color: #ffffff;
+}
+
+.dark {
+  --modal-text-color: #e5e7eb;
+  --modal-bg-color: #101828;
+}
+
 .dark .text-gray-700,
 .dark .text-gray-300 {
   color: #e5e7eb !important;
