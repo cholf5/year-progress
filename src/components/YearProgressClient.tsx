@@ -480,9 +480,9 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-300">{dayOfWeek}</div>
                     <div className={`text-xs px-2 py-1 rounded ${
-                      status === 'past' ? 'bg-emerald-100 dark:bg-emerald-600 text-emerald-800 dark:text-emerald-100' :
-                      status === 'current' ? 'bg-yellow-100 dark:bg-yellow-600 text-yellow-800 dark:text-yellow-100' : 
-                      'bg-gray-100 dark:bg-gray-600 text-gray-800 dark:text-gray-100'
+                      status === 'past' ? 'bg-emerald-500 dark:bg-emerald-400 text-white shadow-md border border-emerald-500 dark:border-emerald-400' :
+                      status === 'current' ? 'bg-yellow-500 dark:bg-yellow-400 text-black shadow-md border border-yellow-500 dark:border-yellow-400' : 
+                      'bg-gray-300 dark:bg-gray-600 text-gray-800 shadow-md border border-gray-400 dark:border-gray-500'
                     }`}>
                       {statusText}
                     </div>
