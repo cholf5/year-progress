@@ -30,6 +30,7 @@ export const translations = {
     twitterIcon: 'Twitter Icon',
     close: 'Close',
     weekDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    weekDayStatus: "Today is week {weekNumber}, day {dayNumber} of {year}.",
     socialHashtags: [],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -84,6 +85,7 @@ We do not collect any personal information. All preferences (such as theme and l
     twitterIcon: 'Twitter 图标',
     close: '关闭',
     weekDays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+    weekDayStatus: "今天是{year}年第{weekNumber}周，第{dayNumber}天",
     socialHashtags: ['年度进度'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -137,6 +139,7 @@ We do not collect any personal information. All preferences (such as theme and l
     twitterIcon: 'Twitter 圖示',
     close: '關閉',
     weekDays: ['週日', '週一', '週二', '週三', '週四', '週五', '週六'],
+    weekDayStatus: "今天是{year}年第{weekNumber}週，第{dayNumber}天",
     socialHashtags: ['年度進度'],
     // 版權和法律資訊
     copyright: '© {year} YearProgress.org',
@@ -190,6 +193,7 @@ We do not collect any personal information. All preferences (such as theme and l
     twitterIcon: 'Icono de Twitter',
     close: 'Cerrar',
     weekDays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    weekDayStatus: "Hoy es la semana {weekNumber}, día {dayNumber} de {year}.",
     socialHashtags: ['ProgresoAnual'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -240,6 +244,7 @@ Este proyecto es de código abierto y está diseñado para ser un recordatorio �
     twitterIcon: 'Icône Twitter',
     close: 'Fermer',
     weekDays: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+    weekDayStatus: "Aujourd'hui, c'est la semaine {weekNumber}, jour {dayNumber} de {year}.",
     socialHashtags: ['ProgrèsAnnuel'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -293,6 +298,7 @@ Ce site ne collecte aucune information personnelle. Tous les paramètres (thème
     twitterIcon: 'Twitter-Symbol',
     close: 'Schließen',
     weekDays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+    weekDayStatus: "Es ist Woche {weekNumber}, Tag {dayNumber} von {year}.",
     socialHashtags: ['Jahresfortschritt'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -346,6 +352,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
     twitterIcon: 'Twitter アイコン',
     close: '閉じる',
     weekDays: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+    weekDayStatus: "今日は{year}年の第{weekNumber}週、第{dayNumber}日です。",
     socialHashtags: ['年間進捗'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -399,6 +406,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
     twitterIcon: 'Twitter 아이콘',
     close: '닫기',
     weekDays: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+    weekDayStatus: "{year}년 {weekNumber}주차, {dayNumber}일차입니다.",
     socialHashtags: ['연간진행률'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -452,6 +460,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
     twitterIcon: 'Ícone do Twitter',
     close: 'Fechar',
     weekDays: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+    weekDayStatus: "Hoje é a semana {weekNumber}, dia {dayNumber} de {year}.",
     socialHashtags: ['ProgressoAnual'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -505,6 +514,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     twitterIcon: 'Иконка Twitter',
     close: 'Закрыть',
     weekDays: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+    weekDayStatus: "Сегодня {weekNumber} неделя, {dayNumber} день {year} года.",
     socialHashtags: ['ГодовойПрогресс'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -558,6 +568,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     twitterIcon: 'أيقونة تويتر',
     close: 'إغلاق',
     weekDays: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
+    weekDayStatus: "اليوم هو الأسبوع {weekNumber}، اليوم {dayNumber} من عام {year}.",
     socialHashtags: ['تقدمالسنة'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -611,6 +622,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     twitterIcon: 'ट्विटर आइकन',
     close: 'बंद करें',
     weekDays: ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार'],
+    weekDayStatus: "आज {year} का {weekNumber}वाँ सप्ताह, {dayNumber}वाँ दिन है।",
     socialHashtags: ['वार्षिकप्रगति'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -664,6 +676,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     twitterIcon: 'Icona Twitter',
     close: 'Chiudi',
     weekDays: ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'],
+    weekDayStatus: "Oggi è la settimana {weekNumber}, giorno {dayNumber} di {year}.",
     socialHashtags: ['ProgressoAnnuale'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -717,6 +730,7 @@ Questo sito non raccoglie alcuna informazione personale. Tutte le impostazioni (
     twitterIcon: 'Twitter Icoon',
     close: 'Sluiten',
     weekDays: ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'],
+    weekDayStatus: "Vandaag is het week {weekNumber}, dag {dayNumber} van {year}.",
     socialHashtags: ['Jaarvoortgang'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -770,6 +784,7 @@ Deze site verzamelt geen persoonlijke informatie. Alle instellingen (thema, taal
     twitterIcon: 'Twitter Simgesi',
     close: 'Kapat',
     weekDays: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+    weekDayStatus: "Bugün {year} yılının {weekNumber}. haftası, {dayNumber}. günü.",
     socialHashtags: ['Yıllıkİlerleme'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -823,6 +838,7 @@ Bu site hiçbir kişisel bilgi toplamaz. Tüm ayarlar (tema, dil vb.) yalnızca 
     twitterIcon: 'Twitter Ikon',
     close: 'Stäng',
     weekDays: ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'],
+    weekDayStatus: "Idag är det vecka {weekNumber}, dag {dayNumber} av {year}.",
     socialHashtags: ['Årsframsteg'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -876,6 +892,7 @@ Denna webbplats samlar inte in någon personlig information. Alla inställningar
     twitterIcon: 'Ikona Twitter',
     close: 'Zamknij',
     weekDays: ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'],
+    weekDayStatus: "Dziś jest tydzień {weekNumber}, dzień {dayNumber} roku {year}.",
     socialHashtags: ['PostępRoczny'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -929,6 +946,7 @@ Ta strona nie zbiera żadnych informacji osobistych. Wszystkie ustawienia (motyw
     twitterIcon: 'Twitter Ikon',
     close: 'Luk',
     weekDays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
+    weekDayStatus: "I dag er det uge {weekNumber}, dag {dayNumber} af {year}.",
     socialHashtags: ['Årsfremdrift'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -982,6 +1000,7 @@ Denne side indsamler ingen personlige oplysninger. Alle indstillinger (tema, spr
     twitterIcon: 'Twitter Ikon',
     close: 'Lukk',
     weekDays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
+    weekDayStatus: "I dag er det uke {weekNumber}, dag {dayNumber} av {year}.",
     socialHashtags: ['Årsframgang'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -1035,6 +1054,7 @@ Denne siden samler ikke inn noen personlig informasjon. Alle innstillinger (tema
     twitterIcon: 'Twitter Ikoni',
     close: 'Sulje',
     weekDays: ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai'],
+    weekDayStatus: "Tänään on viikko {weekNumber}, päivä {dayNumber} vuodesta {year}.",
     socialHashtags: ['Vuosiedistyminen'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
@@ -1173,3 +1193,25 @@ export function getLanguageDisplayName(lang: Language): string {
 
   return displayNames[lang];
 }
+
+// 辅助函数：检查是否为中文语言
+const isChinese = (lang: Language): boolean => {
+  return lang === 'zh-cn' || lang === 'zh-tw';
+};
+
+// 辅助函数：格式化进度标题 (可复用于主页、OG图像和社交分享)
+export const formatProgressTitle = (language: Language, year: number, percentage: number): string => {
+  const template = getTranslation(language, 'progressTitle') as string;
+  return template
+    .replace('{year}', year.toString())
+    .replace('{percentage}', percentage.toString());
+};
+
+// 辅助函数：格式化周日信息 (可复用于主页和OG图像)
+export const formatWeekDayText = (language: Language, weekNumber: number, dayNumber: number, year: number): string => {
+  const template = getTranslation(language, 'weekDayStatus') as string;
+  return template
+    .replace('{weekNumber}', weekNumber.toString())
+    .replace('{dayNumber}', dayNumber.toString())
+    .replace('{year}', year.toString());
+};

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { calculateYearProgress } from '@/lib/yearProgress';
-import { translations, type Language, getTranslation, getInitialLanguage, saveLanguage, getLanguageDisplayName } from '@/lib/i18n';
+import { type Language, getTranslation, getInitialLanguage, saveLanguage, getLanguageDisplayName, formatProgressTitle, formatWeekDayText, translations } from '@/lib/i18n';
 import { type Theme, getInitialTheme, saveTheme, applyTheme, getThemeDisplayName, getSystemTheme, getEffectiveTheme } from '@/lib/theme';
 import { type Settings, type TwitterIcon as TwitterIconType, getSettings, saveSettings } from '@/lib/settings';
 import SettingsModal from '@/components/SettingsModal';
@@ -29,14 +29,6 @@ import {
 // 辅助函数：检查是否是中文（简体或繁体）
 const isChinese = (lang: Language): boolean => {
   return lang === 'zh-cn' || lang === 'zh-tw';
-};
-
-// 辅助函数：格式化进度标题
-const formatProgressTitle = (language: Language, year: number, percentage: number): string => {
-  const template = getTranslation(language, 'progressTitle') as string;
-  return template
-    .replace('{year}', year.toString())
-    .replace('{percentage}', percentage.toString());
 };
 
 // 工具函数：获取日期信息
@@ -517,10 +509,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
         {/* 统计信息 */}
         <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 px-2 transition-colors duration-300">
-          {isChinese(language) 
-            ? `今天是${progress.year}年第${Math.ceil(daysPassed / 7)}周，第${daysPassed}天`
-            : `It's ${t('week')} ${Math.ceil(daysPassed / 7)}, ${t('day')} ${daysPassed} ${t('of')} ${progress.year}.`
-          }
+          {formatWeekDayText(language, Math.ceil(daysPassed / 7), daysPassed, progress.year)}
         </p>
 
         {/* 分享说明 */}

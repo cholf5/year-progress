@@ -1,54 +1,7 @@
 import { ImageResponse } from 'next/og';
-import { translations } from '@/lib/i18n';
+import { type Language, formatProgressTitle, formatWeekDayText, translations } from '@/lib/i18n';
 
 export const runtime = 'edge';
-
-// Function to generate localized week/day text for OG images
-function getOgWeekDayText(lang: string, weekNumber: number, dayNumber: number, year: number): string {
-  const t = translations[lang as keyof typeof translations] || translations.en;
-  
-  // Language-specific formatting
-  switch (lang) {
-    case 'zh':
-      return `现在是第${weekNumber}周，${year}年第${dayNumber}天。`;
-    case 'ja':
-      return `第${weekNumber}週、${year}年の第${dayNumber}日です。`;
-    case 'ko':
-      return `${weekNumber}주차, ${year}년의 ${dayNumber}일입니다.`;
-    case 'ar':
-      return `إنه الأسبوع ${weekNumber}، اليوم ${dayNumber} من ${year}.`;
-    case 'hi':
-      return `यह सप्ताह ${weekNumber}, दिन ${dayNumber} का ${year} है।`;
-    case 'ru':
-      return `Это неделя ${weekNumber}, день ${dayNumber} из ${year}.`;
-    case 'de':
-      return `Es ist Woche ${weekNumber}, Tag ${dayNumber} von ${year}.`;
-    case 'fr':
-      return `C'est la semaine ${weekNumber}, jour ${dayNumber} de ${year}.`;
-    case 'es':
-      return `Es la semana ${weekNumber}, día ${dayNumber} de ${year}.`;
-    case 'pt':
-      return `É a semana ${weekNumber}, dia ${dayNumber} de ${year}.`;
-    case 'it':
-      return `È la settimana ${weekNumber}, giorno ${dayNumber} del ${year}.`;
-    case 'nl':
-      return `Het is week ${weekNumber}, dag ${dayNumber} van ${year}.`;
-    case 'tr':
-      return `${year} yılının ${weekNumber}. haftası, ${dayNumber}. günü.`;
-    case 'sv':
-      return `Det är vecka ${weekNumber}, dag ${dayNumber} av ${year}.`;
-    case 'pl':
-      return `To jest tydzień ${weekNumber}, dzień ${dayNumber} z ${year}.`;
-    case 'da':
-      return `Det er uge ${weekNumber}, dag ${dayNumber} af ${year}.`;
-    case 'no':
-      return `Det er uke ${weekNumber}, dag ${dayNumber} av ${year}.`;
-    case 'fi':
-      return `On viikko ${weekNumber}, päivä ${dayNumber} vuodesta ${year}.`;
-    default: // English and fallback
-      return `It's ${t.week} ${weekNumber}, ${t.day} ${dayNumber} ${t.of} ${year}.`;
-  }
-}
 
 export async function GET(request: Request) {
   try {
@@ -87,8 +40,9 @@ export async function GET(request: Request) {
     const percentage = Math.round((daysPassed / totalDays) * 100 * 100) / 100;
     
     // Get translations for the specified language
-    const lang = langParam as keyof typeof translations;
-    const t = translations[lang] || translations.en;
+    const lang = langParam as Language;
+    const isValidLang = Object.keys(translations).includes(lang);
+    const currentLang: Language = isValidLang ? lang : 'en';
     
     // Create pixel grid for progress visualization
     const squaresPerRow = 53; // Weeks in a year
@@ -127,7 +81,7 @@ export async function GET(request: Request) {
               marginBottom: 20,
             }}
           >
-            {t.progressTitle.replace('{year}', year.toString()).replace('{percentage}', percentage.toString())}
+            {formatProgressTitle(currentLang, year, percentage)}
           </div>
           
           <div
@@ -198,7 +152,7 @@ export async function GET(request: Request) {
               marginTop: 20,
             }}
           >
-            {getOgWeekDayText(lang, Math.ceil(daysPassed / 7), daysPassed, year)}
+            {formatWeekDayText(currentLang, Math.ceil(daysPassed / 7), daysPassed, year)}
           </div>
         </div>
       </div>,
