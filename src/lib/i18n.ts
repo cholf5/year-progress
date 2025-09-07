@@ -32,7 +32,7 @@ export const translations = {
     weekDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'About This Site',
+    aboutSite: 'About',
     privacyPolicy: 'Privacy Policy',
     termsOfService: 'Terms of Service',
     // 关于本站内容
@@ -85,7 +85,7 @@ We do not collect any personal information. All preferences (such as theme and l
     weekDays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: '关于本站',
+    aboutSite: '关于',
     privacyPolicy: '隐私政策',
     termsOfService: '使用条款',
     // 关于本站内容
@@ -137,7 +137,7 @@ We do not collect any personal information. All preferences (such as theme and l
     weekDays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'Acerca del Sitio',
+    aboutSite: 'Acerca',
     privacyPolicy: 'Política de Privacidad',
     termsOfService: 'Términos de Servicio',
     // 关于本站内容
@@ -186,7 +186,7 @@ Este proyecto es de código abierto y está diseñado para ser un recordatorio �
     weekDays: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'À propos du site',
+    aboutSite: 'À propos',
     privacyPolicy: 'Politique de confidentialité',
     termsOfService: 'Conditions d\'utilisation',
     // 关于本站内容
@@ -238,7 +238,7 @@ Ce site ne collecte aucune information personnelle. Tous les paramètres (thème
     weekDays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'Über diese Seite',
+    aboutSite: 'Über',
     privacyPolicy: 'Datenschutzerklärung',
     termsOfService: 'Nutzungsbedingungen',
     // 关于本站内容
@@ -290,7 +290,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
     weekDays: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'このサイトについて',
+    aboutSite: 'について',
     privacyPolicy: 'プライバシーポリシー',
     termsOfService: '利用規約',
     // 关于本站内容
@@ -342,7 +342,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
     weekDays: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: '사이트 소개',
+    aboutSite: '소개',
     privacyPolicy: '개인정보 처리방침',
     termsOfService: '이용약관',
     // 关于本站内容
@@ -394,7 +394,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
     weekDays: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'Sobre Este Site',
+    aboutSite: 'Sobre',
     privacyPolicy: 'Política de Privacidade',
     termsOfService: 'Termos de Serviço',
     // 关于本站内容
@@ -498,7 +498,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     weekDays: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'حول هذا الموقع',
+    aboutSite: 'حول',
     privacyPolicy: 'سياسة الخصوصية',
     termsOfService: 'شروط الخدمة',
     // 关于本站内容
@@ -550,7 +550,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     weekDays: ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'इस साइट के बारे में',
+    aboutSite: 'के बारे में',
     privacyPolicy: 'गोपनीयता नीति',
     termsOfService: 'सेवा की शर्तें',
     // 关于本站内容
@@ -602,7 +602,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     weekDays: ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'Informazioni sul sito',
+    aboutSite: 'Informazioni',
     privacyPolicy: 'Informativa sulla privacy',
     termsOfService: 'Termini di servizio',
     // 关于本站内容
@@ -654,7 +654,7 @@ Questo sito non raccoglie alcuna informazione personale. Tutte le impostazioni (
     weekDays: ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'Over deze site',
+    aboutSite: 'Over',
     privacyPolicy: 'Privacybeleid',
     termsOfService: 'Gebruiksvoorwaarden',
     // 关于本站内容
@@ -706,7 +706,7 @@ Deze site verzamelt geen persoonlijke informatie. Alle instellingen (thema, taal
     weekDays: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'Site Hakkında',
+    aboutSite: 'Hakkında',
     privacyPolicy: 'Gizlilik Politikası',
     termsOfService: 'Hizmet Koşulları',
     // 关于本站内容
@@ -758,7 +758,7 @@ Bu site hiçbir kişisel bilgi toplamaz. Tüm ayarlar (tema, dil vb.) yalnızca 
     weekDays: ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'Om denna webbplats',
+    aboutSite: 'Om',
     privacyPolicy: 'Integritetspolicy',
     termsOfService: 'Användarvillkor',
     // 关于本站内容
@@ -862,7 +862,7 @@ Ta strona nie zbiera żadnych informacji osobistych. Wszystkie ustawienia (motyw
     weekDays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'Om denne side',
+    aboutSite: 'Om',
     privacyPolicy: 'Privatlivspolitik',
     termsOfService: 'Servicevilkår',
     // 关于本站内容
@@ -914,7 +914,7 @@ Denne side indsamler ingen personlige oplysninger. Alle indstillinger (tema, spr
     weekDays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'Om denne siden',
+    aboutSite: 'Om',
     privacyPolicy: 'Personvernpolicy',
     termsOfService: 'Servicevilkår',
     // 关于本站内容
@@ -966,7 +966,7 @@ Denne siden samler ikke inn noen personlig informasjon. Alle innstillinger (tema
     weekDays: ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai'],
     // 版权和法律信息
     copyright: '© {year} YearProgress.org',
-    aboutSite: 'Tästä sivustosta',
+    aboutSite: 'Tietoja',
     privacyPolicy: 'Tietosuojaseloste',
     termsOfService: 'Käyttöehdot',
     // 关于本站内容
