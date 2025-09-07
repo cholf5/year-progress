@@ -526,7 +526,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
           </p>
           
           {/* 社交媒体分享按钮 */}
-          <div className="flex flex-wrap justify-center items-center gap-3">
+          <div id="social-share-buttons" className="flex flex-wrap justify-center items-center gap-3">
             <TwitterShareButton
               url={getShareUrl()}
               title={isChinese(language) 
@@ -537,14 +537,14 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
                 ? ['年度进度', '时间管理', '进度追踪']
                 : ['yearProgress', 'timeTracking', 'progressBar']
               }
-              className="hover:scale-110 transition-transform"
+              className="hover:scale-110 transition-transform social-share-button"
             >
               {twitterIcon === 'x' ? <XIcon size={40} round /> : <TwitterIcon size={40} round />}
             </TwitterShareButton>
 
             <FacebookShareButton
               url={getShareUrl()}
-              className="hover:scale-110 transition-transform"
+              className="hover:scale-110 transition-transform social-share-button"
             >
               <FacebookIcon size={40} round />
             </FacebookShareButton>
@@ -555,7 +555,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
                 ? `${progress.year}年已过去了${progress.percentage}% - 年度进度追踪`
                 : `${progress.year} is ${progress.percentage}% complete - Year Progress Tracker`
               }
-              className="hover:scale-110 transition-transform"
+              className="hover:scale-110 transition-transform social-share-button"
             >
               <TelegramIcon size={40} round />
             </TelegramShareButton>
@@ -566,7 +566,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
                 ? `${progress.year}年已过去了${progress.percentage}% - 年度进度可视化`
                 : `${progress.year} is ${progress.percentage}% complete - Year Progress Visualization`
               }
-              className="hover:scale-110 transition-transform"
+              className="hover:scale-110 transition-transform social-share-button"
             >
               <RedditIcon size={40} round />
             </RedditShareButton>
@@ -577,7 +577,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
                 ? `${progress.year}年已过去了${progress.percentage}% - 年度进度追踪 #年度进度 #时间管理`
                 : `${progress.year} is ${progress.percentage}% complete - Year Progress Tracker #yearProgress #timeTracking`
               }
-              className="hover:scale-110 transition-transform"
+              className="hover:scale-110 transition-transform social-share-button"
             >
               <WeiboIcon size={40} round />
             </WeiboShareButton>

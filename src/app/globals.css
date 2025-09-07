@@ -180,11 +180,23 @@
   border-color: #374151 !important;
 }
 
-.dark button:not(.footer-link):hover,
+.dark button:not(.footer-link):not(.social-share-button):hover,
 .dark .hover\:bg-gray-200:hover,
 .dark .hover\:bg-gray-700:hover {
   background-color: #374151 !important;
   color: #ffffff !important;
+}
+
+/* 社交分享按钮hover状态 - 保持透明背景 */
+.dark .social-share-button:hover,
+.dark .social-share-button button:hover {
+  background-color: transparent !important;
+}
+
+/* 基于容器ID的更精确规则：社交分享区域内的所有button元素 */
+.dark #social-share-buttons button:hover,
+.dark #social-share-buttons > *:hover {
+  background-color: transparent !important;
 }
 
 /* 排除进度小方块，防止通用hover规则影响 */
