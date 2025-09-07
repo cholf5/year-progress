@@ -19,7 +19,41 @@ A real-time yearly pr### Common Gotchas & Solutions
 - **HTML Select limitations**: No styling control, poor mobile UX, theme conflicts
 - **Custom solution**: Button trigger + Portal dropdown + position calculation
 - **Scroll handling**: 8-item height limit with custom scrollbar via CSS
-- **Click-outside logic**: Must account for Portal-rendered elements in DOM tree visualization app built with Next.js 15, TypeScript, and Tailwind CSS v4. Features 18-language internationalization, custom theme system, social sharing, and dynamic OG image generation.
+- **Click-outside logic**: Must account for Portal-rendered elements in DOM tree
+
+### Footer Design and Information Architecture
+- **Low-profile principle**: Footer should be nearly invisible, occupying minimal space without contrasting colors
+- **Information hierarchy**: Use "About This Site" link instead of displaying privacy statements directly
+- **Legal page strategy**: For simple tool sites, avoid complex privacy policies/ToS that may seem "over-formal"
+- **Optimal approach**: Single privacy statement in About page, no separate legal pages to avoid user suspicion
+- **Domain credibility**: .org domains benefit from appearing organizational rather than personal
+
+### CSS Color Management and Theme System Issues
+- **Global CSS override problems**: `globals.css` rules with `!important` can cascade unexpectedly across themes
+- **Button styling conflicts**: Global button styles in dark mode can affect light mode if not properly scoped
+- **Text color visibility**: Light mode requires darker gray colors for readability on white backgrounds
+- **CSS rule organization**: Group all color rules by theme mode, not by component, for better maintainability
+- **Critical debugging pattern**: When theme switching breaks, check for CSS rule conflicts and specificity issues
+
+#### CSS Theme Color Management Pattern
+```css
+/* ===== Centralized Color Management ===== */
+/* Light mode text colors */
+:not(.dark) .text-gray-900 { color: #111827 !important; }
+:not(.dark) .text-gray-400 { color: #4b5563 !important; }
+:not(.dark) .text-gray-500 { color: #374151 !important; }
+
+/* Dark mode text colors */
+.dark .text-gray-900 { color: #ffffff !important; }
+.dark .text-gray-400 { color: #d1d5db !important; }
+.dark .text-gray-500 { color: #d1d5db !important; }
+```
+
+### Modal Component Architecture
+- **InfoModal pattern**: Generic text-display modal for About/Help content with consistent animation
+- **Reusable design**: Single InfoModal component handles title, content, and close button text
+- **Animation consistency**: Use same timing as SettingsModal (50ms open delay, 350ms close duration)
+- **Content management**: Pass content dynamically rather than hard-coding different modal components visualization app built with Next.js 15, TypeScript, and Tailwind CSS v4. Features 18-language internationalization, custom theme system, social sharing, and dynamic OG image generation.
 
 ## Architecture & Key Systems
 
@@ -220,8 +254,9 @@ src/lib/
 
 ## Key Files to Understand
 - `src/app/page.tsx` - Main component with all state management
-- `src/app/globals.css` - Theme system CSS overrides + dropdown animations
+- `src/app/globals.css` - Theme system CSS overrides + centralized color management
 - `src/components/SettingsModal.tsx` - Complete settings system with Portal dropdowns
+- `src/components/InfoModal.tsx` - Generic text-display modal for About/Help content
 - `src/lib/theme.ts` - Theme utilities and localStorage integration
 - `src/lib/i18n.ts` - 18-language translation system
 - `src/lib/settings.ts` - Settings persistence with cookies

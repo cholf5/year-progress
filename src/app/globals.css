@@ -12,13 +12,62 @@
   color: #ffffff !important;
 }
 
-/* 主要背景和文字 */
+/* 主要背景和文字 - 确保日间和夜间模式都正确 */
+:not(.dark) .bg-white {
+  background-color: #ffffff !important;
+}
+
 .dark .bg-white {
   background-color: #000000 !important;
 }
 
+/* ===== 文字颜色统一管理 ===== */
+
+/* 日间模式文字颜色 */
+:not(.dark) .text-gray-900 {
+  color: #111827 !important; /* 确保日间模式下文字是深色 */
+}
+
+:not(.dark) .text-gray-400 {
+  color: #4b5563 !important; /* 从 #64748b 改为更深的 gray-600 */
+}
+
+:not(.dark) .text-gray-500 {
+  color: #374151 !important; /* 确保 gray-500 在日间模式下够深 */
+}
+
+:not(.dark) .text-gray-600 {
+  color: #374151 !important; /* 确保 gray-600 在日间模式下够深 */
+}
+
+:not(.dark) .text-gray-700 {
+  color: #374151 !important; /* 深灰色，在白色背景上清晰 */
+}
+
+:not(.dark) .text-gray-300 {
+  color: #6b7280 !important; /* 中等灰色，比原来的 gray-300 深 */
+}
+
+/* 夜间模式文字颜色 */
 .dark .text-gray-900 {
   color: #ffffff !important;
+}
+
+.dark .text-gray-400 {
+  color: #d1d5db !important;
+}
+
+.dark .text-gray-500 {
+  color: #d1d5db !important;
+}
+
+.dark .text-gray-600 {
+  color: #d1d5db !important;
+}
+
+.dark .text-gray-700,
+.dark .text-gray-300 {
+  color: #e5e7eb !important;
 }
 
 /* 进度网格容器 - 使用用户指定的容器背景色 */
@@ -38,10 +87,6 @@
   color: #1e293b !important;
 }
 
-:not(.dark) .text-gray-400 {
-  color: #64748b !important;
-}
-
 :not(.dark) .text-blue-400 {
   color: #2563eb !important;
 }
@@ -53,10 +98,6 @@
 /* 分享区域 - 深色模式，使用用户指定的容器背景 */
 .dark .bg-gray-900 {
   background-color: #101828 !important; /* 用户指定的容器背景 */
-}
-
-.dark .text-gray-400 {
-  color: #d1d5db !important;
 }
 
 .dark .text-blue-400 {
@@ -100,20 +141,30 @@
   background-color: #e2e8f0 !important; /* 更深的背景让白色Future方块更清晰 */
 }
 
-/* 所有文字颜色的覆盖 */
-.dark .text-gray-700,
-.dark .text-gray-300 {
-  color: #e5e7eb !important;
+/* 所有文字颜色的覆盖 - 日间模式 */
+:not(.dark) .text-gray-700 {
+  color: #374151 !important; /* 深灰色，在白色背景上清晰 */
 }
 
-/* 按钮和交互元素 - 使用用户指定的容器背景 */
-.dark button {
+:not(.dark) .text-gray-300 {
+  color: #6b7280 !important; /* 中等灰色，比原来的 gray-300 深 */
+}
+
+/* 按钮和交互元素 - 亮色模式确保正确的颜色 */
+:not(.dark) button:not(.footer-link) {
+  background-color: inherit;
+  color: inherit;
+  border-color: inherit;
+}
+
+/* 按钮和交互元素 - 使用用户指定的容器背景，但排除页脚按钮 */
+.dark button:not(.footer-link) {
   background-color: #101828 !important; /* 用户指定的容器背景 */
   color: #e5e7eb !important;
   border-color: #374151 !important;
 }
 
-.dark button:hover,
+.dark button:not(.footer-link):hover,
 .dark .hover\:bg-gray-200:hover,
 .dark .hover\:bg-gray-700:hover {
   background-color: #374151 !important;

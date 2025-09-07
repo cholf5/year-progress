@@ -7,6 +7,7 @@ import { type Theme, getInitialTheme, saveTheme, applyTheme, getThemeDisplayName
 import { type Settings, type TwitterIcon as TwitterIconType, getSettings, saveSettings } from '@/lib/settings';
 import SettingsModal from '@/components/SettingsModal';
 import SettingsButton from '@/components/SettingsButton';
+import InfoModal from '@/components/InfoModal';
 import {
   TwitterShareButton,
   FacebookShareButton,
@@ -53,6 +54,9 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
   const [hoveredDay, setHoveredDay] = useState<{dayNumber: number, x: number, y: number} | null>(null);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 375);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [infoModalTitle, setInfoModalTitle] = useState('');
+  const [infoModalContent, setInfoModalContent] = useState('');
 
   // 从设置中获取当前值（用于新功能）
   const twitterIcon = settings.twitterIcon;
@@ -89,6 +93,49 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
     if (newSettings.theme !== theme) {
       applyTheme(newSettings.theme);
     }
+  };
+
+  // 处理信息模态窗显示
+  const showInfoModalHandler = (type: 'about') => {
+    let title = '';
+    let content = '';
+    
+    switch (type) {
+      case 'about':
+        title = language === 'zh' ? '关于年度进度' : 'About Year Progress';
+        content = language === 'zh' 
+          ? `年度进度是一个简单、优雅的可视化工具，显示当前年度已经过去了多少时间。我们的目标是帮助人们获得时间流逝的视角，并充分利用每一天。
+
+主要功能：
+• 实时进度跟踪，每小时更新
+• 美观的网格可视化显示已完成的天数
+• 支持18种语言和多种主题
+• 社交媒体分享，生成动态进度卡片
+• 简洁、无干扰的界面
+
+这个项目是开源的，旨在成为时间珍贵的有用提醒。无论您是在反思成就、规划未来，还是仅仅对年度进度感到好奇，这个工具都能为我们在时间中所处的位置提供清晰的视觉透视。
+
+数据说明：
+本网站不收集任何个人信息，所有设置（主题、语言等）仅存储在您的设备上。`
+          : `Year Progress is a simple, elegant visualization tool that shows how much of the current year has passed. Our goal is to help people gain perspective on time's passage and make the most of each day.
+
+Key Features:
+• Real-time progress tracking with hourly updates
+• Beautiful grid visualization showing completed days
+• Support for 18 languages and multiple themes
+• Social media sharing with dynamic progress cards
+• Clean, distraction-free interface
+
+This project is open-source and designed to be a helpful reminder that time is precious. Whether you're reflecting on achievements, planning ahead, or simply curious about the year's progress, this tool provides a clear, visual perspective on where we stand in time.
+
+Privacy Note:
+This website does not collect any personal information. All settings (theme, language, etc.) are stored only on your device.`;
+        break;
+    }
+    
+    setInfoModalTitle(title);
+    setInfoModalContent(content);
+    setShowInfoModal(true);
   };
 
   useEffect(() => {
@@ -271,12 +318,14 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
   const daysPassed = progress.daysPassed;
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center p-3 sm:p-6 relative transition-colors duration-300">
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white flex flex-col transition-colors duration-300">
       
-      {/* 设置按钮 */}
-      <div className="absolute top-3 right-3 sm:top-6 sm:right-6">
-        <SettingsButton onClick={() => setShowSettingsModal(true)} />
-      </div>
+      {/* 主要内容区域 */}
+      <div className="flex-1 flex flex-col items-center justify-center p-3 sm:p-6 relative">
+        {/* 设置按钮 */}
+        <div className="absolute top-3 right-3 sm:top-6 sm:right-6">
+          <SettingsButton onClick={() => setShowSettingsModal(true)} />
+        </div>
 
       {/* 设置模态框 */}
       <SettingsModal
@@ -621,6 +670,34 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
           </p>
         </div>
       </div>
+      {/* 关闭主要内容区域 */}
+      </div>
+
+      {/* 低调页脚 */}
+      <footer className="py-4 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          {/* 版权信息和关于链接 */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3 text-xs">
+            <span className="text-gray-500 dark:text-gray-600">© {new Date().getFullYear()} YearProgress.org</span>
+            <span className="hidden sm:inline text-gray-500 dark:text-gray-600">•</span>
+            <button
+              onClick={() => showInfoModalHandler('about')}
+              className="footer-link text-gray-500 dark:text-gray-600 hover:text-gray-400 dark:hover:text-gray-500 underline transition-colors duration-200"
+            >
+              {language === 'zh' ? '关于本站' : 'About This Site'}
+            </button>
+          </div>
+        </div>
+      </footer>
+
+      {/* 信息模态窗 */}
+      <InfoModal
+        isOpen={showInfoModal}
+        onClose={() => setShowInfoModal(false)}
+        title={infoModalTitle}
+        content={infoModalContent}
+        closeText={language === 'zh' ? '关闭' : 'Close'}
+      />
     </div>
   );
 }

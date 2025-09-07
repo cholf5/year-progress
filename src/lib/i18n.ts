@@ -30,6 +30,96 @@ export const translations = {
     twitterIcon: 'Twitter Icon',
     close: 'Close',
     weekDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    // 版权和法律信息
+    copyright: '© {year} YearProgress.org',
+    aboutSite: 'About This Site',
+    privacyPolicy: 'Privacy Policy',
+    termsOfService: 'Terms of Service',
+    // 关于本站内容
+    aboutSiteTitle: 'About Year Progress',
+    aboutSiteContent: `Year Progress is a simple, elegant visualization tool that shows how much of the current year has passed. Our goal is to help people gain perspective on time's passage and make the most of each day.
+
+Key Features:
+• Real-time progress tracking with hourly updates
+• Beautiful grid visualization showing completed days
+• Support for 18 languages and multiple themes
+• Social media sharing with dynamic progress cards
+• Clean, distraction-free interface
+
+This project is open-source and designed to be a helpful reminder that time is precious. Whether you're reflecting on achievements, planning ahead, or simply curious about the year's progress, this tool provides a clear, visual perspective on where we stand in time.`,
+    // 隐私政策内容
+    privacyPolicyTitle: 'Privacy Policy',
+    privacyPolicyContent: `Last updated: {date}
+
+At Year Progress, we respect your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data.
+
+Information We Collect:
+• Settings Preferences: Theme settings, language preferences, and display options are stored locally in your browser using cookies and local storage
+• Usage Analytics: We may collect anonymous usage statistics to improve our service
+• No Personal Data: We do not collect, store, or process any personally identifiable information
+
+How We Use Information:
+• To remember your preferences and settings
+• To improve our service and user experience  
+• To generate anonymous usage statistics
+
+Data Storage:
+• All preference data is stored locally on your device
+• No personal information is transmitted to our servers
+• Settings are stored using browser cookies with a 365-day expiration
+
+Third-Party Services:
+• Social sharing features are provided by respective social media platforms
+• These services have their own privacy policies and terms
+
+Your Rights:
+• You can clear all stored preferences by clearing your browser's cookies
+• You can opt out of analytics by using browser privacy settings
+• You have full control over your local data
+
+Contact:
+If you have questions about this Privacy Policy, please contact us through our official channels.`,
+    // 使用条款内容
+    termsOfServiceTitle: 'Terms of Service',
+    termsOfServiceContent: `Last updated: {date}
+
+Welcome to Year Progress. By using our service, you agree to these terms.
+
+Acceptance of Terms:
+By accessing and using Year Progress, you accept and agree to be bound by the terms and provision of this agreement.
+
+Use License:
+• Permission is granted to use this service for personal, non-commercial purposes
+• This license shall automatically terminate if you violate any of these restrictions
+• The service is provided "as is" without any warranties
+
+Restrictions:
+You may not:
+• Use the service for any unlawful purpose
+• Attempt to interfere with the service's functionality
+• Copy, modify, or distribute the service without permission
+• Use the service to harm others or spread misinformation
+
+Service Availability:
+• We strive to keep the service available 24/7 but cannot guarantee 100% uptime
+• We reserve the right to modify or discontinue the service at any time
+• Scheduled maintenance may cause temporary interruptions
+
+User Content:
+• You retain ownership of any content you share using our service
+• You are responsible for the content you share on social media platforms
+• We are not liable for content shared through third-party platforms
+
+Limitation of Liability:
+Year Progress shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the service.
+
+Changes to Terms:
+We reserve the right to modify these terms at any time. Continued use of the service constitutes acceptance of any changes.
+
+Governing Law:
+These terms shall be governed by and construed in accordance with applicable laws.
+
+If you have questions about these Terms of Service, please contact us through our official channels.`,
   },
   zh: {
     title: '年度进度',
@@ -62,6 +152,96 @@ export const translations = {
     twitterIcon: 'Twitter 图标',
     close: '关闭',
     weekDays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+    // 版权和法律信息
+    copyright: '© {year} YearProgress.org',
+    aboutSite: '关于本站',
+    privacyPolicy: '隐私政策',
+    termsOfService: '使用条款',
+    // 关于本站内容
+    aboutSiteTitle: '关于年度进度',
+    aboutSiteContent: `年度进度是一个简单、优雅的可视化工具，显示当前年度已经过去了多少时间。我们的目标是帮助人们获得时间流逝的视角，并充分利用每一天。
+
+主要功能：
+• 实时进度跟踪，每小时更新
+• 美观的网格可视化显示已完成的天数
+• 支持18种语言和多种主题
+• 社交媒体分享，生成动态进度卡片
+• 简洁、无干扰的界面
+
+这个项目是开源的，旨在成为时间珍贵的有用提醒。无论您是在反思成就、规划未来，还是仅仅对年度进度感到好奇，这个工具都能为我们在时间中所处的位置提供清晰的视觉透视。`,
+    // 隐私政策内容
+    privacyPolicyTitle: '隐私政策',
+    privacyPolicyContent: `最后更新：{date}
+
+在年度进度，我们尊重您的隐私并致力于保护您的个人信息。本隐私政策解释了我们如何收集、使用和保护您的数据。
+
+我们收集的信息：
+• 设置偏好：主题设置、语言偏好和显示选项使用 cookies 和本地存储在您的浏览器中本地存储
+• 使用分析：我们可能收集匿名使用统计数据以改进我们的服务
+• 无个人数据：我们不收集、存储或处理任何个人身份信息
+
+我们如何使用信息：
+• 记住您的偏好和设置
+• 改进我们的服务和用户体验
+• 生成匿名使用统计数据
+
+数据存储：
+• 所有偏好数据都本地存储在您的设备上
+• 不会向我们的服务器传输个人信息
+• 设置使用浏览器 cookies 存储，有效期为365天
+
+第三方服务：
+• 社交分享功能由相应的社交媒体平台提供
+• 这些服务有自己的隐私政策和条款
+
+您的权利：
+• 您可以通过清除浏览器的 cookies 来清除所有存储的偏好
+• 您可以使用浏览器隐私设置选择退出分析
+• 您对本地数据拥有完全控制权
+
+联系方式：
+如果您对本隐私政策有疑问，请通过我们的官方渠道联系我们。`,
+    // 使用条款内容
+    termsOfServiceTitle: '使用条款',
+    termsOfServiceContent: `最后更新：{date}
+
+欢迎使用年度进度。使用我们的服务即表示您同意这些条款。
+
+条款接受：
+通过访问和使用年度进度，您接受并同意受本协议条款和条件的约束。
+
+使用许可：
+• 允许将此服务用于个人、非商业目的
+• 如果您违反任何这些限制，此许可将自动终止
+• 服务按"原样"提供，不提供任何保证
+
+限制：
+您不得：
+• 将服务用于任何非法目的
+• 试图干扰服务的功能
+• 未经许可复制、修改或分发服务
+• 使用服务伤害他人或传播错误信息
+
+服务可用性：
+• 我们努力保持服务全天候可用，但不能保证100%正常运行时间
+• 我们保留随时修改或停止服务的权利
+• 定期维护可能导致临时中断
+
+用户内容：
+• 您保留使用我们服务分享的任何内容的所有权
+• 您对在社交媒体平台上分享的内容负责
+• 我们不对通过第三方平台分享的内容承担责任
+
+责任限制：
+年度进度不对因使用服务而产生的任何间接、偶发、特殊、后果性或惩罚性损害承担责任。
+
+条款变更：
+我们保留随时修改这些条款的权利。继续使用服务即表示接受任何更改。
+
+适用法律：
+这些条款应受适用法律管辖和解释。
+
+如果您对这些使用条款有疑问，请通过我们的官方渠道联系我们。`,
   },
   es: {
     title: 'Progreso del Año',
@@ -94,6 +274,96 @@ export const translations = {
     twitterIcon: 'Icono de Twitter',
     close: 'Cerrar',
     weekDays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    // 版权和法律信息
+    copyright: '© {year} YearProgress.org',
+    aboutSite: 'Acerca del Sitio',
+    privacyPolicy: 'Política de Privacidad',
+    termsOfService: 'Términos de Servicio',
+    // 关于本站内容
+    aboutSiteTitle: 'Acerca de Progreso del Año',
+    aboutSiteContent: `Progreso del Año es una herramienta de visualización simple y elegante que muestra cuánto del año actual ha pasado. Nuestro objetivo es ayudar a las personas a obtener perspectiva sobre el paso del tiempo y aprovechar al máximo cada día.
+
+Características principales:
+• Seguimiento de progreso en tiempo real con actualizaciones cada hora
+• Hermosa visualización en cuadrícula que muestra los días completados
+• Soporte para 18 idiomas y múltiples temas
+• Compartir en redes sociales con tarjetas de progreso dinámicas
+• Interfaz limpia y sin distracciones
+
+Este proyecto es de código abierto y está diseñado para ser un recordatorio útil de que el tiempo es precioso. Ya sea que estés reflexionando sobre logros, planificando el futuro, o simplemente curioso sobre el progreso del año, esta herramienta proporciona una perspectiva clara y visual de dónde nos encontramos en el tiempo.`,
+    // 隐私政策内容
+    privacyPolicyTitle: 'Política de Privacidad',
+    privacyPolicyContent: `Última actualización: {date}
+
+En Progreso del Año, respetamos su privacidad y estamos comprometidos a proteger su información personal. Esta Política de Privacidad explica cómo recopilamos, usamos y protegemos sus datos.
+
+Información que Recopilamos:
+• Preferencias de Configuración: Configuraciones de tema, preferencias de idioma y opciones de visualización se almacenan localmente en su navegador usando cookies y almacenamiento local
+• Análisis de Uso: Podemos recopilar estadísticas de uso anónimas para mejorar nuestro servicio
+• Sin Datos Personales: No recopilamos, almacenamos o procesamos información de identificación personal
+
+Cómo Usamos la Información:
+• Para recordar sus preferencias y configuraciones
+• Para mejorar nuestro servicio y experiencia del usuario
+• Para generar estadísticas de uso anónimas
+
+Almacenamiento de Datos:
+• Todos los datos de preferencias se almacenan localmente en su dispositivo
+• No se transmite información personal a nuestros servidores
+• Las configuraciones se almacenan usando cookies del navegador con una expiración de 365 días
+
+Servicios de Terceros:
+• Las funciones para compartir en redes sociales son proporcionadas por las respectivas plataformas de redes sociales
+• Estos servicios tienen sus propias políticas de privacidad y términos
+
+Sus Derechos:
+• Puede borrar todas las preferencias almacenadas limpiando las cookies de su navegador
+• Puede optar por no participar en análisis usando configuraciones de privacidad del navegador
+• Tiene control completo sobre sus datos locales
+
+Contacto:
+Si tiene preguntas sobre esta Política de Privacidad, contáctenos a través de nuestros canales oficiales.`,
+    // 使用条款内容
+    termsOfServiceTitle: 'Términos de Servicio',
+    termsOfServiceContent: `Última actualización: {date}
+
+Bienvenido a Progreso del Año. Al usar nuestro servicio, acepta estos términos.
+
+Aceptación de Términos:
+Al acceder y usar Progreso del Año, acepta y está de acuerdo en estar obligado por los términos y provisiones de este acuerdo.
+
+Licencia de Uso:
+• Se otorga permiso para usar este servicio para propósitos personales y no comerciales
+• Esta licencia se terminará automáticamente si viola cualquiera de estas restricciones
+• El servicio se proporciona "tal como es" sin garantías
+
+Restricciones:
+No puede:
+• Usar el servicio para cualquier propósito ilegal
+• Intentar interferir con la funcionalidad del servicio
+• Copiar, modificar o distribuir el servicio sin permiso
+• Usar el servicio para dañar a otros o difundir información errónea
+
+Disponibilidad del Servicio:
+• Nos esforzamos por mantener el servicio disponible 24/7 pero no podemos garantizar 100% de tiempo de actividad
+• Nos reservamos el derecho de modificar o discontinuar el servicio en cualquier momento
+• El mantenimiento programado puede causar interrupciones temporales
+
+Contenido del Usuario:
+• Retiene la propiedad de cualquier contenido que comparta usando nuestro servicio
+• Es responsable del contenido que comparte en plataformas de redes sociales
+• No somos responsables del contenido compartido a través de plataformas de terceros
+
+Limitación de Responsabilidad:
+Progreso del Año no será responsable de ningún daño indirecto, incidental, especial, consecuencial o punitivo resultante de su uso del servicio.
+
+Cambios en los Términos:
+Nos reservamos el derecho de modificar estos términos en cualquier momento. El uso continuado del servicio constituye aceptación de cualquier cambio.
+
+Ley Aplicable:
+Estos términos se regirán e interpretarán de acuerdo con las leyes aplicables.
+
+Si tiene preguntas sobre estos Términos de Servicio, contáctenos a través de nuestros canales oficiales.`,
   },
   fr: {
     title: 'Progrès de l\'Année',
