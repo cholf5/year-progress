@@ -43,9 +43,24 @@ export const getSettings = (): Settings => {
   if (cookieSettings) {
     try {
       const parsed = JSON.parse(cookieSettings);
+      let language = parsed.language || DEFAULT_SETTINGS.language;
+      
+      // 处理旧版本的 'zh' 设置，迁移为 'zh-cn'
+      if (language === 'zh') {
+        language = 'zh-cn';
+        // 更新Cookie和localStorage
+        const updatedSettings = {
+          theme: parsed.theme || DEFAULT_SETTINGS.theme,
+          language: language,
+          twitterIcon: parsed.twitterIcon || DEFAULT_SETTINGS.twitterIcon
+        };
+        setCookie('yearProgressSettings', JSON.stringify(updatedSettings));
+        localStorage.setItem('language', 'zh-cn');
+      }
+      
       return {
         theme: parsed.theme || DEFAULT_SETTINGS.theme,
-        language: parsed.language || DEFAULT_SETTINGS.language,
+        language: language,
         twitterIcon: parsed.twitterIcon || DEFAULT_SETTINGS.twitterIcon
       };
     } catch (error) {
@@ -55,7 +70,13 @@ export const getSettings = (): Settings => {
   
   // 从localStorage迁移旧设置
   const theme = localStorage.getItem('theme') as Theme || DEFAULT_SETTINGS.theme;
-  const language = localStorage.getItem('language') as Language || DEFAULT_SETTINGS.language;
+  let language = localStorage.getItem('language') as Language || DEFAULT_SETTINGS.language;
+  
+  // 处理旧版本的 'zh' 设置，迁移为 'zh-cn'
+  if (language === ('zh' as Language)) {
+    language = 'zh-cn';
+    localStorage.setItem('language', 'zh-cn');
+  }
   
   return {
     theme,

@@ -1062,7 +1062,22 @@ Tämä sivusto ei kerää mitään henkilökohtaisia tietoja. Kaikki asetukset (
 export type Language = keyof typeof translations;
 
 export function getTranslation(lang: Language, key: keyof typeof translations.en): string | readonly string[] {
-  return translations[lang][key] || translations.en[key];
+  // 处理旧版本的 'zh' 语言代码，自动迁移为 'zh-cn'
+  let actualLang = lang;
+  if (lang === ('zh' as Language)) {
+    actualLang = 'zh-cn';
+    // 如果在浏览器环境，更新localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', 'zh-cn');
+    }
+  }
+  
+  // 确保语言存在于translations中，否则使用英语
+  if (!translations[actualLang]) {
+    actualLang = 'en';
+  }
+  
+  return translations[actualLang][key] || translations.en[key];
 }
 
 export function getInitialLanguage(): Language {
