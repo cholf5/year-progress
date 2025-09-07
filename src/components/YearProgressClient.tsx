@@ -102,34 +102,8 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
     
     switch (type) {
       case 'about':
-        title = language === 'zh' ? '关于年度进度' : 'About Year Progress';
-        content = language === 'zh' 
-          ? `年度进度是一个简单、优雅的可视化工具，显示当前年度已经过去了多少时间。我们的目标是帮助人们获得时间流逝的视角，并充分利用每一天。
-
-主要功能：
-• 实时进度跟踪，每小时更新
-• 美观的网格可视化显示已完成的天数
-• 支持18种语言和多种主题
-• 社交媒体分享，生成动态进度卡片
-• 简洁、无干扰的界面
-
-这个项目是开源的，旨在成为时间珍贵的有用提醒。无论您是在反思成就、规划未来，还是仅仅对年度进度感到好奇，这个工具都能为我们在时间中所处的位置提供清晰的视觉透视。
-
-数据说明：
-本网站不收集任何个人信息，所有设置（主题、语言等）仅存储在您的设备上。`
-          : `Year Progress is a simple, elegant visualization tool that shows how much of the current year has passed. Our goal is to help people gain perspective on time's passage and make the most of each day.
-
-Key Features:
-• Real-time progress tracking with hourly updates
-• Beautiful grid visualization showing completed days
-• Support for 18 languages and multiple themes
-• Social media sharing with dynamic progress cards
-• Clean, distraction-free interface
-
-This project is open-source and designed to be a helpful reminder that time is precious. Whether you're reflecting on achievements, planning ahead, or simply curious about the year's progress, this tool provides a clear, visual perspective on where we stand in time.
-
-Privacy Note:
-This website does not collect any personal information. All settings (theme, language, etc.) are stored only on your device.`;
+        title = getTranslation(language, 'aboutSiteTitle') as string;
+        content = getTranslation(language, 'aboutSiteContent') as string;
         break;
     }
     
@@ -684,7 +658,7 @@ This website does not collect any personal information. All settings (theme, lan
               onClick={() => showInfoModalHandler('about')}
               className="footer-link text-gray-500 dark:text-gray-600 hover:text-gray-400 dark:hover:text-gray-500 underline transition-colors duration-200"
             >
-              {language === 'zh' ? '关于本站' : 'About This Site'}
+              {getTranslation(language, 'aboutSite') as string}
             </button>
           </div>
         </div>
