@@ -31,6 +31,13 @@ A real-time yearly progress visualization app built with Next.js 15, TypeScript,
 - **Optimal approach**: Single privacy statement in About page, no separate legal pages to avoid user suspicion
 - **Domain credibility**: .org domains benefit from appearing organizational rather than personal
 
+#### Multi-language Architecture Principles
+1. **Single source of truth**: All translations must be defined in the `translations` object; hard-coding is not permitted.
+2. **Template system**: Use `{placeholder}` placeholders instead of string concatenation.
+3. **Language neutrality**: Helper functions should not contain language-specific conditionals.
+4. **Centralized management**: All helper functions are placed in `i18n.ts` and exported for reuse.
+5. **Type safety**: New translation keys must be added simultaneously to all languages ​​to avoid TypeScript errors.
+
 ### CSS Color Management and Theme System Issues
 - **Global CSS override problems**: `globals.css` rules with `!important` can cascade unexpectedly across themes
 - **Button styling conflicts**: Global button styles in dark mode can affect light mode if not properly scoped
@@ -462,6 +469,90 @@ export async function robots(): Promise<MetadataRoute.Robots> {
 - **Custom domains**: Support via `NEXT_PUBLIC_SITE_URL` environment variable
 - **Error handling**: Fallback to production domain if headers unavailable during build
 
+## DRY Principle and Code Reuse Architecture (Don't Repeat Yourself)
+
+### Core DRY Principles
+This project strictly adheres to the DRY principle, avoiding duplication of code and logic to ensure maintainability and consistency:
+
+1. **Single Source of Truth**: All text, configuration, and constants must be defined in a single location.
+
+2. **Centralized Management**: Helper functions and utility classes are centralized in the `lib/` directory for global reuse.
+
+3. **Template System**: Use placeholder templates instead of string concatenation or hard-coding.
+
+4. **Type Safety**: Ensure consistency across all reusable components using TypeScript.
+
+### DRY Violations and Fixes
+
+#### ❌ Common DRY Violation Patterns
+```TypeScript
+// 1. Duplicate Text Generation Logic
+// Homepage Component
+const titleInMainPage = `${year} has passed ${percentage}%`;
+// OG API Component
+const titleInOgApi = `${year} is ${percentage}%` complete`;
+
+// 2. Hard-coded language selection
+if (language === 'zh-cn' || language === 'zh-tw') {
+return 'Chinese logic';
+} else if (language === 'ja') {
+return 'Japanese logic';
+}
+
+// 3. Duplicate domain configuration
+const domain1 = 'https://www.yearprogress.org'; // robots.ts
+const domain2 = 'https://www.yearprogress.org'; // sitemap.ts
+const domain3 = 'https://www.yearprogress.org'; // metadata.ts
+```
+
+#### ✅ Proper DRY architecture pattern
+```typescript
+// 1. Centralized text generation (src/lib/i18n.ts)
+export const formatProgressTitle = (language: Language, year: number, percentage: number): string => {
+const template = getTranslation(language, 'progressTitle') as string;
+
+return template.replace('{year}', year.toString()).replace('{percentage}', percentage.toString());
+};
+
+// 2. Templated Multi-Language Processing
+const template = getTranslation(language, 'weekDayStatus'); // "Today is week {weekNumber}, day {dayNumber}, year {year}"
+return template.replace('{year}', year).replace('{weekNumber}', weekNumber).replace('{dayNumber}', dayNumber);
+
+// 3. Single Constant Source (src/lib/utils/baseUrl.ts)
+export const PRODUCTION_URL = 'https://www.yearprogress.org';
+export const getBaseUrl = () => PRODUCTION_URL;
+```
+
+### DRY Implementation Strategy in the Project
+
+#### Text and Translations
+- **Location**: `src/lib/i18n.ts`
+- **Rule**: All user-visible text must be defined in the `translations` object
+- **Helper Function**: `formatProgressTitle()`, `formatWeekDayText()`, and other reusable functions
+
+#### Domain and URL Management
+- **Location**: `src/lib/utils/baseUrl.ts`
+- **Rule**: A single `PRODUCTION_URL` constant referenced by all files
+- **Application**: robots.ts, sitemap.ts, metadata.ts, structured data
+
+#### Social Sharing Logic
+- **Location**: Scattered across components, but using a unified helper function
+- **Rule**: Use the same `formatProgressTitle()` to generate titles across all platforms
+- **Avoid**: Implementing text logic separately for each social platform
+
+#### Theme and Style Management
+- **Location**: `src/lib/theme.ts` and `globals.css`
+- **Rule**: Centralize theme logic to avoid duplication within components
+- **Pattern**: Use the `applyTheme()` function instead of separate CSS class operations
+
+### DRY Violation Checklist
+During code reviews, check for the following common violations:
+- [ ] Are there duplicate string literals?
+- [ ] Are the same URLs/domains used in multiple files?
+- [ ] Are there duplicate language check logic?
+- [ ] Are there duplicate calculation logic?
+- [ ] Do new features reuse existing helper functions?
+
 ## Multi-Language System Management
 
 ### Language Refactoring & Migration Best Practices
@@ -610,3 +701,4 @@ const formatProgressTitle = (language: Language, year: number, percentage: numbe
 <h1>{formatProgressTitle(language, progress.year, progress.percentage)}</h1>
 <TwitterShareButton title={formatProgressTitle(language, progress.year, progress.percentage)} />
 ```
+

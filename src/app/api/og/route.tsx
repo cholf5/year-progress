@@ -42,7 +42,13 @@ export async function GET(request: Request) {
     // Get translations for the specified language
     const lang = langParam as Language;
     const isValidLang = Object.keys(translations).includes(lang);
-    const currentLang: Language = isValidLang ? lang : 'en';
+    
+    // Fallback problematic languages to English for OG image generation
+    // Arabic font rendering causes "lookupType: 5 - substFormat: 3" error in Next.js OG
+    const problematicLanguages: Language[] = ['ar'];
+    const shouldFallbackToEn = problematicLanguages.includes(lang);
+    
+    const currentLang: Language = isValidLang && !shouldFallbackToEn ? lang : 'en';
     
     // Create pixel grid for progress visualization
     const squaresPerRow = 53; // Weeks in a year
