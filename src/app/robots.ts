@@ -4,60 +4,30 @@ import { getSeoBaseUrl } from '../lib/utils/baseUrl'
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = getSeoBaseUrl()
   
-  // DRY原则：集中定义路径配置
-  const ALLOWED_PATHS = [
-    '/',
-    '/api/og', // Allow OG image generation for social media
-  ]
-  
-  const COMMON_DISALLOWED = [
-    '/api/',
-    '/private/',
-    '/_next/',
-    '/admin/',
-  ]
-  
-  const SEARCH_ENGINE_DISALLOWED = [
-    '/api/',
-    '/private/',
-  ]
-  
   return {
     rules: [
-      // 默认规则：允许OG图片但保护其他API
+      // 通用规则：先允许OG图片，再禁止其他API（确保最佳兼容性）
       {
         userAgent: '*',
-        allow: ALLOWED_PATHS,
-        disallow: COMMON_DISALLOWED,
+        allow: '/api/og',     // 明确允许OG图片生成
+        disallow: [
+          '/api/',            // 然后禁止其他所有API访问
+          '/private/',  
+          '/_next/',
+          '/admin/',
+        ],
       },
-      // 搜索引擎爬虫：更宽松的规则
-      {
-        userAgent: 'Googlebot',
-        allow: ALLOWED_PATHS,
-        disallow: SEARCH_ENGINE_DISALLOWED,
-        crawlDelay: 1,
-      },
-      {
-        userAgent: 'Bingbot',
-        allow: ALLOWED_PATHS,
-        disallow: SEARCH_ENGINE_DISALLOWED,
-        crawlDelay: 1,
-      },
-      // 社交媒体爬虫：无限制访问OG图片
+      // 社交媒体爬虫：确保能访问OG图片（虽然上面已经允许了，但明确声明更保险）
       {
         userAgent: 'Twitterbot',
-        allow: ALLOWED_PATHS,
-        disallow: [],
-        crawlDelay: 0,
+        allow: '/api/og',
       },
       {
-        userAgent: 'facebookexternalhit',
-        allow: ALLOWED_PATHS,
-        disallow: [],
-        crawlDelay: 0,
+        userAgent: 'facebookexternalhit', 
+        allow: '/api/og',
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl,
+    // 移除 host 字段 - 不是标准 robots.txt 指令，大多数搜索引擎不支持
   }
 }
