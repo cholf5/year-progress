@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { getSeoBaseUrl } from '../lib/utils/baseUrl'
 import YearProgressClient from '../components/YearProgressClient'
+import { formatPageTitle, getTranslation, Language } from '../lib/i18n'
 
 interface Props {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -15,21 +16,30 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   const day = params.day ? parseInt(params.day as string) : Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 1).getTime()) / (1000 * 60 * 60 * 24)) + 1
   const lang = (params.lang as string) || 'en'
   
+  // 确保语言类型正确
+  const language = lang as Language
+  
   // 构建动态OG图片URL
   const ogImageUrl = `${baseUrl}/api/og?year=${year}&day=${day}&lang=${lang}`
   
+  // 获取多语言内容
+  const pageTitle = formatPageTitle(language)
+  const siteName = getTranslation(language, 'siteName') as string
+  const description = getTranslation(language, 'description') as string
+  const subtitle = getTranslation(language, 'subtitle') as string
+  
   return {
     openGraph: {
-      title: 'Year Progress - Real-time Yearly Progress Visualization',
-      description: 'Real-time yearly progress visualization. See how much of the year has passed and how much time remains. Share on social media to generate beautiful progress cards!',
+      title: pageTitle,
+      description: description,
       url: baseUrl,
-      siteName: 'Year Progress',
+      siteName: siteName,
       images: [
         {
           url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: 'Year Progress - Real-time yearly progress visualization',
+          alt: `${siteName} - ${subtitle}`,
         },
       ],
       locale: 'en_US',
@@ -37,8 +47,8 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Year Progress - Real-time Yearly Progress Visualization',
-      description: 'Real-time yearly progress visualization. See how much of the year has passed and how much time remains. Share on social media to generate beautiful progress cards!',
+      title: pageTitle,
+      description: description,
       creator: '@yearofprogress',
       images: [ogImageUrl],
     },

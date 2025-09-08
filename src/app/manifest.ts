@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Year Progress - Real-time Yearly Progress Visualization',
-    short_name: 'Year Progress',
+    name: 'YearProgress.org - Real-time Yearly Progress Visualization',
+    short_name: 'YearProgress.org',
     description: 'Real-time yearly progress visualization. See how much of the year has passed and share beautiful progress cards!',
     start_url: '/',
     display: 'standalone',
@@ -31,7 +31,7 @@ export default function manifest(): MetadataRoute.Manifest {
         sizes: '1200x630',
         type: 'image/png',
         form_factor: 'wide',
-        label: 'Year Progress visualization with progress grid'
+        label: 'YearProgress.org visualization with progress grid'
       }
     ]
   }

@@ -16,14 +16,14 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Year Progress',
-    default: "Year Progress - Real-time Yearly Progress Visualization"
+    template: '%s | YearProgress.org',
+    default: "YearProgress.org - Real-time Yearly Progress Visualization"
   },
   description: "Real-time yearly progress visualization. See how much of the year has passed and how much time remains. Share on social media to generate beautiful progress cards!",
   keywords: ["year progress", "time tracking", "progress bar", "yearly progress", "time visualization", "social sharing", "year tracker", "calendar progress", "time management", "annual progress"],
-  authors: [{ name: "Year Progress" }],
-  creator: "Year Progress",
-  publisher: "Year Progress",
+  authors: [{ name: "YearProgress.org" }],
+  creator: "YearProgress.org",
+  publisher: "YearProgress.org",
   metadataBase: new URL(getSeoBaseUrl()),
   alternates: {
     canonical: '/',
@@ -85,7 +85,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="Year Progress" />
+        <meta name="apple-mobile-web-app-title" content="YearProgress.org" />
         <meta name="format-detection" content="telephone=no" />
         
         {/* 结构化数据 */}

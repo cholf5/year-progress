@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { calculateYearProgress } from '@/lib/yearProgress';
-import { type Language, getTranslation, getInitialLanguage, saveLanguage, getLanguageDisplayName, formatProgressTitle, formatWeekDayText, translations } from '@/lib/i18n';
+import { type Language, getTranslation, getInitialLanguage, saveLanguage, getLanguageDisplayName, formatProgressTitle, formatWeekDayText, formatPageTitle, translations } from '@/lib/i18n';
 import { type Theme, getInitialTheme, saveTheme, applyTheme, getThemeDisplayName, getSystemTheme, getEffectiveTheme } from '@/lib/theme';
 import { type Settings, type TwitterIcon as TwitterIconType, getSettings, saveSettings } from '@/lib/settings';
 import SettingsModal from '@/components/SettingsModal';
@@ -194,7 +194,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
     };
   }, []);
 
-  // 动态更新OG meta标签
+  // 动态更新OG meta标签和浏览器标题
   useEffect(() => {
     if (!mounted || typeof window === 'undefined') return;
 
@@ -222,26 +222,35 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
     const ogImageUrl = getOgImageUrl();
     
+    // 更新浏览器标题
+    document.title = formatPageTitle(language);
+    
+    // 更新Apple Web App标题
+    const appleTitleMeta = document.querySelector('meta[name="apple-mobile-web-app-title"]') as HTMLMetaElement;
+    if (appleTitleMeta) {
+      appleTitleMeta.setAttribute('content', getTranslation(language, 'siteName') as string);
+    }
+    
     // 更新OG标签
     updateOrCreateMeta('og:type', 'website');
     updateOrCreateMeta('og:locale', language === 'zh-cn' ? 'zh_CN' : language === 'zh-tw' ? 'zh_TW' : 'en_US');
     updateOrCreateMeta('og:url', window.location.href);
-    updateOrCreateMeta('og:title', getTranslation(language, 'title') as string);
+    updateOrCreateMeta('og:title', formatPageTitle(language));
     updateOrCreateMeta('og:description', getTranslation(language, 'description') as string);
-    updateOrCreateMeta('og:site_name', getTranslation(language, 'yearProgress') as string);
+    updateOrCreateMeta('og:site_name', getTranslation(language, 'siteName') as string);
     updateOrCreateMeta('og:image', ogImageUrl);
     updateOrCreateMeta('og:image:width', '1200');
     updateOrCreateMeta('og:image:height', '630');
-    updateOrCreateMeta('og:image:alt', (getTranslation(language, 'title') as string) + ' - Real-time yearly progress card');
+    updateOrCreateMeta('og:image:alt', formatPageTitle(language));
 
     // 更新Twitter标签
     updateOrCreateTwitterMeta('twitter:card', 'summary_large_image');
-    updateOrCreateTwitterMeta('twitter:title', getTranslation(language, 'title') as string);
+    updateOrCreateTwitterMeta('twitter:title', formatPageTitle(language));
     updateOrCreateTwitterMeta('twitter:description', getTranslation(language, 'description') as string);
     updateOrCreateTwitterMeta('twitter:image', ogImageUrl);
     updateOrCreateTwitterMeta('twitter:creator', '@yearofprogress');
 
-  }, [mounted, language, progress.year, progress.daysPassed]);
+  }, [mounted, language, progress.year, progress.daysPassed, getOgImageUrl]);
 
   // 单独的useEffect用于系统主题监听
   useEffect(() => {

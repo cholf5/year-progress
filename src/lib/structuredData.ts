@@ -13,13 +13,13 @@ export function generateWebApplicationSchema(language: string = 'en') {
   }
   
   const names = {
-    en: 'Year Progress',
-    'zh-cn': '年度进度',
-    'zh-tw': '年度進度',
-    es: 'Progreso del Año',
-    ja: '年次進捗',
-    de: 'Jahresfortschritt',
-    fr: 'Progrès de l\'Année',
+    en: 'YearProgress.org',
+    'zh-cn': 'YearProgress.org',
+    'zh-tw': 'YearProgress.org',
+    es: 'YearProgress.org',
+    ja: 'YearProgress.org',
+    de: 'YearProgress.org',
+    fr: 'YearProgress.org',
   }
   
   return {
@@ -38,7 +38,7 @@ export function generateWebApplicationSchema(language: string = 'en') {
     },
     creator: {
       '@type': 'Organization',
-      name: 'Year Progress',
+      name: 'YearProgress.org',
     },
     inLanguage: [
       'en', 'zh-cn', 'zh-tw', 'es', 'hi', 'ar', 'pt', 'bn', 'ru', 
@@ -54,13 +54,13 @@ export function generateBreadcrumbSchema(language: string = 'en') {
   const baseUrl = 'https://www.yearprogress.org'
   
   const homeNames = {
-    en: 'Year Progress',
-    'zh-cn': '年度进度',
-    'zh-tw': '年度進度',
-    es: 'Progreso del Año',
-    ja: '年次進捗',
-    de: 'Jahresfortschritt',
-    fr: 'Progrès de l\'Année',
+    en: 'YearProgress.org',
+    'zh-cn': 'YearProgress.org',
+    'zh-tw': 'YearProgress.org',
+    es: 'YearProgress.org',
+    ja: 'YearProgress.org',
+    de: 'YearProgress.org',
+    fr: 'YearProgress.org',
   }
   
   return {
