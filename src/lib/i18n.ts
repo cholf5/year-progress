@@ -1,3 +1,7 @@
+// 支持的语言数量常量
+// 每次添加新语言时，只需要更新这个常量即可
+export const SUPPORTED_LANGUAGES_COUNT = 27;
+
 export const translations = {
   en: {
     title: 'YearProgress.org',
@@ -44,16 +48,16 @@ export const translations = {
     termsOfService: 'Terms of Service',
     // 关于本站内容
     aboutSiteTitle: 'About YearProgress.org',
-    aboutSiteContent: `This site is a simple yet elegant visualization tool that shows how much of the current year has already passed. Our goal is to help people gain a more intuitive sense of time’s passage and make the most of every single day.
+    aboutSiteContent: `This site is a simple yet elegant visualization tool that shows how much of the current year has already passed. Our goal is to help people gain a more intuitive sense of time's passage and make the most of every single day.
 
 Key Features:
 • Real-time calculation of yearly progress
 • Beautiful grid visualization of days gone by
-• Support for 23 languages and multiple themes
+• Support for {supportedLanguagesCount} languages and multiple themes
 • One-click sharing with automatically generated progress cards
 • Clean, distraction-free interface
 
-Whether you’re reflecting on past achievements, planning for the future, or simply curious about how far into the year we are, this tool offers a clear and unique perspective on time.
+Whether you're reflecting on past achievements, planning for the future, or simply curious about how far into the year we are, this tool offers a clear and unique perspective on time.
 
 Data Policy:
 We do not collect any personal information. All preferences (such as theme and language) are stored locally on your device.
@@ -109,7 +113,7 @@ We do not collect any personal information. All preferences (such as theme and l
 主要功能：
 • 实时计算年度进度
 • 以美观网格直观呈现已过去的天数
-• 支持 23 种语言与多种主题
+• 支持 {supportedLanguagesCount} 种语言与多种主题
 • 一键分享，自动生成精美进度卡片
 • 简洁、无干扰的界面设计
 
@@ -168,7 +172,7 @@ We do not collect any personal information. All preferences (such as theme and l
 主要功能：
 • 即時計算年度進度
 • 以美觀網格直觀呈現已過去的天數
-• 支援 23 種語言與多種主題
+• 支援 {supportedLanguagesCount} 種語言與多種主題
 • 一鍵分享，自動生成精美進度卡片
 • 簡潔、無干擾的介面設計
 
@@ -227,7 +231,7 @@ We do not collect any personal information. All preferences (such as theme and l
 Características principales:
 • Seguimiento de progreso en tiempo real con actualizaciones cada hora
 • Hermosa visualización en cuadrícula que muestra los días completados
-• Soporte para 23 idiomas y múltiples temas
+• Soporte para {supportedLanguagesCount} idiomas y múltiples temas
 • Compartir en redes sociales con tarjetas de progreso dinámicas
 • Interfaz limpia y sin distracciones
 
@@ -1472,6 +1476,242 @@ Tovuti hii hakusanyi habari yoyote binafsi. Mipangilio yote (mandhari, lugha, nk
 ডেটা নীতি:
 আমরা কোনো ব্যক্তিগত তথ্য সংগ্রহ করি না। সমস্ত পছন্দ (যেমন থিম এবং ভাষা) আপনার ডিভাইসে স্থানীয়ভাবে সংরক্ষিত হয়।`,
   },
+  ne: {
+    title: 'YearProgress.org',
+    siteName: 'YearProgress.org',
+    description: 'वास्तविक समयको वार्षिक प्रगति दृश्य। वर्षको कति भाग बितिसकेको छ र कति समय बाँकी छ हेर्नुहोस्।',
+    yearProgress: 'वार्षिक प्रगति',
+    subtitle: 'वास्तविक समयको वार्षिक प्रगति दृश्य',
+    complete: 'पूरा',
+    progressTitle: '{year} {percentage}% पूरा भयो',
+    week: 'हप्ता',
+    day: 'दिन',
+    of: 'को',
+    daysCompleted: 'दिन सम्पन्न',
+    daysRemaining: 'दिन बाँकी',
+    shareInstructions: 'सुन्दर प्रगति कार्ड बनाउन X (Twitter) मा यो लिङ्क साझा गर्नुहोस्!',
+    currentDate: 'वर्तमान मिति',
+    timeWaits: 'समयले कसैको पर्खाइ गर्दैन, हरेक दिनलाई महत्त्व दिनुहोस्!',
+    shareUrl: 'URL साझा गर्नुहोस्',
+    copyLink: 'लिङ्क प्रतिलिपि गर्नुहोस्',
+    linkCopied: 'लिङ्क क्लिपबोर्डमा प्रतिलिपि गरियो!',
+    past: 'भूत',
+    current: 'वर्तमान',
+    future: 'भविष्य',
+    shareToSocialMedia: 'सामाजिक सञ्जालमा साझा गर्नुहोस्',
+    clickToShare: 'सामाजिक सञ्जालमा साझा गर्न र सुन्दर प्रगति कार्ड बनाउन तल क्लिक गर्नुहोस्!',
+    orCopyLink: 'वा साझा गर्न लिङ्क प्रतिलिपि गर्नुहोस्',
+    copy: 'प्रतिलिपि',
+    copied: 'प्रतिलिपि गरियो!',
+    settings: 'सेटिङ्गहरू',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'दिन {dayNumber} • हप्ता {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
+    theme: 'विषयवस्तु',
+    language: 'भाषा',
+    twitterIcon: 'ट्विटर आइकन',
+    close: 'बन्द गर्नुहोस्',
+    weekDays: ['आइतबार', 'सोमबार', 'मङ्गलबार', 'बुधबार', 'बिहिबार', 'शुक्रबार', 'शनिबार'],
+    weekDayStatus: "आज {year} को {weekNumber} हप्ता, {dayNumber} औं दिन हो।",
+    socialHashtags: ['वार्षिकप्रगति'],
+    // कपीराइट र कानुनी जानकारी
+    copyright: '© {year} YearProgress.org',
+    aboutSite: 'बारेमा',
+    privacyPolicy: 'गोपनीयता नीति',
+    termsOfService: 'सेवा शर्तहरू',
+    // साइट बारेमा सामग्री
+    aboutSiteTitle: 'YearProgress.org बारेमा',
+    aboutSiteContent: `YearProgress.org एक सरल तर उत्कृष्ट दृश्यात्मक उपकरण हो जसले हालको वर्षको कति भाग बितिसकेको छ भनेर देखाउँछ। हाम्रो लक्ष्य मानिसहरूलाई समयको बगावनको बारेमा दृष्टिकोण प्राप्त गर्न मद्दत गर्नु र हरेक दिनलाई अधिकतम उपयोग गर्नु हो।
+
+मुख्य विशेषताहरू:
+• वास्तविक समय प्रगति ट्र्याकिङ प्रत्येक घण्टा अपडेट सहित
+• सम्पन्न दिनहरू देखाउने सुन्दर ग्रिड दृश्यात्मकता
+• २३ भाषा र बहुविध विषयवस्तु समर्थन
+• गतिशील प्रगति कार्डहरू सहित सामाजिक सञ्जाल साझेदारी
+• सफा, ध्यान विचलन रहित इन्टरफेस
+
+यो परियोजना खुला स्रोत हो र समय अमूल्य छ भन्ने उपयोगी अनुस्मरणको रूपमा डिजाइन गरिएको छ। तपाईंले उपलब्धिहरूमा सोच्नुहुन्छ, भविष्यको योजना बनाउनुहुन्छ, वा वर्षको प्रगतिमा जिज्ञासु हुनुहुन्छ, यो उपकरणले समयमा हामी कहाँ छौं भन्ने स्पष्ट र दृश्य दृष्टिकोण प्रदान गर्दछ।
+
+डाटा जानकारी:
+यो साइटले कुनै पनि व्यक्तिगत जानकारी संकलन गर्दैन। सबै सेटिङ्हरू (विषयवस्तु, भाषा, आदि) तपाईंको यन्त्रमा मात्र संग्रहित हुन्छन्।`,
+  },
+  ur: {
+    title: 'YearProgress.org',
+    siteName: 'YearProgress.org',
+    description: 'حقیقی وقت سالانہ پیش رفت کی تصویری تشکیل۔ دیکھیں کہ سال کا کتنا حصہ گزر چکا ہے اور کتنا وقت باقی ہے۔',
+    yearProgress: 'سالانہ پیشرفت',
+    subtitle: 'حقیقی وقت سالانہ پیش رفت کی تصویری تشکیل',
+    complete: 'مکمل',
+    progressTitle: '{year} کا {percentage}% مکمل ہو گیا ہے',
+    week: 'ہفتہ',
+    day: 'دن',
+    of: 'کا',
+    daysCompleted: 'دن مکمل',
+    daysRemaining: 'دن باقی',
+    shareInstructions: 'ایک خوبصورت پیشرفت کارڈ بنانے کے لیے اس لنک کو X (ٹویٹر) پر شیئر کریں!',
+    currentDate: 'موجودہ تاریخ',
+    timeWaits: 'وقت کسی کا انتظار نہیں کرتا، ہر دن کی قدر کریں!',
+    shareUrl: 'URL شیئر کریں',
+    copyLink: 'لنک کاپی کریں',
+    linkCopied: 'لنک کلپ بورڈ میں کاپی ہو گیا!',
+    past: 'ماضی',
+    current: 'موجودہ',
+    future: 'مستقبل',
+    shareToSocialMedia: 'سوشل میڈیا پر شیئر کریں',
+    clickToShare: 'سوشل میڈیا پر شیئر کرنے اور خوبصورت پیشرفت کارڈ بنانے کے لیے نیچے کلک کریں!',
+    orCopyLink: 'یا شیئر کرنے کے لیے لنک کاپی کریں',
+    copy: 'کاپی',
+    copied: 'کاپی ہو گیا!',
+    settings: 'ترتیبات',
+    monthDayFormat: '{day} {month}',
+    dayWeekInfoFormat: 'دن {dayNumber} • ہفتہ {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
+    theme: 'تھیم',
+    language: 'زبان',
+    twitterIcon: 'ٹویٹر آئیکن',
+    close: 'بند کریں',
+    weekDays: ['اتوار', 'پیر', 'منگل', 'بدھ', 'جمعرات', 'جمعہ', 'ہفتہ'],
+    weekDayStatus: "آج {year} کا {weekNumber} واں ہفتہ، {dayNumber} واں دن ہے۔",
+    socialHashtags: ['سالانہپیشرفت'],
+    // کاپی رائٹ اور قانونی معلومات
+    copyright: '© {year} YearProgress.org',
+    aboutSite: 'کے بارے میں',
+    privacyPolicy: 'رازداری کی پالیسی',
+    termsOfService: 'سروس کی شرائط',
+    // سائٹ کے بارے میں مواد
+    aboutSiteTitle: 'YearProgress.org کے بارے میں',
+    aboutSiteContent: `YearProgress.org ایک سادہ لیق ایک خوبصورت تصویری سازی کا آلہ ہے جو دکھاتا ہے کہ موجودہ سال کا کتنا حصہ پہلے ہی گزر چکا ہے۔ ہمارا مقصد لوگوں کو وقت کے گزرنے پر ایک بصیرت حاصل کرنے میں مدد کرنا ہے اور ہر دن سے بہترین استعمال کرنا ہے۔
+
+اہم خصوصیات:
+• ہر گھنٹے اپ ڈیٹ کے ساتھ حقیقی وقت پیشرفت کی نگرانی
+• مکمل ہوئے دنوں کو دکھانے والی خوبصورت گرڈ تصویری سازی
+• ۲۳ زبانوں اور متعدد تھیمز کی حمایت
+• حراک پیشرفت کارڈز کے ساتھ سوشل میڈیا شیئرنگ
+• صاف، توجہ کے بغیر انٹرفیس
+
+یہ پروجیکٹ اوپن سورس ہے اور اسے ایک مفید یاد دہانی کے طور پر ڈیزائن کیا گیا ہے کہ وقت قیمتی ہے۔ چاہے آپ کامیابیوں پر غور کر رہے ہوں، مستقبل کی منصوبہ بندی کر رہے ہوں، یا صرف سال کی پیشرفت میں دلچسپی رکھتے ہوں، یہ آلہ وقت میں ہمارے کہاں کی واضح اور بصری نظریہ فراہم کرتا ہے۔
+
+ڈیٹا معلومات:
+یہ سائٹ کوئی ذاتی معلومات جمع نہیں کرتی۔ تمام ترتیبات (تھیم، زبان، وغیرہ) صرف آپ کے آلے پر محفوظ ہیں۔`,
+  },
+  my: {
+    title: 'YearProgress.org',
+    siteName: 'YearProgress.org',
+    description: 'အချိန်တိုင်း နှစ်စဉ် အောင်မြင်မှု ပုံဖော်ခြင်း။ နှစ်မည်မျှ ကုန်ဆုံးပြီး မည်သည့်အချိန်ကျန်သည်ကို ကြည့်ပါ။',
+    yearProgress: 'နှစ်စဉ် အောင်မြင်မှု',
+    subtitle: 'အချိန်တိုင်း နှစ်စဉ် အောင်မြင်မှု ပုံဖော်ခြင်း',
+    complete: 'ပြီးစီး',
+    progressTitle: '{year} ခုနှစ် {percentage}% ပြီးစီးပါပြီ',
+    week: 'အပတ်',
+    day: 'ရက်',
+    of: '၏',
+    daysCompleted: 'ရက်ပြီးစီး',
+    daysRemaining: 'ကျန်ရက်',
+    shareInstructions: 'အလှတရား အောင်မြင်မှုကဒ်ထုတ်ရန် X (Twitter) တွင် ဤလင့်ခ်ကို မျှဝေပါ!',
+    currentDate: 'လက်ရှိရက်စွဲ',
+    timeWaits: 'အချိန်သည် မည်သူ့ကိုမျှစောင့်မနေဘဲ ရက်တိုင်းစွဲများကို တန်ဖိုးထားပါ!',
+    shareUrl: 'URL မျှဝေပါ',
+    copyLink: 'လင့်ခ်ကူးယူပါ',
+    linkCopied: 'လင့်ခ်ကို clipboard တွင် ကူးယူပြီးပါပြီ!',
+    past: 'အတိတ်',
+    current: 'လက်ရှိ',
+    future: 'အနာဂတ်',
+    shareToSocialMedia: 'လူမှုမီဒီယာတွင် မျှဝေပါ',
+    clickToShare: 'လူမှုမီဒီယာတွင် မျှဝေပြီး အလှတရား အောင်မြင်မှုကဒ်များကို ထုတ်ရန် အောက်ကနှိပ်ပါ!',
+    orCopyLink: 'သို့မဟုတ် မျှဝေရန် လင့်ခ်ကို ကူးယူပါ',
+    copy: 'ကူးယူ',
+    copied: 'ကူးယူပြီးပါပြီ!',
+    settings: 'ဆက်တင်များ',
+    monthDayFormat: '{day} {month}',
+    dayWeekInfoFormat: 'ရက် {dayNumber} • အပတ် {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
+    theme: 'အပြင်အဆင်',
+    language: 'ဘာသာစကား',
+    twitterIcon: 'တွစ်တာအိုင်ကွန်',
+    close: 'ပိတ်ပါ',
+    weekDays: ['တနင်္ဂနွေ', 'တနင်္လုပ်', 'အင်္ဂါ', 'ဗုဒ္ဓဟူး', 'ကြာသပတေး', 'သောကြာ', 'စနေ'],
+    weekDayStatus: "ယနေ့သည် {year} ခုနှစ်၏ {weekNumber} ပတ်မြောက်၊ {dayNumber} ရက်မြောက်ဖြစ်သည်။",
+    socialHashtags: ['နှစ်စဉ်အောင်မြင်မှု'],
+    //မူပိုင်ခွင့်နှင့် ဥပဒေဆိုင်ရာအချက်အလက်များ
+    copyright: '© {year} YearProgress.org',
+    aboutSite: 'အကြောင်း',
+    privacyPolicy: 'ကိုယ်ရေးကာကွယ်မှုမူဝါဒ',
+    termsOfService: 'ဝန်ဆောင်မှုစည်းမျဉ်းများ',
+    //ဆိုက်အကြောင်းအရာအကြောင်းအရာ
+    aboutSiteTitle: 'YearProgress.org အကြောင်း',
+    aboutSiteContent: `YearProgress.org သည် လက်ရှိနှစ်၏ ဘယ်မျှလောက်ကုန်ဆုံးပြီးပြီဖြစ်သည်ကို ပြသည့် ရိုးရှင်းသော်လည်း အလှတရားဖြစ်သော ပုံဖော်ခြင်းကိရိယာတစ်ခုဖြစ်သည်။ ကျွန်ုပ်တို့၏ရည်ရွယ်ချက်မှာ လူများအား အချိန်ကုန်ဆုံးမှုအပေါ် ရှု့မြင်နိုင်စေရန်နှင့် ရက်တိုင်းစွဲများကို အမြင့်ဆုံးအသုံးပြုနိုင်စေရန် ကူညီပေးရန်ဖြစ်သည်။
+
+အဓိကလုပ်ဆောင်ချက်များ-
+• နာရီတိုင်းအပ်ဒိတ်များဖြင့် အချိန်တိုင်း အောင်မြင်မှုခြေရာခံ
+• ပြီးစီးသွားသောရက်များကို ပြသည့်အလှတရားဂရစ်ပုံဖော်ခြင်း
+• ၂၃ ဘာသာစကားနှင့် အမျိုးမျိုးသောအပြင်အဆင်များကိုပံ့ပိုးခြင်း
+• လှုပ်ရှားနေသောအောင်မြင်မှုကဒ်များဖြင့် လူမှုမီဒီယာမျှဝေခြင်း
+• သန့်ရှင်း၊ အာရုံပြတ်စေသောအင်တာဖေ့စ်
+
+ဤစီးပွားရေးလုပ်ငန်းသည် အိုးပင်ဆို့စ်ဖြစ်ပြီး အချိန်သည်တန်ဖိုးရှိသည်ဟု အသိပေးသည့်အသုံးဝင်တစ်ခုအဖြစ် ဒီဇိုင်းထားသည်။ သင်သည် အောင်မြင်မှုများအပေါ်တွေးနေစေကာမူ၊ အနာဂတ်အတွက်စီစဉ်နေစေကာမူ၊ သို့မဟုတ် နှစ်စဉ်အောင်မြင်မှုအပေါ်စိတ်ဝင်စားနေစေကာမူ၊ ဤကိရိယာသည် ကျွန်ုပ်တို့အချိန်တွင် မည်သည့်နေရာတွင်ရှိသည်ကို ရှင်းလင်းနှင့်မြင်ကွင်းသောအမြင်ကို ပေးသည်။
+
+ဒေတာအချက်အလက်-
+ဤဆိုက်သည် မည်သည့်ကိုယ်ရေးအချက်အလက်ကိုမျှ စုဆောင်းမည်မဟုတ်ပါ။ အားလုံးသောဆက်တင်များ (အပြင်အဆင်၊ ဘာသာစကား စသည်တို့) သည် သင့်စက်ပစ္စည်းတွင်သာ သိမ်းဆည်းထားသည်။`,
+  },
+  fil: {
+    title: 'YearProgress.org',
+    siteName: 'YearProgress.org',
+    description: 'Real-time na visualisasyon ng taunang progreso. Tingnan kung gaano na ng taon ang lumipas at kung gaano pa ang oras na natitira.',
+    yearProgress: 'Taunang Progreso',
+    subtitle: 'Real-time na Visualisasyon ng Taunang Progreso',
+    complete: 'kumpleto',
+    progressTitle: '{year} ay {percentage}% kumpleto na',
+    week: 'linggo',
+    day: 'araw',
+    of: 'ng',
+    daysCompleted: 'araw nakumpleto',
+    daysRemaining: 'araw na natitira',
+    shareInstructions: 'Ibahagi ang link na ito sa X (Twitter) upang makabuo ng isang magandang progress card!',
+    currentDate: 'Kasalukuyang Petsa',
+    timeWaits: 'Ang oras ay hindi naghihintay sa sinuman, pagyamanin ang bawat araw!',
+    shareUrl: 'Ibahagi ang URL',
+    copyLink: 'Kopyahin ang Link',
+    linkCopied: 'Na-copy na ang link sa clipboard!',
+    past: 'Nakaraan',
+    current: 'Kasalukuyan',
+    future: 'Hinaharap',
+    shareToSocialMedia: 'Ibahagi sa Social Media',
+    clickToShare: 'Mag-click sa ibaba upang ibahagi sa social media at makabuo ng magagandang progress cards!',
+    orCopyLink: 'O kopyahin ang link para ibahagi',
+    copy: 'Kopyahin',
+    copied: 'Nakopya na!',
+    settings: 'Mga Setting',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Araw {dayNumber} • Linggo {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
+    theme: 'Tema',
+    language: 'Wika',
+    twitterIcon: 'Twitter Icon',
+    close: 'Isara',
+    weekDays: ['Linggo', 'Lunes', 'Martes', 'Miyerkules', 'Huwebes', 'Biyernes', 'Sabado'],
+    weekDayStatus: "Ngayon ay linggo {weekNumber}, araw {dayNumber} ng taong {year}.",
+    socialHashtags: ['TaunangProgreso'],
+    // Karapatan sa pag-aari at impormasyong legal
+    copyright: '© {year} YearProgress.org',
+    aboutSite: 'Tungkol',
+    privacyPolicy: 'Patakaran sa Privacy',
+    termsOfService: 'Mga Tuntunin ng Serbisyo',
+    // Impormasyon tungkol sa site
+    aboutSiteTitle: 'Tungkol sa YearProgress.org',
+    aboutSiteContent: `Ang YearProgress.org ay isang simple ngunit eleganteng visualization tool na nagpapakita kung gaano na ng kasalukuyang taon ang lumipas. Ang aming layunin ay tumulong sa mga tao na makakuha ng perspective sa pagdaan ng oras at pagyamanin ang bawat araw.
+
+Mga Pangunahing Tampok:
+• Real-time progress tracking na may mga update bawat oras
+• Magandang grid visualization na nagpapakita ng mga araw na nakumpleto
+• Suporta para sa 23 na wika at maraming tema
+• Social media sharing na may dynamic na progress cards
+• Malinis, distraction-free na interface
+
+Ang proyektong ito ay open-source at idinisenyo bilang isang kapaki-pakinabang paalala na ang oras ay mahalaga. Maging tumitingin ka sa mga nakamit na tagumpay, nagpaplano para sa hinaharap, o simpleng namamangha sa progreso ng taon, ang tool na ito ay nagbibigay ng malinaw at visual na perspective sa ating kalagayan sa oras.
+
+Impormasyon sa Data:
+Ang site na ito ay hindi nangongolekta ng anumang personal na impormasyon. Lahat ng mga setting (tema, wika, etc.) ay naka-imbak lamang sa iyong device.`,
+  },
 } as const;
 
 export type Language = keyof typeof translations;
@@ -1534,28 +1774,32 @@ export function detectLanguage(browserLang: string): Language {
     'zh-tw': 'zh-tw',
     'zh-hk': 'zh-tw', // 香港使用繁体中文
     'zh-sg': 'zh-cn', // 新加坡使用简体中文
-    'es': 'es',
-    'fr': 'fr',
-    'de': 'de',
-    'ja': 'ja',
-    'ko': 'ko',
-    'pt': 'pt',
-    'ru': 'ru',
-    'ar': 'ar',
-    'hi': 'hi',
-    'it': 'it',
-    'nl': 'nl',
-    'tr': 'tr',
-    'sv': 'sv',
-    'pl': 'pl',
-    'da': 'da',
-    'no': 'no',
-    'fi': 'fi',
-    'vi': 'vi',
-    'th': 'th',
-    'id': 'id',
-    'sw': 'sw',
-    'bn': 'bn',
+    'es': 'es', // 西班牙语
+    'fr': 'fr', // 法语
+    'de': 'de', // 德语
+    'ja': 'ja', // 日语
+    'ko': 'ko', // 韩语
+    'pt': 'pt', // 葡萄牙语
+    'ru': 'ru', // 俄语
+    'ar': 'ar', // 阿拉伯语
+    'hi': 'hi', // 印地语
+    'it': 'it', // 意大利语
+    'nl': 'nl', // 荷兰语
+    'tr': 'tr', // 土耳其语
+    'sv': 'sv', // 瑞典语
+    'pl': 'pl', // 波兰语
+    'da': 'da', // 丹麦语
+    'no': 'no', // 挪威语
+    'fi': 'fi', // 芬兰语
+    'vi': 'vi', // 越南语
+    'th': 'th', // 泰语
+    'id': 'id', // 印度尼西亚语
+    'sw': 'sw', // 斯瓦希里语
+    'bn': 'bn', // 孟加拉语
+    'ne': 'ne', // 尼泊尔语
+    'ur': 'ur', // 乌尔都语
+    'my': 'my', // 缅甸语
+    'fil': 'fil', // 菲律宾语
   };
 
   // 先检查完整的语言代码（如 zh-tw, zh-cn）
@@ -1594,6 +1838,10 @@ export function getLanguageDisplayName(lang: Language): string {
     id: 'Bahasa Indonesia',
     sw: 'Kiswahili',
     bn: 'বাংলা',
+    ne: 'नेपाली',
+    ur: 'اردو',
+    my: 'မြန်မာ',
+    fil: 'Filipino',
   };
 
   return displayNames[lang];
@@ -1685,7 +1933,11 @@ export const getOgLocale = (language: Language): string => {
     'th': 'th_TH',
     'id': 'id_ID',
     'sw': 'sw_TZ',
-    'bn': 'bn_BD'
+    'bn': 'bn_BD',
+    'ne': 'ne_NP',
+    'ur': 'ur_PK',
+    'my': 'my_MM',
+    'fil': 'fil_PH'
   };
   
   return localeMap[language] || 'en_US';
