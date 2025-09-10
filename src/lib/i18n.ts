@@ -27,6 +27,9 @@ export const translations = {
     copy: 'Copy',
     copied: 'Copied!',
     settings: 'Settings',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Day {dayNumber} • Week {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Theme',
     language: 'Language',
     twitterIcon: 'Twitter Icon',
@@ -84,6 +87,9 @@ We do not collect any personal information. All preferences (such as theme and l
     copy: '复制',
     copied: '已复制!',
     settings: '设置',
+    monthDayFormat: '{month}月{day}日',
+    dayWeekInfoFormat: '全年第{dayNumber}天 • 第{weekNumber}周',
+    bottomStatsFormat: '已过去{daysPassed}天 • 剩余{daysRemaining}天',
     theme: '主题',
     language: '语言',
     twitterIcon: 'Twitter 图标',
@@ -140,6 +146,9 @@ We do not collect any personal information. All preferences (such as theme and l
     copy: '複製',
     copied: '已複製!',
     settings: '設定',
+    monthDayFormat: '{month}月{day}日',
+    dayWeekInfoFormat: '全年第{dayNumber}天 • 第{weekNumber}週',
+    bottomStatsFormat: '已過去{daysPassed}天 • 剩餘{daysRemaining}天',
     theme: '主題',
     language: '語言',
     twitterIcon: 'Twitter 圖示',
@@ -196,6 +205,9 @@ We do not collect any personal information. All preferences (such as theme and l
     copy: 'Copiar',
     copied: '¡Copiado!',
     settings: 'Configuración',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Día {dayNumber} • Semana {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Tema',
     language: 'Idioma',
     twitterIcon: 'Icono de Twitter',
@@ -249,6 +261,9 @@ Este proyecto es de código abierto y está diseñado para ser un recordatorio �
     copy: 'Copier',
     copied: 'Copié!',
     settings: 'Paramètres',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Jour {dayNumber} • Semaine {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Thème',
     language: 'Langue',
     twitterIcon: 'Icône Twitter',
@@ -305,6 +320,9 @@ Ce site ne collecte aucune information personnelle. Tous les paramètres (thème
     copy: 'Kopieren',
     copied: 'Kopiert!',
     settings: 'Einstellungen',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Tag {dayNumber} • Woche {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Design',
     language: 'Sprache',
     twitterIcon: 'Twitter-Symbol',
@@ -361,6 +379,9 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
     copy: 'コピー',
     copied: 'コピー完了！',
     settings: '設定',
+    monthDayFormat: '{month}月{day}日',
+    dayWeekInfoFormat: '第{dayNumber}日 • 第{weekNumber}週',
+    bottomStatsFormat: '{daysPassed}日経過 • {daysRemaining}日残り',
     theme: 'テーマ',
     language: '言語',
     twitterIcon: 'Twitter アイコン',
@@ -417,6 +438,9 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
     copy: '복사',
     copied: '복사됨!',
     settings: '설정',
+    monthDayFormat: '{month}월{day}일',
+    dayWeekInfoFormat: '{dayNumber}일 • {weekNumber}주',
+    bottomStatsFormat: '{daysPassed}일 완료 • {daysRemaining}일 남음',
     theme: '테마',
     language: '언어',
     twitterIcon: 'Twitter 아이콘',
@@ -473,6 +497,9 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
     copy: 'Copiar',
     copied: 'Copiado!',
     settings: 'Configurações',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Dia {dayNumber} • Semana {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Tema',
     language: 'Idioma',
     twitterIcon: 'Ícone do Twitter',
@@ -529,6 +556,9 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     copy: 'Копировать',
     copied: 'Скопировано!',
     settings: 'Настройки',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'День {dayNumber} • Неделя {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Тема',
     language: 'Язык',
     twitterIcon: 'Иконка Twitter',
@@ -585,6 +615,9 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     copy: 'نسخ',
     copied: 'تم النسخ!',
     settings: 'الإعدادات',
+    monthDayFormat: '{day} {month}',
+    dayWeekInfoFormat: 'يوم {dayNumber} • أسبوع {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'المظهر',
     language: 'اللغة',
     twitterIcon: 'أيقونة تويتر',
@@ -641,6 +674,9 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     copy: 'कॉपी',
     copied: 'कॉपी हो गया!',
     settings: 'सेटिंग्स',
+    monthDayFormat: '{day} {month}',
+    dayWeekInfoFormat: 'दिन {dayNumber} • सप्ताह {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'थीम',
     language: 'भाषा',
     twitterIcon: 'ट्विटर आइकन',
@@ -697,6 +733,9 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
     copy: 'Copia',
     copied: 'Copiato!',
     settings: 'Impostazioni',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Giorno {dayNumber} • Settimana {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Tema',
     language: 'Lingua',
     twitterIcon: 'Icona Twitter',
@@ -753,6 +792,9 @@ Questo sito non raccoglie alcuna informazione personale. Tutte le impostazioni (
     copy: 'Kopieer',
     copied: 'Gekopieerd!',
     settings: 'Instellingen',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Dag {dayNumber} • Week {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Thema',
     language: 'Taal',
     twitterIcon: 'Twitter Icoon',
@@ -809,6 +851,9 @@ Deze site verzamelt geen persoonlijke informatie. Alle instellingen (thema, taal
     copy: 'Kopyala',
     copied: 'Kopyalandı!',
     settings: 'Ayarlar',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Gün {dayNumber} • Hafta {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Tema',
     language: 'Dil',
     twitterIcon: 'Twitter Simgesi',
@@ -865,6 +910,9 @@ Bu site hiçbir kişisel bilgi toplamaz. Tüm ayarlar (tema, dil vb.) yalnızca 
     copy: 'Kopiera',
     copied: 'Kopierat!',
     settings: 'Inställningar',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Dag {dayNumber} • Vecka {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Tema',
     language: 'Språk',
     twitterIcon: 'Twitter Ikon',
@@ -921,6 +969,9 @@ Denna webbplats samlar inte in någon personlig information. Alla inställningar
     copy: 'Kopiuj',
     copied: 'Skopiowano!',
     settings: 'Ustawienia',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Dzień {dayNumber} • Tydzień {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Motyw',
     language: 'Język',
     twitterIcon: 'Ikona Twitter',
@@ -977,6 +1028,9 @@ Ta strona nie zbiera żadnych informacji osobistych. Wszystkie ustawienia (motyw
     copy: 'Kopier',
     copied: 'Kopieret!',
     settings: 'Indstillinger',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Dag {dayNumber} • Uge {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Tema',
     language: 'Sprog',
     twitterIcon: 'Twitter Ikon',
@@ -1033,6 +1087,9 @@ Denne side indsamler ingen personlige oplysninger. Alle indstillinger (tema, spr
     copy: 'Kopier',
     copied: 'Kopiert!',
     settings: 'Innstillinger',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Dag {dayNumber} • Uke {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Tema',
     language: 'Språk',
     twitterIcon: 'Twitter Ikon',
@@ -1089,6 +1146,9 @@ Denne siden samler ikke inn noen personlig informasjon. Alle innstillinger (tema
     copy: 'Kopioi',
     copied: 'Kopioitu!',
     settings: 'Asetukset',
+    monthDayFormat: '{month} {day}',
+    dayWeekInfoFormat: 'Päivä {dayNumber} • Viikko {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Teema',
     language: 'Kieli',
     twitterIcon: 'Twitter Ikoni',
@@ -1145,6 +1205,9 @@ Tämä sivusto ei kerää mitään henkilökohtaisia tietoja. Kaikki asetukset (
     copy: 'Sao chép',
     copied: 'Đã sao chép!',
     settings: 'Cài đặt',
+    monthDayFormat: '{day} {month}',
+    dayWeekInfoFormat: 'Ngày {dayNumber} • Tuần {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Chủ đề',
     language: 'Ngôn ngữ',
     twitterIcon: 'Biểu tượng Twitter',
@@ -1201,6 +1264,9 @@ Trang web này không thu thập bất kỳ thông tin cá nhân nào. Tất c�
     copy: 'คัดลอก',
     copied: 'คัดลอกแล้ว!',
     settings: 'การตั้งค่า',
+    monthDayFormat: '{day} {month}',
+    dayWeekInfoFormat: 'วันที่ {dayNumber} • สัปดาห์ {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'ธีม',
     language: 'ภาษา',
     twitterIcon: 'ไอคอน Twitter',
@@ -1257,6 +1323,9 @@ Trang web này không thu thập bất kỳ thông tin cá nhân nào. Tất c�
     copy: 'Salin',
     copied: 'Disalin!',
     settings: 'Pengaturan',
+    monthDayFormat: '{day} {month}',
+    dayWeekInfoFormat: 'Hari {dayNumber} • Minggu {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Tema',
     language: 'Bahasa',
     twitterIcon: 'Ikon Twitter',
@@ -1313,6 +1382,9 @@ Situs ini tidak mengumpulkan informasi pribadi apa pun. Semua pengaturan (tema, 
     copy: 'Nakili',
     copied: 'Imenakiliwa!',
     settings: 'Mipangilio',
+    monthDayFormat: '{day} {month}',
+    dayWeekInfoFormat: 'Siku {dayNumber} • Wiki {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'Mandhari',
     language: 'Lugha',
     twitterIcon: 'Alama ya Twitter',
@@ -1369,6 +1441,9 @@ Tovuti hii hakusanyi habari yoyote binafsi. Mipangilio yote (mandhari, lugha, nk
     copy: 'কপি',
     copied: 'কপি করা হয়েছে!',
     settings: 'সেটিংস',
+    monthDayFormat: '{day} {month}',
+    dayWeekInfoFormat: 'দিন {dayNumber} • সপ্তাহ {weekNumber}',
+    bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
     theme: 'থিম',
     language: 'ভাষা',
     twitterIcon: 'টুইটার আইকন',
@@ -1524,11 +1599,6 @@ export function getLanguageDisplayName(lang: Language): string {
   return displayNames[lang];
 }
 
-// 辅助函数：检查是否为中文语言
-const isChinese = (lang: Language): boolean => {
-  return lang === 'zh-cn' || lang === 'zh-tw';
-};
-
 // 辅助函数：格式化进度标题 (可复用于主页、OG图像和社交分享)
 export const formatProgressTitle = (language: Language, year: number, percentage: number): string => {
   const template = getTranslation(language, 'progressTitle') as string;
@@ -1551,4 +1621,72 @@ export const formatPageTitle = (language: Language): string => {
   const siteName = getTranslation(language, 'siteName') as string;
   const subtitle = getTranslation(language, 'subtitle') as string;
   return `${siteName} - ${subtitle}`;
+};
+
+// 辅助函数：格式化月日信息 (用于工具提示)
+export const formatMonthDay = (language: Language, date: Date): string => {
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  
+  // 使用翻译模板
+  const template = getTranslation(language, 'monthDayFormat') as string;
+  return template
+    .replace('{month}', month.toString())
+    .replace('{day}', day.toString());
+};
+
+// 辅助函数：格式化天数和周数信息 (用于工具提示)
+export const formatDayWeekInfo = (language: Language, dayNumber: number, weekNumber: number): string => {
+  // 使用翻译模板
+  const template = getTranslation(language, 'dayWeekInfoFormat') as string;
+  return template
+    .replace('{dayNumber}', dayNumber.toString())
+    .replace('{weekNumber}', weekNumber.toString());
+};
+
+// 辅助函数：格式化底部统计信息
+export const formatBottomStats = (language: Language, daysPassed: number, totalDays: number): string => {
+  const daysCompleted = getTranslation(language, 'daysCompleted') as string;
+  const daysRemaining = getTranslation(language, 'daysRemaining') as string;
+  
+  // 使用翻译模板
+  const template = getTranslation(language, 'bottomStatsFormat') as string;
+  return template
+    .replace('{daysPassed}', daysPassed.toString())
+    .replace('{daysCompleted}', daysCompleted)
+    .replace('{daysRemaining}', (totalDays - daysPassed).toString())
+    .replace('{daysRemainingUnit}', daysRemaining);
+};
+
+// 辅助函数：获取 OpenGraph locale 映射
+export const getOgLocale = (language: Language): string => {
+  const localeMap: Record<Language, string> = {
+    'en': 'en_US',
+    'zh-cn': 'zh_CN',
+    'zh-tw': 'zh_TW',
+    'es': 'es_ES',
+    'fr': 'fr_FR',
+    'de': 'de_DE',
+    'ja': 'ja_JP',
+    'ko': 'ko_KR',
+    'pt': 'pt_PT',
+    'ru': 'ru_RU',
+    'ar': 'ar_SA',
+    'hi': 'hi_IN',
+    'it': 'it_IT',
+    'nl': 'nl_NL',
+    'tr': 'tr_TR',
+    'sv': 'sv_SE',
+    'pl': 'pl_PL',
+    'da': 'da_DK',
+    'no': 'no_NO',
+    'fi': 'fi_FI',
+    'vi': 'vi_VN',
+    'th': 'th_TH',
+    'id': 'id_ID',
+    'sw': 'sw_TZ',
+    'bn': 'bn_BD'
+  };
+  
+  return localeMap[language] || 'en_US';
 };

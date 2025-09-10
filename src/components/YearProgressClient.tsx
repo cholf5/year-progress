@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { calculateYearProgress } from '@/lib/yearProgress';
-import { type Language, getTranslation, getInitialLanguage, saveLanguage, getLanguageDisplayName, formatProgressTitle, formatWeekDayText, formatPageTitle, translations } from '@/lib/i18n';
+import { type Language, getTranslation, getInitialLanguage, saveLanguage, getLanguageDisplayName, formatProgressTitle, formatWeekDayText, formatPageTitle, formatMonthDay, formatDayWeekInfo, formatBottomStats, getOgLocale, translations } from '@/lib/i18n';
 import { type Theme, getInitialTheme, saveTheme, applyTheme, getThemeDisplayName, getSystemTheme, getEffectiveTheme } from '@/lib/theme';
 import { type Settings, type TwitterIcon as TwitterIconType, getSettings, saveSettings } from '@/lib/settings';
 import SettingsModal from '@/components/SettingsModal';
@@ -26,10 +26,6 @@ import {
   WeiboIcon,
 } from 'react-share';
 
-// 辅助函数：检查是否是中文（简体或繁体）
-const isChinese = (lang: Language): boolean => {
-  return lang === 'zh-cn' || lang === 'zh-tw';
-};
 
 // 工具函数：获取日期信息
 const getDateInfo = (dayNumber: number, year: number, language: Language) => {
@@ -42,9 +38,7 @@ const getDateInfo = (dayNumber: number, year: number, language: Language) => {
   const weekDays = getTranslation(language, 'weekDays') as string[];
   const dayOfWeek = weekDays[date.getDay()];
   
-  const monthDay = isChinese(language) 
-    ? `${date.getMonth() + 1}月${date.getDate()}日`
-    : date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const monthDay = formatMonthDay(language, date);
     
   return { weekNumber, dayOfWeek, monthDay, date };
 };
@@ -233,7 +227,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
     
     // 更新OG标签
     updateOrCreateMeta('og:type', 'website');
-    updateOrCreateMeta('og:locale', language === 'zh-cn' ? 'zh_CN' : language === 'zh-tw' ? 'zh_TW' : 'en_US');
+    updateOrCreateMeta('og:locale', getOgLocale(language));
     updateOrCreateMeta('og:url', window.location.href);
     updateOrCreateMeta('og:title', formatPageTitle(language));
     updateOrCreateMeta('og:description', getTranslation(language, 'description') as string);
@@ -474,10 +468,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
                   <div className="text-center space-y-1">
                     <div className="font-semibold">{monthDay}</div>
                     <div className="text-xs text-gray-500 dark:text-gray-300">
-                      {isChinese(language) 
-                        ? `全年第${hoveredDay.dayNumber}天 • 第${weekNumber}周`
-                        : `Day ${hoveredDay.dayNumber} • Week ${weekNumber}`
-                      }
+                      {formatDayWeekInfo(language, hoveredDay.dayNumber, weekNumber)}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-300">{dayOfWeek}</div>
                     <div className={`text-xs px-2 py-1 rounded ${
@@ -630,10 +621,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
         <div className="text-center space-y-2 text-gray-500 dark:text-gray-400 text-xs sm:text-sm px-2 transition-colors duration-300">
           <p>{t('currentDate')}: {new Date().toLocaleDateString()}</p>
           <p className="break-words">
-            {isChinese(language) 
-              ? `已过去${daysPassed}天 • 剩余${totalDays - daysPassed}天`
-              : `${daysPassed} ${t('daysCompleted')} • ${totalDays - daysPassed} ${t('daysRemaining')}`
-            }
+            {formatBottomStats(language, daysPassed, totalDays)}
           </p>
         </div>
       </div>

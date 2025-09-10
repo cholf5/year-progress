@@ -70,13 +70,13 @@ A real-time yearly progress visualization app built with Next.js 15, TypeScript,
 - **Helper function pattern**: Create `formatProgressTitle(language, year, percentage)` for consistent formatting
 - **Template replacement**: Use `getTranslation(language, 'progressTitle')` with `.replace('{year}', year).replace('{percentage}', percentage)`
 - **Platform consistency**: Apply same localized text across Twitter, Facebook, Telegram, Reddit, Weibo, Instagram
-- **Avoid hardcoded conditionals**: Replace `isChinese(language) ? '中文文本' : 'English text'` patterns with i18n system
+- **Avoid hardcoded conditionals**: Replace language-specific conditionals with centralized i18n helper functions
 - **Social hashtags integration**: Use `getTranslation(language, 'socialHashtags')` for platform-specific hashtags
 
 #### Social Media Multilingual Refactoring Pattern
 ```typescript
 // ❌ WRONG: Hardcoded language-specific text
-title={isChinese(language) 
+title={language === 'zh-cn' || language === 'zh-tw' 
   ? `${progress.year}年已过去了${progress.percentage}%`
   : `${progress.year} is ${progress.percentage}% complete.`
 }
@@ -148,18 +148,16 @@ When adding a new language (e.g., `pt-br` for Brazilian Portuguese):
 
 #### Language-Specific Logic Pattern
 ```typescript
-// Helper function for language groups
-const isChinese = (lang: Language): boolean => {
-  return lang === 'zh-cn' || lang === 'zh-tw';
-};
-
-// Use in components for special formatting
-const formatDate = (date: Date, language: Language) => {
-  if (isChinese(language)) {
+// Helper function for date formatting (now centralized in i18n.ts)
+const formatMonthDay = (language: Language, date: Date): string => {
+  if (language === 'zh-cn' || language === 'zh-tw') {
     return `${date.getMonth() + 1}月${date.getDate()}日`;
   }
   return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 };
+
+// Use in components by importing from i18n.ts
+import { formatMonthDay } from '@/lib/i18n';
 ```
 
 ### Progress Calculation (`src/lib/yearProgress.ts`)
@@ -327,7 +325,7 @@ src/lib/
 - **Template replacement**: Handle pluralization and cultural number formats
 - **Legacy migration**: Always provide migration path for old language codes (e.g., `zh` → `zh-cn`)
 - **Regional variations**: Consider country-specific variants (`zh-hk`, `zh-sg`, `pt-br`, `en-gb`)
-- **Helper functions**: Use language group helpers like `isChinese()` instead of multiple equality checks
+- **Helper functions**: Use centralized i18n helper functions instead of multiple equality checks
 - **OG locale mapping**: Map language codes to proper OpenGraph locales (`zh-cn` → `zh_CN`, `zh-tw` → `zh_TW`)
 
 #### Language Code Migration Pattern
@@ -561,7 +559,7 @@ Based on the `zh` → `zh-cn`/`zh-tw` refactoring experience:
 #### Critical Success Patterns
 1. **Backward Compatibility First**: Never break existing user settings
 2. **Migration Logic**: Auto-migrate old language codes in `getInitialLanguage()`
-3. **Helper Functions**: Create language group helpers (`isChinese()`, `isSpanish()`) instead of multiple direct comparisons
+3. **Helper Functions**: Create centralized i18n helper functions instead of multiple direct comparisons
 4. **Standard Language Codes**: Always use BCP 47 standards (`zh-cn`, `zh-tw`, `pt-br`)
 5. **Comprehensive Testing**: Test all language-dependent features after changes
 
@@ -598,15 +596,12 @@ When adding any new language variant (e.g., `pt-br`, `es-mx`, `fr-ca`):
 
 #### Language Group Management Pattern
 ```typescript
-// Create language group helpers for maintainability
-const isChinese = (lang: Language): boolean => lang === 'zh-cn' || lang === 'zh-tw';
-const isPortuguese = (lang: Language): boolean => lang === 'pt' || lang === 'pt-br';
-const isSpanish = (lang: Language): boolean => lang === 'es' || lang === 'es-mx' || lang === 'es-ar';
+// Use centralized i18n helper functions for maintainability
+// Import from i18n.ts instead of creating language-specific helpers
+import { formatMonthDay } from '@/lib/i18n';
 
-// Use in components instead of multiple equality checks
-const monthDay = isChinese(language) 
-  ? `${date.getMonth() + 1}月${date.getDate()}日`
-  : date.toLocaleDateString(language === 'pt-br' ? 'pt-BR' : 'en-US');
+// Use in components
+const monthDay = formatMonthDay(language, date);
 ```
 
 #### Migration Logic Template
