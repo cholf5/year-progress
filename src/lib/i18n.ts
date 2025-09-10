@@ -1,6 +1,6 @@
 // 支持的语言数量常量
 // 每次添加新语言时，只需要更新这个常量即可
-export const SUPPORTED_LANGUAGES_COUNT = 27;
+export const SUPPORTED_LANGUAGES_COUNT = "27";
 
 export const translations = {
   en: {
@@ -287,7 +287,7 @@ Este proyecto es de código abierto y está diseñado para ser un recordatorio �
 Fonctionnalités principales :
 • Suivi du progrès en temps réel avec mises à jour horaires
 • Visualisation en grille élégante montrant les jours écoulés
-• Support pour 23 langues et plusieurs thèmes
+• Support pour {supportedLanguagesCount} langues et plusieurs thèmes
 • Partage sur les réseaux sociaux avec cartes de progrès dynamiques
 • Interface propre et sans distraction
 
@@ -346,7 +346,7 @@ Ce site ne collecte aucune information personnelle. Tous les paramètres (thème
 Hauptfunktionen:
 • Echtzeit-Fortschrittserfassung mit stündlichen Updates
 • Schöne Rastervisualisierung der abgeschlossenen Tage
-• Unterstützung für 23 Sprachen und mehrere Themes
+• Unterstützung für {supportedLanguagesCount} Sprachen und mehrere Themes
 • Social Media Sharing mit dynamischen Fortschrittskarten
 • Saubere, ablenkungsfreie Benutzeroberfläche
 
@@ -405,7 +405,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
 主な機能：
 • 1時間ごとの更新によるリアルタイム進捗追跡
 • 経過した日数を美しいグリッドで視覚化
-• 23言語と複数テーマのサポート
+• {supportedLanguagesCount}言語と複数テーマのサポート
 • 動的な進捗カードでのソーシャルメディア共有
 • 清潔で気が散らないインターフェース
 
@@ -464,7 +464,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
 주요 기능:
 • 매시간 업데이트되는 실시간 진행률 추적
 • 지난 날들을 보여주는 아름다운 격자 시각화
-• 23개 언어와 여러 테마 지원
+• {supportedLanguagesCount}개 언어와 여러 테마 지원
 • 동적 진행률 카드를 통한 소셜 미디어 공유
 • 깔끔하고 방해 요소 없는 인터페이스
 
@@ -523,7 +523,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
 Recursos principais:
 • Rastreamento de progresso em tempo real com atualizações de hora em hora
 • Bela visualização em grade mostrando dias completados
-• Suporte para 23 idiomas e múltiplos temas
+• Suporte para {supportedLanguagesCount} idiomas e múltiplos temas
 • Compartilhamento em redes sociais com cartões de progresso dinâmicos
 • Interface limpa e sem distrações
 
@@ -582,7 +582,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
 Основные функции:
 • Отслеживание прогресса в реальном времени с обновлением каждый час
 • Красивая сетчатая визуализация завершенных дней
-• Поддержка 23 языков и множества тем
+• Поддержка {supportedLanguagesCount} языков и множества тем
 • Обмен в социальных сетях с динамическими карточками прогресса
 • Чистый интерфейс без отвлекающих элементов
 
@@ -641,7 +641,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
 الميزات الرئيسية:
 • تتبع التقدم في الوقت الفعلي مع التحديثات كل ساعة
 • تصور شبكي جميل يُظهر الأيام المكتملة
-• دعم لـ 23 لغة ومظاهر متعددة
+• دعم لـ {supportedLanguagesCount} لغة ومظاهر متعددة
 • مشاركة وسائل التواصل الاجتماعي مع بطاقات تقدم ديناميكية
 • واجهة نظيفة وخالية من المشتتات
 
@@ -700,7 +700,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
 मुख्य विशेषताएं:
 • घंटे के अपडेट के साथ रियल-टाइम प्रगति ट्रैकिंग
 • पूर्ण दिनों को दिखाने वाला सुंदर ग्रिड विज़ुअलाइज़ेशन
-• 23 भाषाओं और कई थीम का समर्थन
+• {supportedLanguagesCount} भाषाओं और कई थीम का समर्थन
 • डायनामिक प्रगति कार्ड के साथ सोशल मीडिया शेयरिंग
 • स्वच्छ, विकर्षण-मुक्त इंटरफेस
 
@@ -759,7 +759,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
 Caratteristiche principali:
 • Monitoraggio del progresso in tempo reale con aggiornamenti orari
 • Bella visualizzazione a griglia che mostra i giorni completati
-• Supporto per 23 lingue e temi multipli
+• Supporto per {supportedLanguagesCount} lingue e temi multipli
 • Condivisione sui social media con carte di progresso dinamiche
 • Interfaccia pulita e senza distrazioni
 
@@ -818,7 +818,7 @@ Questo sito non raccoglie alcuna informazione personale. Tutte le impostazioni (
 Belangrijkste functies:
 • Real-time voortgangsvolging met uur-updates
 • Mooie rastervisualisatie die voltooide dagen toont
-• Ondersteuning voor 23 talen en meerdere thema's
+• Ondersteuning voor {supportedLanguagesCount} talen en meerdere thema's
 • Sociale media delen met dynamische voortgangskaarten
 • Schone, afleidingsvrije interface
 
@@ -877,7 +877,7 @@ Deze site verzamelt geen persoonlijke informatie. Alle instellingen (thema, taal
 Ana Özellikler:
 • Saatlik güncellemelerle gerçek zamanlı ilerleme takibi
 • Tamamlanan günleri gösteren güzel ızgara görselleştirmesi
-• 23 dil ve çoklu tema desteği
+• {supportedLanguagesCount} dil ve çoklu tema desteği
 • Dinamik ilerleme kartlarıyla sosyal medya paylaşımı
 • Temiz, dikkat dağıtmayan arayüz
 
@@ -936,7 +936,7 @@ Bu site hiçbir kişisel bilgi toplamaz. Tüm ayarlar (tema, dil vb.) yalnızca 
 Huvudfunktioner:
 • Realtids framstegsföljning med uppdateringar varje timme
 • Vacker rutnätsvisualisering som visar slutförda dagar
-• Stöd för 23 språk och flera teman
+• Stöd för {supportedLanguagesCount} språk och flera teman
 • Delning på sociala medier med dynamiska framstegskort
 • Rent, distraktionsfritt gränssnitt
 
@@ -995,7 +995,7 @@ Denna webbplats samlar inte in någon personlig information. Alla inställningar
 Główne funkcje:
 • Śledzenie postępów w czasie rzeczywistym z aktualizacjami co godzinę
 • Piękna wizualizacja siatki pokazująca ukończone dni
-• Obsługa 23 języków i wielu motywów
+• Obsługa {supportedLanguagesCount} języków i wielu motywów
 • Udostępnianie w mediach społecznościowych z dynamicznymi kartami postępu
 • Czysty interfejs bez rozpraszaczy
 
@@ -1054,7 +1054,7 @@ Ta strona nie zbiera żadnych informacji osobistych. Wszystkie ustawienia (motyw
 Hovedfunktioner:
 • Realtidsfremskridtssporing med timeopdateringer
 • Smuk gittervisualisering der viser gennemførte dage
-• Support til 23 sprog og flere temaer
+• Support til {supportedLanguagesCount} sprog og flere temaer
 • Sociale medier deling med dynamiske fremskridtskort
 • Rent, distraktionsfrit interface
 
@@ -1113,7 +1113,7 @@ Denne side indsamler ingen personlige oplysninger. Alle indstillinger (tema, spr
 Hovedfunksjoner:
 • Sanntids fremgangsoppdatering med timelige oppdateringer
 • Vakker rutenettvisualisering som viser fullførte dager
-• Støtte for 23 språk og flere temaer
+• Støtte for {supportedLanguagesCount} språk og flere temaer
 • Sosiale medier deling med dynamiske fremgangskort
 • Rent, distraksjonfritt grensesnitt
 
@@ -1172,7 +1172,7 @@ Denne siden samler ikke inn noen personlig informasjon. Alle innstillinger (tema
 Pääominaisuudet:
 • Reaaliaikainen edistymisen seuranta tunneittain päivitettynä
 • Kaunis ruudukkovisualisointi, joka näyttää suoritetut päivät
-• Tuki 23 kielelle ja useille teemoille
+• Tuki {supportedLanguagesCount} kielelle ja useille teemoille
 • Sosiaalisen median jakaminen dynaamisilla edistymiskorteilla
 • Puhdas, häiriötön käyttöliittymä
 
@@ -1231,7 +1231,7 @@ Tämä sivusto ei kerää mitään henkilökohtaisia tietoja. Kaikki asetukset (
 Tính năng chính:
 • Theo dõi tiến độ theo thời gian thực với cập nhật mỗi giờ
 • Trực quan hóa lưới đẹp mắt hiển thị các ngày đã hoàn thành
-• Hỗ trợ 23 ngôn ngữ và nhiều chủ đề
+• Hỗ trợ {supportedLanguagesCount} ngôn ngữ và nhiều chủ đề
 • Chia sẻ mạng xã hội với thẻ tiến độ động
 • Giao diện sạch, không gây xao nhãng
 
@@ -1290,7 +1290,7 @@ Trang web này không thu thập bất kỳ thông tin cá nhân nào. Tất c�
 คุณสมบัติหลัก:
 • การติดตามความคืบหน้าแบบเรียลไทม์พร้อมอัปเดตทุกชั่วโมง
 • การแสดงผลภาพกริดที่สวยงามแสดงวันที่ผ่านไปแล้ว
-• รองรับ 23 ภาษาและหลายธีม
+• รองรับ {supportedLanguagesCount} ภาษาและหลายธีม
 • การแชร์โซเชียลมีเดียด้วยการ์ดความคืบหน้าแบบไดนามิก
 • อินเตอร์เฟซที่สะอาดและไม่รบกวน
 
@@ -1349,7 +1349,7 @@ Trang web này không thu thập bất kỳ thông tin cá nhân nào. Tất c�
 Fitur utama:
 • Pelacakan kemajuan real-time dengan pembaruan setiap jam
 • Visualisasi grid yang indah menunjukkan hari-hari yang telah selesai
-• Dukungan untuk 23 bahasa dan beberapa tema
+• Dukungan untuk {supportedLanguagesCount} bahasa dan beberapa tema
 • Berbagi media sosial dengan kartu kemajuan dinamis
 • Antarmuka yang bersih dan bebas gangguan
 
@@ -1408,7 +1408,7 @@ Situs ini tidak mengumpulkan informasi pribadi apa pun. Semua pengaturan (tema, 
 Vipengele vikuu:
 • Ufuatiliaji wa maendeleo halisi kwa masasisho ya kila saa
 • Uwakilishaji mzuri wa gridi unaonyesha siku zilizokamilika
-• Msaada kwa lugha 23 na mandhari mbalimbali
+• Msaada kwa lugha {supportedLanguagesCount} na mandhari mbalimbali
 • Kushiriki katika mitandao ya kijamii kwa kadi za maendeleo zenye nguvu
 • Kiolesura safi isiyo na kero
 
@@ -1467,7 +1467,7 @@ Tovuti hii hakusanyi habari yoyote binafsi. Mipangilio yote (mandhari, lugha, nk
 মূল বৈশিষ্ট্য:
 • বার্ষিক অগ্রগতির বাস্তব সময়ের গণনা
 • অতীত দিনগুলির সুন্দর গ্রিড ভিজ্যুয়ালাইজেশন
-• ২৩টি ভাষা এবং একাধিক থিম সমর্থন
+• {supportedLanguagesCount}টি ভাষা এবং একাধিক থিম সমর্থন
 • স্বয়ংক্রিয়ভাবে তৈরি অগ্রগতি কার্ড সহ এক-ক্লিক শেয়ারিং
 • পরিষ্কার, বিভ্রান্তিমুক্ত ইন্টারফেস
 
@@ -1526,7 +1526,7 @@ Tovuti hii hakusanyi habari yoyote binafsi. Mipangilio yote (mandhari, lugha, nk
 मुख्य विशेषताहरू:
 • वास्तविक समय प्रगति ट्र्याकिङ प्रत्येक घण्टा अपडेट सहित
 • सम्पन्न दिनहरू देखाउने सुन्दर ग्रिड दृश्यात्मकता
-• २३ भाषा र बहुविध विषयवस्तु समर्थन
+• {supportedLanguagesCount} भाषा र बहुविध विषयवस्तु समर्थन
 • गतिशील प्रगति कार्डहरू सहित सामाजिक सञ्जाल साझेदारी
 • सफा, ध्यान विचलन रहित इन्टरफेस
 
@@ -1585,7 +1585,7 @@ Tovuti hii hakusanyi habari yoyote binafsi. Mipangilio yote (mandhari, lugha, nk
 اہم خصوصیات:
 • ہر گھنٹے اپ ڈیٹ کے ساتھ حقیقی وقت پیشرفت کی نگرانی
 • مکمل ہوئے دنوں کو دکھانے والی خوبصورت گرڈ تصویری سازی
-• ۲۳ زبانوں اور متعدد تھیمز کی حمایت
+• {supportedLanguagesCount} زبانوں اور متعدد تھیمز کی حمایت
 • حراک پیشرفت کارڈز کے ساتھ سوشل میڈیا شیئرنگ
 • صاف، توجہ کے بغیر انٹرفیس
 
@@ -1644,7 +1644,7 @@ Tovuti hii hakusanyi habari yoyote binafsi. Mipangilio yote (mandhari, lugha, nk
 အဓိကလုပ်ဆောင်ချက်များ-
 • နာရီတိုင်းအပ်ဒိတ်များဖြင့် အချိန်တိုင်း အောင်မြင်မှုခြေရာခံ
 • ပြီးစီးသွားသောရက်များကို ပြသည့်အလှတရားဂရစ်ပုံဖော်ခြင်း
-• ၂၃ ဘာသာစကားနှင့် အမျိုးမျိုးသောအပြင်အဆင်များကိုပံ့ပိုးခြင်း
+• {supportedLanguagesCount} ဘာသာစကားနှင့် အမျိုးမျိုးသောအပြင်အဆင်များကိုပံ့ပိုးခြင်း
 • လှုပ်ရှားနေသောအောင်မြင်မှုကဒ်များဖြင့် လူမှုမီဒီယာမျှဝေခြင်း
 • သန့်ရှင်း၊ အာရုံပြတ်စေသောအင်တာဖေ့စ်
 
@@ -1703,7 +1703,7 @@ Tovuti hii hakusanyi habari yoyote binafsi. Mipangilio yote (mandhari, lugha, nk
 Mga Pangunahing Tampok:
 • Real-time progress tracking na may mga update bawat oras
 • Magandang grid visualization na nagpapakita ng mga araw na nakumpleto
-• Suporta para sa 23 na wika at maraming tema
+• Suporta para sa {supportedLanguagesCount} na wika at maraming tema
 • Social media sharing na may dynamic na progress cards
 • Malinis, distraction-free na interface
 
@@ -1732,7 +1732,16 @@ export function getTranslation(lang: Language, key: keyof typeof translations.en
     actualLang = 'en';
   }
   
-  return translations[actualLang][key] || translations.en[key];
+  const result = translations[actualLang][key] || translations.en[key];
+  
+  // 如果是字符串，进行占位符替换
+  if (typeof result === 'string') {
+    return result
+      .replace('{supportedLanguagesCount}', SUPPORTED_LANGUAGES_COUNT)
+      .replace('{year}', new Date().getFullYear().toString());
+  }
+  
+  return result;
 }
 
 export function getInitialLanguage(): Language {
