@@ -14,6 +14,7 @@ export function generateWebApplicationSchema(language: string = 'en') {
     th: 'การแสดงผลความคืบหน้าปีแบบเรียลไทม์ ดูว่าปีนี้ผ่านไปแล้วเท่าไรและแชร์การ์ดความคืบหน้าที่สวยงาม',
     id: 'Visualisasi kemajuan tahun secara real-time. Lihat berapa banyak tahun yang telah berlalu dan bagikan kartu kemajuan yang indah.',
     sw: 'Uwakilishaji wa maendeleo ya mwaka wakati halisi. Angalia kiasi gani cha mwaka umepita na shiriki kadi nzuri za maendeleo.',
+    bn: 'বাস্তব সময়ের বার্ষিক অগ্রগতি ভিজ্যুয়ালাইজেশন। দেখুন বছরের কতটুকু সময় অতিবাহিত হয়েছে এবং সুন্দর অগ্রগতি কার্ড শেয়ার করুন।',
   }
   
   const names = {
@@ -28,6 +29,7 @@ export function generateWebApplicationSchema(language: string = 'en') {
     th: 'YearProgress.org',
     id: 'YearProgress.org',
     sw: 'YearProgress.org',
+    bn: 'YearProgress.org',
   }
   
   return {
@@ -74,6 +76,7 @@ export function generateBreadcrumbSchema(language: string = 'en') {
     th: 'YearProgress.org',
     id: 'YearProgress.org',
     sw: 'YearProgress.org',
+    bn: 'YearProgress.org',
   }
   
   return {

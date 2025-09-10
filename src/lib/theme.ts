@@ -72,7 +72,8 @@ export const getThemeDisplayName = (theme: Theme, language: string): string => {
       vi: 'Chế độ Sáng',
       th: 'โหมดสว่าง',
       id: 'Mode Terang',
-      sw: 'Hali ya Nuru'
+      sw: 'Hali ya Nuru',
+      bn: 'লাইট মোড'
     },
     dark: {
       en: 'Dark Mode',
@@ -98,7 +99,8 @@ export const getThemeDisplayName = (theme: Theme, language: string): string => {
       vi: 'Chế độ Tối',
       th: 'โหมดมืด',
       id: 'Mode Gelap',
-      sw: 'Hali ya Giza'
+      sw: 'Hali ya Giza',
+      bn: 'ডার্ক মোড'
     },
     system: {
       en: 'Follow System',
@@ -124,7 +126,8 @@ export const getThemeDisplayName = (theme: Theme, language: string): string => {
       vi: 'Theo Hệ thống',
       th: 'ตามระบบ',
       id: 'Ikuti Sistem',
-      sw: 'Fuata Mfumo'
+      sw: 'Fuata Mfumo',
+      bn: 'সিস্টেম অনুসরণ করুন'
     }
   };
   
