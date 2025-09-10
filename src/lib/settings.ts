@@ -141,7 +141,11 @@ export const getTwitterIconDisplayName = (icon: TwitterIcon, language: string): 
       pl: 'Logo X',
       da: 'X-logo',
       no: 'X-logo',
-      fi: 'X-logo'
+      fi: 'X-logo',
+      vi: 'Logo X',
+      th: 'โลโก้ X',
+      id: 'Logo X',
+      sw: 'Alama ya X'
     },
     bird: {
       en: 'Classic Bird',
@@ -163,7 +167,11 @@ export const getTwitterIconDisplayName = (icon: TwitterIcon, language: string): 
       pl: 'Klasyczny ptak',
       da: 'Klassisk fugl',
       no: 'Klassisk fugl',
-      fi: 'Klassinen lintu'
+      fi: 'Klassinen lintu',
+      vi: 'Chim Biểu tượng',
+      th: 'นกคลาสสิก',
+      id: 'Burung Klasik',
+      sw: 'Ndege ya Klasiki'
     }
   };
   

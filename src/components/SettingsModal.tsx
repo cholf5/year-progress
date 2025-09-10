@@ -23,7 +23,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const languages = ['en', 'zh-cn', 'zh-tw', 'es', 'fr', 'de', 'ja', 'ko', 'pt', 'ru', 'ar', 'hi', 'it', 'nl', 'tr', 'sv', 'pl', 'da', 'no', 'fi'];
+    const languages = ['en', 'zh-cn', 'zh-tw', 'es', 'fr', 'de', 'ja', 'ko', 'pt', 'ru', 'ar', 'hi', 'it', 'nl', 'tr', 'sv', 'pl', 'da', 'no', 'fi', 'vi', 'th', 'id', 'sw'];
 
   // 获取语言显示名称
   const getLanguageDisplayName = (lang: string): string => {
@@ -47,7 +47,11 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
       'pl': 'Polski',
       'da': 'Dansk',
       'no': 'Norsk',
-      'fi': 'Suomi'
+      'fi': 'Suomi',
+      'vi': 'Tiếng Việt',
+      'th': 'ไทย',
+      'id': 'Bahasa Indonesia',
+      'sw': 'Kiswahili'
     };
     return names[lang] || lang;
   };

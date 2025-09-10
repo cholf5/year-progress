@@ -10,6 +10,10 @@ export function generateWebApplicationSchema(language: string = 'en') {
     ja: 'リアルタイムの年次進捗可視化。今年がどれだけ過ぎたかを確認し、美しい進捗カードを共有しましょう。',
     de: 'Echtzeit-Jahresfortschritt-Visualisierung. Sehen Sie, wie viel vom Jahr vergangen ist und teilen Sie schöne Fortschrittskarten.',
     fr: 'Visualisation du progrès annuel en temps réel. Voyez combien de l\'année est passée et partagez de belles cartes de progrès.',
+    vi: 'Trực quan hóa tiến độ năm theo thời gian thực. Xem bao nhiêu phần trăm của năm đã trôi qua và chia sẻ thẻ tiến độ đẹp.',
+    th: 'การแสดงผลความคืบหน้าปีแบบเรียลไทม์ ดูว่าปีนี้ผ่านไปแล้วเท่าไรและแชร์การ์ดความคืบหน้าที่สวยงาม',
+    id: 'Visualisasi kemajuan tahun secara real-time. Lihat berapa banyak tahun yang telah berlalu dan bagikan kartu kemajuan yang indah.',
+    sw: 'Uwakilishaji wa maendeleo ya mwaka wakati halisi. Angalia kiasi gani cha mwaka umepita na shiriki kadi nzuri za maendeleo.',
   }
   
   const names = {
@@ -20,6 +24,10 @@ export function generateWebApplicationSchema(language: string = 'en') {
     ja: 'YearProgress.org',
     de: 'YearProgress.org',
     fr: 'YearProgress.org',
+    vi: 'YearProgress.org',
+    th: 'YearProgress.org',
+    id: 'YearProgress.org',
+    sw: 'YearProgress.org',
   }
   
   return {
@@ -42,7 +50,8 @@ export function generateWebApplicationSchema(language: string = 'en') {
     },
     inLanguage: [
       'en', 'zh-cn', 'zh-tw', 'es', 'hi', 'ar', 'pt', 'bn', 'ru', 
-      'ja', 'de', 'jv', 'ko', 'fr', 'tr', 'vi', 'it', 'th', 'pl'
+      'ja', 'de', 'jv', 'ko', 'fr', 'tr', 'vi', 'it', 'th', 'pl',
+      'da', 'no', 'fi', 'nl', 'sv', 'id', 'sw'
     ],
     keywords: 'year progress, time tracking, progress bar, yearly progress, time visualization, social sharing',
     mainEntityOfPage: baseUrl,
@@ -61,6 +70,10 @@ export function generateBreadcrumbSchema(language: string = 'en') {
     ja: 'YearProgress.org',
     de: 'YearProgress.org',
     fr: 'YearProgress.org',
+    vi: 'YearProgress.org',
+    th: 'YearProgress.org',
+    id: 'YearProgress.org',
+    sw: 'YearProgress.org',
   }
   
   return {

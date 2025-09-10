@@ -68,7 +68,11 @@ export const getThemeDisplayName = (theme: Theme, language: string): string => {
       pl: 'Tryb jasny',
       da: 'Lys tilstand',
       no: 'Lys modus',
-      fi: 'Valoisa tila'
+      fi: 'Valoisa tila',
+      vi: 'Chế độ Sáng',
+      th: 'โหมดสว่าง',
+      id: 'Mode Terang',
+      sw: 'Hali ya Nuru'
     },
     dark: {
       en: 'Dark Mode',
@@ -90,7 +94,11 @@ export const getThemeDisplayName = (theme: Theme, language: string): string => {
       pl: 'Tryb ciemny',
       da: 'Mørk tilstand',
       no: 'Mørk modus',
-      fi: 'Tumma tila'
+      fi: 'Tumma tila',
+      vi: 'Chế độ Tối',
+      th: 'โหมดมืด',
+      id: 'Mode Gelap',
+      sw: 'Hali ya Giza'
     },
     system: {
       en: 'Follow System',
@@ -112,7 +120,11 @@ export const getThemeDisplayName = (theme: Theme, language: string): string => {
       pl: 'Podążaj za systemem',
       da: 'Følg systemet',
       no: 'Følg systemet',
-      fi: 'Seuraa järjestelmää'
+      fi: 'Seuraa järjestelmää',
+      vi: 'Theo Hệ thống',
+      th: 'ตามระบบ',
+      id: 'Ikuti Sistem',
+      sw: 'Fuata Mfumo'
     }
   };
   

@@ -46,7 +46,7 @@ export const translations = {
 Key Features:
 • Real-time calculation of yearly progress
 • Beautiful grid visualization of days gone by
-• Support for 18 languages and multiple themes
+• Support for 22 languages and multiple themes
 • One-click sharing with automatically generated progress cards
 • Clean, distraction-free interface
 
@@ -103,7 +103,7 @@ We do not collect any personal information. All preferences (such as theme and l
 主要功能：
 • 实时计算年度进度
 • 以美观网格直观呈现已过去的天数
-• 支持 18 种语言与多种主题
+• 支持 22 种语言与多种主题
 • 一键分享，自动生成精美进度卡片
 • 简洁、无干扰的界面设计
 
@@ -159,7 +159,7 @@ We do not collect any personal information. All preferences (such as theme and l
 主要功能：
 • 即時計算年度進度
 • 以美觀網格直觀呈現已過去的天數
-• 支援 18 種語言與多種主題
+• 支援 22 種語言與多種主題
 • 一鍵分享，自動生成精美進度卡片
 • 簡潔、無干擾的介面設計
 
@@ -215,7 +215,7 @@ We do not collect any personal information. All preferences (such as theme and l
 Características principales:
 • Seguimiento de progreso en tiempo real con actualizaciones cada hora
 • Hermosa visualización en cuadrícula que muestra los días completados
-• Soporte para 18 idiomas y múltiples temas
+• Soporte para 22 idiomas y múltiples temas
 • Compartir en redes sociales con tarjetas de progreso dinámicas
 • Interfaz limpia y sin distracciones
 
@@ -268,7 +268,7 @@ Este proyecto es de código abierto y está diseñado para ser un recordatorio �
 Fonctionnalités principales :
 • Suivi du progrès en temps réel avec mises à jour horaires
 • Visualisation en grille élégante montrant les jours écoulés
-• Support pour 18 langues et plusieurs thèmes
+• Support pour 22 langues et plusieurs thèmes
 • Partage sur les réseaux sociaux avec cartes de progrès dynamiques
 • Interface propre et sans distraction
 
@@ -324,7 +324,7 @@ Ce site ne collecte aucune information personnelle. Tous les paramètres (thème
 Hauptfunktionen:
 • Echtzeit-Fortschrittserfassung mit stündlichen Updates
 • Schöne Rastervisualisierung der abgeschlossenen Tage
-• Unterstützung für 18 Sprachen und mehrere Themes
+• Unterstützung für 22 Sprachen und mehrere Themes
 • Social Media Sharing mit dynamischen Fortschrittskarten
 • Saubere, ablenkungsfreie Benutzeroberfläche
 
@@ -380,7 +380,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
 主な機能：
 • 1時間ごとの更新によるリアルタイム進捗追跡
 • 経過した日数を美しいグリッドで視覚化
-• 18言語と複数テーマのサポート
+• 22言語と複数テーマのサポート
 • 動的な進捗カードでのソーシャルメディア共有
 • 清潔で気が散らないインターフェース
 
@@ -436,7 +436,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
 주요 기능:
 • 매시간 업데이트되는 실시간 진행률 추적
 • 지난 날들을 보여주는 아름다운 격자 시각화
-• 18개 언어와 여러 테마 지원
+• 22개 언어와 여러 테마 지원
 • 동적 진행률 카드를 통한 소셜 미디어 공유
 • 깔끔하고 방해 요소 없는 인터페이스
 
@@ -492,7 +492,7 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
 Recursos principais:
 • Rastreamento de progresso em tempo real com atualizações de hora em hora
 • Bela visualização em grade mostrando dias completados
-• Suporte para 18 idiomas e múltiplos temas
+• Suporte para 22 idiomas e múltiplos temas
 • Compartilhamento em redes sociais com cartões de progresso dinâmicos
 • Interface limpa e sem distrações
 
@@ -548,7 +548,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
 Основные функции:
 • Отслеживание прогресса в реальном времени с обновлением каждый час
 • Красивая сетчатая визуализация завершенных дней
-• Поддержка 18 языков и множества тем
+• Поддержка 22 языков и множества тем
 • Обмен в социальных сетях с динамическими карточками прогресса
 • Чистый интерфейс без отвлекающих элементов
 
@@ -604,7 +604,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
 الميزات الرئيسية:
 • تتبع التقدم في الوقت الفعلي مع التحديثات كل ساعة
 • تصور شبكي جميل يُظهر الأيام المكتملة
-• دعم لـ 18 لغة ومظاهر متعددة
+• دعم لـ 22 لغة ومظاهر متعددة
 • مشاركة وسائل التواصل الاجتماعي مع بطاقات تقدم ديناميكية
 • واجهة نظيفة وخالية من المشتتات
 
@@ -660,7 +660,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
 मुख्य विशेषताएं:
 • घंटे के अपडेट के साथ रियल-टाइम प्रगति ट्रैकिंग
 • पूर्ण दिनों को दिखाने वाला सुंदर ग्रिड विज़ुअलाइज़ेशन
-• 18 भाषाओं और कई थीम का समर्थन
+• 22 भाषाओं और कई थीम का समर्थन
 • डायनामिक प्रगति कार्ड के साथ सोशल मीडिया शेयरिंग
 • स्वच्छ, विकर्षण-मुक्त इंटरफेस
 
@@ -716,7 +716,7 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
 Caratteristiche principali:
 • Monitoraggio del progresso in tempo reale con aggiornamenti orari
 • Bella visualizzazione a griglia che mostra i giorni completati
-• Supporto per 18 lingue e temi multipli
+• Supporto per 22 lingue e temi multipli
 • Condivisione sui social media con carte di progresso dinamiche
 • Interfaccia pulita e senza distrazioni
 
@@ -772,7 +772,7 @@ Questo sito non raccoglie alcuna informazione personale. Tutte le impostazioni (
 Belangrijkste functies:
 • Real-time voortgangsvolging met uur-updates
 • Mooie rastervisualisatie die voltooide dagen toont
-• Ondersteuning voor 18 talen en meerdere thema's
+• Ondersteuning voor 22 talen en meerdere thema's
 • Sociale media delen met dynamische voortgangskaarten
 • Schone, afleidingsvrije interface
 
@@ -828,7 +828,7 @@ Deze site verzamelt geen persoonlijke informatie. Alle instellingen (thema, taal
 Ana Özellikler:
 • Saatlik güncellemelerle gerçek zamanlı ilerleme takibi
 • Tamamlanan günleri gösteren güzel ızgara görselleştirmesi
-• 18 dil ve çoklu tema desteği
+• 22 dil ve çoklu tema desteği
 • Dinamik ilerleme kartlarıyla sosyal medya paylaşımı
 • Temiz, dikkat dağıtmayan arayüz
 
@@ -884,7 +884,7 @@ Bu site hiçbir kişisel bilgi toplamaz. Tüm ayarlar (tema, dil vb.) yalnızca 
 Huvudfunktioner:
 • Realtids framstegsföljning med uppdateringar varje timme
 • Vacker rutnätsvisualisering som visar slutförda dagar
-• Stöd för 18 språk och flera teman
+• Stöd för 22 språk och flera teman
 • Delning på sociala medier med dynamiska framstegskort
 • Rent, distraktionsfritt gränssnitt
 
@@ -1108,7 +1108,7 @@ Denne siden samler ikke inn noen personlig informasjon. Alle innstillinger (tema
 Pääominaisuudet:
 • Reaaliaikainen edistymisen seuranta tunneittain päivitettynä
 • Kaunis ruudukkovisualisointi, joka näyttää suoritetut päivät
-• Tuki 18 kielelle ja useille teemoille
+• Tuki 22 kielelle ja useille teemoille
 • Sosiaalisen median jakaminen dynaamisilla edistymiskorteilla
 • Puhdas, häiriötön käyttöliittymä
 
@@ -1116,6 +1116,230 @@ Tämä projekti on avointa lähdekoodia ja suunniteltu hyödylliseksi muistutuks
 
 Tietojen tiedot:
 Tämä sivusto ei kerää mitään henkilökohtaisia tietoja. Kaikki asetukset (teema, kieli jne.) tallennetaan vain laitteellesi.`,
+  },
+  vi: {
+    title: 'YearProgress.org',
+    siteName: 'YearProgress.org',
+    description: 'Trực quan hóa tiến độ năm theo thời gian thực. Xem bao nhiêu phần trăm của năm đã trôi qua và bao nhiêu thời gian còn lại.',
+    yearProgress: 'Tiến Độ Năm',
+    subtitle: 'Trực quan hóa tiến độ năm theo thời gian thực',
+    complete: 'hoàn thành',
+    progressTitle: '{year} đã hoàn thành {percentage}%',
+    week: 'tuần',
+    day: 'ngày',
+    of: 'của',
+    daysCompleted: 'ngày đã hoàn thành',
+    daysRemaining: 'ngày còn lại',
+    shareInstructions: 'Chia sẻ liên kết này trên X (Twitter) để tạo thẻ tiến độ đẹp!',
+    currentDate: 'Ngày Hiện Tại',
+    timeWaits: 'Thời gian không chờ đợi ai, hãy trân trọng mỗi ngày!',
+    shareUrl: 'Chia sẻ URL',
+    copyLink: 'Sao chép Liên kết',
+    linkCopied: 'Đã sao chép liên kết vào bộ nhớ tạm!',
+    past: 'Quá khứ',
+    current: 'Hiện tại',
+    future: 'Tương lai',
+    shareToSocialMedia: 'Chia sẻ lên Mạng xã hội',
+    clickToShare: 'Nhấp bên dưới để chia sẻ lên mạng xã hội và tạo thẻ tiến độ đẹp!',
+    orCopyLink: 'Hoặc sao chép liên kết để chia sẻ',
+    copy: 'Sao chép',
+    copied: 'Đã sao chép!',
+    settings: 'Cài đặt',
+    theme: 'Chủ đề',
+    language: 'Ngôn ngữ',
+    twitterIcon: 'Biểu tượng Twitter',
+    close: 'Đóng',
+    weekDays: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'],
+    weekDayStatus: "Hôm nay là tuần {weekNumber}, ngày {dayNumber} của năm {year}.",
+    socialHashtags: ['TienDoNam'],
+    // 版权和法律信息
+    copyright: '© {year} YearProgress.org',
+    aboutSite: 'Về',
+    privacyPolicy: 'Chính sách Riêng tư',
+    termsOfService: 'Điều khoản Dịch vụ',
+    // 关于本站内容
+    aboutSiteTitle: 'Về YearProgress.org',
+    aboutSiteContent: `YearProgress.org là một công cụ trực quan hóa đơn giản và thanh lịch, cho thấy bao nhiêu phần trăm của năm hiện tại đã trôi qua. Mục tiêu của chúng tôi là giúp mọi người có cái nhìn rõ hơn về sự trôi đi của thời gian và tận dụng tối đa mỗi ngày.
+
+Tính năng chính:
+• Theo dõi tiến độ theo thời gian thực với cập nhật mỗi giờ
+• Trực quan hóa lưới đẹp mắt hiển thị các ngày đã hoàn thành
+• Hỗ trợ 22 ngôn ngữ và nhiều chủ đề
+• Chia sẻ mạng xã hội với thẻ tiến độ động
+• Giao diện sạch, không gây xao nhãng
+
+Dự án này là mã nguồn mở và được thiết kế như một lời nhắc nhở hữu ích rằng thời gian là quý giá. Dù bạn đang suy ngẫm về những thành tựu, lên kế hoạch cho tương lai, hay đơn giản là tò mò về tiến độ của năm, công cụ này cung cấp một góc nhìn rõ ràng và trực quan về vị trí của chúng ta trong dòng thời gian.
+
+Thông tin dữ liệu:
+Trang web này không thu thập bất kỳ thông tin cá nhân nào. Tất cả cài đặt (chủ đề, ngôn ngữ, v.v.) chỉ được lưu trữ trên thiết bị của bạn.`,
+  },
+  th: {
+    title: 'YearProgress.org',
+    siteName: 'YearProgress.org',
+    description: 'การแสดงผลความคืบหน้าปีแบบเรียลไทม์ ดูว่าปีนี้ผ่านไปแล้วเท่าไรและเหลือเวลาอีกเท่าไหร่',
+    yearProgress: 'ความคืบหน้าปี',
+    subtitle: 'การแสดงผลความคืบหน้าปีแบบเรียลไทม์',
+    complete: 'สมบูรณ์',
+    progressTitle: '{year} ผ่านไปแล้ว {percentage}%',
+    week: 'สัปดาห์',
+    day: 'วัน',
+    of: 'ของ',
+    daysCompleted: 'วันที่ผ่านไป',
+    daysRemaining: 'วันที่เหลือ',
+    shareInstructions: 'แชร์ลิงก์นี้บน X (Twitter) เพื่อสร้างการ์ดความคืบหน้าที่สวยงาม!',
+    currentDate: 'วันที่ปัจจุบัน',
+    timeWaits: 'เวลาไม่รอใคร ให้คุณให้คุณค่ากับทุกวัน!',
+    shareUrl: 'แชร์ URL',
+    copyLink: 'คัดลอกลิงก์',
+    linkCopied: 'คัดลอกลิงก์ไปยังคลิปบอร์ดแล้ว!',
+    past: 'อดีต',
+    current: 'ปัจจุบัน',
+    future: 'อนาคต',
+    shareToSocialMedia: 'แชร์บนโซเชียลมีเดีย',
+    clickToShare: 'คลิกด้านล่างเพื่อแชร์บนโซเชียลมีเดียและสร้างการ์ดความคืบหน้าที่สวยงาม!',
+    orCopyLink: 'หรือคัดลอกลิงก์เพื่อแชร์',
+    copy: 'คัดลอก',
+    copied: 'คัดลอกแล้ว!',
+    settings: 'การตั้งค่า',
+    theme: 'ธีม',
+    language: 'ภาษา',
+    twitterIcon: 'ไอคอน Twitter',
+    close: 'ปิด',
+    weekDays: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'],
+    weekDayStatus: "วันนี้คือสัปดาห์ที่ {weekNumber} วันที่ {dayNumber} ของปี {year}",
+    socialHashtags: ['ความคืบหน้าปี'],
+    // 版权和法律信息
+    copyright: '© {year} YearProgress.org',
+    aboutSite: 'เกี่ยวกับ',
+    privacyPolicy: 'นโยบายความเป็นส่วนตัว',
+    termsOfService: 'ข้อกำหนดการให้บริการ',
+    // 关于本站内容
+    aboutSiteTitle: 'เกี่ยวกับ YearProgress.org',
+    aboutSiteContent: `YearProgress.org เป็นเครื่องมือการแสดงผลภาพที่เรียบง่ายและสวยงาม แสดงให้เห็นว่าปีปัจจุบันผ่านไปแล้วเท่าไหร่ เป้าหมายของเราคือช่วยให้ผู้คนมองเห็นมุมมองเกี่ยวกับการผ่านไปของเวลาและใช้ประโยชน์จากทุกวันให้เต็มที่
+
+คุณสมบัติหลัก:
+• การติดตามความคืบหน้าแบบเรียลไทม์พร้อมอัปเดตทุกชั่วโมง
+• การแสดงผลภาพกริดที่สวยงามแสดงวันที่ผ่านไปแล้ว
+• รองรับ 22 ภาษาและหลายธีม
+• การแชร์โซเชียลมีเดียด้วยการ์ดความคืบหน้าแบบไดนามิก
+• อินเตอร์เฟซที่สะอาดและไม่รบกวน
+
+โปรเจกต์นี้เป็นโอเพ่นซอร์สและออกแบบมาเพื่อเป็นการเตือนใจที่มีประโยชน์ว่าเวลามีค่า ไม่ว่าคุณจะกำลังพิจารณาถึงความสำเร็จ วางแผนอนาคต หรือเพียงแค่อยากรู้ว่าปีนี้ผ่านไปเท่าไหร่ เครื่องมือนี้จะมอบมุมมองที่ชัดเจนและเป็นภาพเกี่ยวกับตำแหน่งของเราในเวลา
+
+ข้อมูลข้อมูล:
+เว็บไซต์นี้ไม่รวบรวมข้อมูลส่วนตัวใดๆ ทั้งสิ้น การตั้งค่าทั้งหมด (ธีม ภาษา ฯลฯ) จะถูกจัดเก็บไว้บนอุปกรณ์ของคุณเท่านั้น`,
+  },
+  id: {
+    title: 'YearProgress.org',
+    siteName: 'YearProgress.org',
+    description: 'Visualisasi kemajuan tahun secara real-time. Lihat berapa banyak tahun yang telah berlalu dan berapa banyak waktu yang tersisa.',
+    yearProgress: 'Kemajuan Tahun',
+    subtitle: 'Visualisasi kemajuan tahun secara real-time',
+    complete: 'selesai',
+    progressTitle: '{year} telah selesai {percentage}%',
+    week: 'minggu',
+    day: 'hari',
+    of: 'dari',
+    daysCompleted: 'hari selesai',
+    daysRemaining: 'hari tersisa',
+    shareInstructions: 'Bagikan tautan ini di X (Twitter) untuk menghasilkan kartu kemajuan yang indah!',
+    currentDate: 'Tanggal Saat Ini',
+    timeWaits: 'Waktu tidak menunggu siapa pun, hargai setiap hari!',
+    shareUrl: 'Bagikan URL',
+    copyLink: 'Salin Tautan',
+    linkCopied: 'Tautan disalin ke clipboard!',
+    past: 'Masa Lalu',
+    current: 'Saat Ini',
+    future: 'Masa Depan',
+    shareToSocialMedia: 'Bagikan ke Media Sosial',
+    clickToShare: 'Klik di bawah untuk berbagi ke media sosial dan menghasilkan kartu kemajuan yang indah!',
+    orCopyLink: 'Atau salin tautan untuk dibagikan',
+    copy: 'Salin',
+    copied: 'Disalin!',
+    settings: 'Pengaturan',
+    theme: 'Tema',
+    language: 'Bahasa',
+    twitterIcon: 'Ikon Twitter',
+    close: 'Tutup',
+    weekDays: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+    weekDayStatus: "Hari ini adalah minggu {weekNumber}, hari {dayNumber} dari tahun {year}.",
+    socialHashtags: ['KemajuanTahunan'],
+    // 版权和法律信息
+    copyright: '© {year} YearProgress.org',
+    aboutSite: 'Tentang',
+    privacyPolicy: 'Kebijakan Privasi',
+    termsOfService: 'Syarat dan Ketentuan',
+    // 关于本站内容
+    aboutSiteTitle: 'Tentang YearProgress.org',
+    aboutSiteContent: `YearProgress.org adalah alat visualisasi yang sederhana dan elegan yang menunjukkan berapa banyak dari tahun saat ini telah berlalu. Tujuan kami adalah membantu orang mendapatkan perspektif tentang berlalunya waktu dan memanfaatkan setiap hari sebaik mungkin.
+
+Fitur utama:
+• Pelacakan kemajuan real-time dengan pembaruan setiap jam
+• Visualisasi grid yang indah menunjukkan hari-hari yang telah selesai
+• Dukungan untuk 22 bahasa dan beberapa tema
+• Berbagi media sosial dengan kartu kemajuan dinamis
+• Antarmuka yang bersih dan bebas gangguan
+
+Proyek ini bersumber terbuka dan dirancang sebagai pengingat yang berguna bahwa waktu itu berharga. Baik Anda sedang merenungkan pencapaian, merencanakan masa depan, atau hanya sekadar penasaran tentang kemajuan tahun, alat ini memberikan perspektif yang jelas dan visual tentang di mana kita berada dalam waktu.
+
+Informasi data:
+Situs ini tidak mengumpulkan informasi pribadi apa pun. Semua pengaturan (tema, bahasa, dll.) hanya disimpan di perangkat Anda.`,
+  },
+  sw: {
+    title: 'YearProgress.org',
+    siteName: 'YearProgress.org',
+    description: 'Uwakilishaji wa maendeleo ya mwaka wakati halisi. Angalia kiasi gani cha mwaka umepita na kiasi gani cha wakati kinachobaki.',
+    yearProgress: 'Maendeleo ya Mwaka',
+    subtitle: 'Uwakilishaji wa maendeleo ya mwaka wakati halisi',
+    complete: 'kamili',
+    progressTitle: '{year} imekamilika {percentage}%',
+    week: 'wiki',
+    day: 'siku',
+    of: 'ya',
+    daysCompleted: 'siku zimekamilika',
+    daysRemaining: 'siku zimebaki',
+    shareInstructions: 'Shiriki kiungo hiki kwenye X (Twitter) kuzalisha kadi nzuri ya maendeleo!',
+    currentDate: 'Tarehe ya Sasa',
+    timeWaits: 'Muda hauangalii mtu, thamani kila siku!',
+    shareUrl: 'Shiriki URL',
+    copyLink: 'Nakili Kiungo',
+    linkCopied: 'Kiungo kimenuzuliwa kwenye ubao!',
+    past: 'Uliopita',
+    current: 'Sasa',
+    future: 'Ujao',
+    shareToSocialMedia: 'Shiriki kwenye Mitandao ya Kijamii',
+    clickToShare: 'Bofya chini kushiriki kwenye mitandao ya kijamii na kuzalisha kadi nzuri za maendeleo!',
+    orCopyLink: 'Au nakili kiungo kushiriki',
+    copy: 'Nakili',
+    copied: 'Imenakiliwa!',
+    settings: 'Mipangilio',
+    theme: 'Mandhari',
+    language: 'Lugha',
+    twitterIcon: 'Alama ya Twitter',
+    close: 'Funga',
+    weekDays: ['Jumapili', 'Jumatatu', 'Jumanne', 'Jumatano', 'Alhamisi', 'Ijumaa', 'Jumamosi'],
+    weekDayStatus: "Leo ni wiki {weekNumber}, siku {dayNumber} ya mwaka {year}.",
+    socialHashtags: ['MaendeleoYaMwaka'],
+    // 版权和法律信息
+    copyright: '© {year} YearProgress.org',
+    aboutSite: 'Kuhusu',
+    privacyPolicy: 'Sera ya Faragha',
+    termsOfService: 'Masharti ya Huduma',
+    // 关于本站内容
+    aboutSiteTitle: 'Kuhusu YearProgress.org',
+    aboutSiteContent: `YearProgress.org ni zana rahisi na maridadi ya kuonyesha kiasi gani cha mwaka wa sasa kinapita. Lengo letu ni kusaidia watu kupata mtazamo kuhusu kupita kwa muda na kufaidi kila siku kikamilifu.
+
+Vipengele vikuu:
+• Ufuatiliaji wa maendeleo halisi kwa masasisho ya kila saa
+• Uwakilishaji mzuri wa gridi unaonyesha siku zilizokamilika
+• Msaada kwa lugha 22 na mandhari mbalimbali
+• Kushiriki katika mitandao ya kijamii kwa kadi za maendeleo zenye nguvu
+• Kiolesura safi isiyo na kero
+
+Mradi huu ni chanzo wazi na uliundwa kama kumbukumbu muhimu kuwa muda ni thamani. Iwe unafikiria mafanikio, unapanga siku zijazo, au tu una shauku kuhusu maendeleo ya mwaka, zana hii inatoa mtazamo wazi na wa kuona kuhusu wapi tulipo katika muda.
+
+Maelezo ya data:
+Tovuti hii hakusanyi habari yoyote binafsi. Mipangilio yote (mandhari, lugha, nk.) imerahisishwa kwenye kifaa chako pekee.`,
   },
 } as const;
 
@@ -1173,7 +1397,7 @@ export function detectLanguage(browserLang: string): Language {
   const fullLangCode = browserLang.toLowerCase();
   
   // 支持的语言映射
-  const languageMap: { [key: string]: Language } = {
+  const languageMap: Record<string, Language> = {
     'zh': 'zh-cn', // 浏览器语言代码 zh 映射到 zh-cn
     'zh-cn': 'zh-cn',
     'zh-tw': 'zh-tw',
@@ -1196,6 +1420,10 @@ export function detectLanguage(browserLang: string): Language {
     'da': 'da',
     'no': 'no',
     'fi': 'fi',
+    'vi': 'vi',
+    'th': 'th',
+    'id': 'id',
+    'sw': 'sw',
   };
 
   // 先检查完整的语言代码（如 zh-tw, zh-cn）
@@ -1208,7 +1436,7 @@ export function detectLanguage(browserLang: string): Language {
 }
 
 export function getLanguageDisplayName(lang: Language): string {
-  const displayNames: { [K in Language]: string } = {
+  const displayNames: Record<Language, string> = {
     en: 'English',
     'zh-cn': '简体中文',
     'zh-tw': '繁體中文',
@@ -1229,6 +1457,10 @@ export function getLanguageDisplayName(lang: Language): string {
     da: 'Dansk',
     no: 'Norsk',
     fi: 'Suomi',
+    vi: 'Tiếng Việt',
+    th: 'ไทย',
+    id: 'Bahasa Indonesia',
+    sw: 'Kiswahili',
   };
 
   return displayNames[lang];
