@@ -2,697 +2,506 @@
 
 ## Project Overview
 
-A real-time yearly progress visualization app built with Next.js 15, TypeScript, and Tailwind CSS v4. Features 19-language internationalization, custom theme system, social sharing, and dynamic OG image generation.
+A real-time yearly progress visualization application built with Next.js 15, TypeScript, and Tailwind CSS v4. Features comprehensive internationalization with 29 languages, custom theme system, social media sharing, and dynamic OG image generation.
 
-## Common Gotchas & Solutions
+## Architecture & Key Systems
 
-### Tailwind CSS v4 Dark Mode Issues
-- **Problem**: `dark:` prefixes don't work reliably
-- **Solution**: Use manual CSS classes in `globals.css` with `.dark` selectors
-- **Pattern**: Always add `!important` and test theme switching functionality
+### Technology Stack
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript for type safety
+- **Styling**: Tailwind CSS v4 with manual theme overrides
+- **State Management**: React hooks with localStorage persistence
+- **Internationalization**: Custom modular i18n system supporting 29 languages
+- **Performance**: Turbopack for optimized builds
 
-### Settings Modal Development Issues
-- **Animation timing**: Requires 50ms delay for open animation, not 10ms
-- **Overflow conflicts**: Modal needs `overflow-hidden` for rounded corners, but clips dropdowns
-- **Solution**: Use React Portal to render dropdowns outside modal container
-- **Dropdown positioning**: Calculate `getBoundingClientRect()` before Portal render
-- **Z-index management**: Portal dropdowns need `z-[9999]` to appear above modal backdrop
+### Core Systems
 
-### Custom Dropdown vs HTML Select
-- **HTML Select limitations**: No styling control, poor mobile UX, theme conflicts
-- **Custom solution**: Button trigger + Portal dropdown + position calculation
-- **Scroll handling**: 8-item height limit with custom scrollbar via CSS
-- **Click-outside logic**: Must account for Portal-rendered elements in DOM tree
+#### Theme System (`src/lib/theme.ts`)
+- **Custom implementation** bypassing Tailwind's `dark:` prefixes due to v4 compatibility
+- **Three modes**: `light`, `dark`, `system` with localStorage persistence
+- **Manual CSS overrides** in `globals.css` using `.dark` class selectors
+- **Critical pattern**: Always use `applyTheme()` function, not Tailwind classes
 
-### Footer Design and Information Architecture
-- **Low-profile principle**: Footer should be nearly invisible, occupying minimal space without contrasting colors
-- **Information hierarchy**: Use "About This Site" link instead of displaying privacy statements directly
-- **Legal page strategy**: For simple tool sites, avoid complex privacy policies/ToS that may seem "over-formal"
-- **Optimal approach**: Single privacy statement in About page, no separate legal pages to avoid user suspicion
-- **Domain credibility**: .org domains benefit from appearing organizational rather than personal
+#### Internationalization System (`src/lib/i18n/`)
+- **29 languages** with full translation support including RTL (Arabic)
+- **Modular architecture**: Individual files per language (~4KB each) instead of monolithic file
+- **Template strings** with placeholders: `'{year} is {percentage}% complete'`
+- **Browser detection** with localStorage fallback and migration logic
+- **Centralized helper functions** for consistent text formatting
 
-#### Multi-language Architecture Principles
-1. **Single source of truth**: All translations must be defined in the `translations` object; hard-coding is not permitted.
-2. **Template system**: Use `{placeholder}` placeholders instead of string concatenation.
-3. **Language neutrality**: Helper functions should not contain language-specific conditionals.
-4. **Centralized management**: All helper functions are placed in `i18n.ts` and exported for reuse.
-5. **Type safety**: New translation keys must be added simultaneously to all languages ​​to avoid TypeScript errors.
-
-### CSS Color Management and Theme System Issues
-- **Global CSS override problems**: `globals.css` rules with `!important` can cascade unexpectedly across themes
-- **Button styling conflicts**: Global button styles in dark mode can affect light mode if not properly scoped
-- **Text color visibility**: Light mode requires darker gray colors for readability on white backgrounds
-- **CSS rule organization**: Group all color rules by theme mode, not by component, for better maintainability
-- **Critical debugging pattern**: When theme switching breaks, check for CSS rule conflicts and specificity issues
-
-#### CSS Theme Color Management Pattern
-```css
-/* ===== Centralized Color Management ===== */
-/* Light mode text colors */
-:not(.dark) .text-gray-900 { color: #111827 !important; }
-:not(.dark) .text-gray-400 { color: #4b5563 !important; }
-:not(.dark) .text-gray-500 { color: #374151 !important; }
-
-/* Dark mode text colors */
-.dark .text-gray-900 { color: #ffffff !important; }
-.dark .text-gray-400 { color: #d1d5db !important; }
-.dark .text-gray-500 { color: #d1d5db !important; }
+##### Supported Languages
+```typescript
+type Language = 
+  | 'en' | 'zh-cn' | 'zh-tw' | 'es' | 'fr' | 'de' | 'ja' | 'ko' | 'pt' | 'ru' 
+  | 'ar' | 'hi' | 'it' | 'nl' | 'tr' | 'sv' | 'pl' | 'da' | 'no' | 'fi' 
+  | 'vi' | 'th' | 'id' | 'sw' | 'bn' | 'ne' | 'ur' | 'my' | 'fil';
 ```
 
-### Modal Component Architecture
-- **InfoModal pattern**: Generic text-display modal for About/Help content with consistent animation
-- **Reusable design**: Single InfoModal component handles title, content, and close button text
-- **Animation consistency**: Use same timing as SettingsModal (50ms open delay, 350ms close duration)
-- **Content management**: Pass content dynamically rather than hard-coding different modal components
+##### Key I18n Functions
+- `getTranslation(language, key)`: Get localized text
+- `getLanguageDisplayName(lang)`: Get native language name
+- `getCachedLanguages()`: Get all supported languages
+- `formatProgressTitle(lang, year, percentage)`: Format progress titles
+- `detectLanguage(browserLang)`: Auto-detect browser language
 
-### Social Media Sharing Internationalization
-- **Centralized text source**: Always use `progressTitle` from `i18n.ts` instead of hardcoded strings
-- **Helper function pattern**: Create `formatProgressTitle(language, year, percentage)` for consistent formatting
-- **Template replacement**: Use `getTranslation(language, 'progressTitle')` with `.replace('{year}', year).replace('{percentage}', percentage)`
-- **Platform consistency**: Apply same localized text across Twitter, Facebook, Telegram, Reddit, Weibo, Instagram
-- **Avoid hardcoded conditionals**: Replace language-specific conditionals with centralized i18n helper functions
-- **Social hashtags integration**: Use `getTranslation(language, 'socialHashtags')` for platform-specific hashtags
+#### Progress Calculation (`src/lib/yearProgress.ts`)
+- **Precise day counting** from January 1st, handling leap years correctly
+- **Real-time updates** every hour via `setInterval`
+- Returns structured data: `{ year, totalDays, daysPassed, percentage, remainingDays }`
+- **Grid visualization**: 53×7 squares representing weeks/days
 
-#### Social Media Multilingual Refactoring Pattern
+#### Settings System (`src/components/SettingsModal.tsx`)
+- **Cookie-based persistence** with 365-day expiration
+- **Animated modal** with iOS-style popup and backdrop blur
+- **Portal-based dropdowns** to avoid overflow clipping
+- **Three categories**: Theme switching, language selection, Twitter icon toggle
+
+### Styling Architecture
+- **Tailwind CSS v4** with custom CSS overrides for theme compatibility
+- **Manual dark mode**: `.dark` class with `!important` declarations
+- **Responsive design**: Mobile-first with breakpoint prefixes
+- **Custom color scheme**: Specific hex values for consistency
+
+## Development Workflows
+
+### Running the Application
+```bash
+npm run dev --turbopack    # Development with Turbopack
+npm run build --turbopack  # Production build
+npm run preview           # Build + start combo
+```
+
+### Critical Development Patterns
+
+#### Theme Development
+1. **Always test both light and dark modes**
+2. **Use manual CSS classes** instead of `dark:` prefixes
+3. **Test system preference switching** functionality
+4. **Check CSS rule conflicts** in `globals.css`
+
+#### Internationalization Development
+1. **Use centralized i18n functions** - never hardcode text
+2. **Template system**: Use `{placeholder}` instead of string concatenation
+3. **Test all 29 languages** when adding new UI strings
+4. **Consider RTL support** for Arabic and other RTL languages
+
+#### Modal Development
+1. **Animation timing**: 50ms delay for open, 350ms for close
+2. **Portal dropdowns**: Use for complex UI overlays
+3. **Click-outside handling**: Account for Portal-rendered elements
+4. **Position calculation**: Use `getBoundingClientRect()` before rendering
+
+## How to Add a New Language
+
+### Prerequisites
+- Understand the project's DRY principle and i18n architecture
+- Have translation skills or access to translation resources
+- Familiarity with TypeScript and the project structure
+
+### Step-by-Step Guide
+
+#### Step 1: Add Language Translation File
+Create a new file in `src/lib/i18n/locales/` with the language code:
+
 ```typescript
-// ❌ WRONG: Hardcoded language-specific text
-title={language === 'zh-cn' || language === 'zh-tw' 
-  ? `${progress.year}年已过去了${progress.percentage}%`
-  : `${progress.year} is ${progress.percentage}% complete.`
-}
+// src/lib/i18n/locales/[language-code].ts
+import { Translation } from './types';
 
-// ✅ CORRECT: Use centralized i18n system
-const formatProgressTitle = (language: Language, year: number, percentage: number): string => {
+export const translations: Translation = {
+  title: 'YearProgress.org',
+  siteName: 'YearProgress.org',
+  description: 'Translated description...',
+  yearProgress: 'Year Progress',
+  subtitle: 'Real-time Yearly Progress Visualization',
+  complete: 'complete',
+  progressTitle: '{year} is {percentage}% complete',
+  week: 'week',
+  day: 'day',
+  of: 'of',
+  daysCompleted: 'days completed',
+  daysRemaining: 'days remaining',
+  // ... all other required translation keys
+  weekDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  weekDayStatus: "Today is week {weekNumber}, day {dayNumber} of {year}.",
+  socialHashtags: ['YearProgress'],
+  copyright: '© {year} YearProgress.org',
+  aboutSite: 'About',
+  privacyPolicy: 'Privacy Policy',
+  termsOfService: 'Terms of Service',
+  aboutSiteTitle: 'About YearProgress.org',
+  aboutSiteContent: `Translated about content...`,
+};
+```
+
+#### Step 2: Update Core I18n System
+In `src/lib/i18n/index.ts`:
+
+1. **Add to Language type**:
+```typescript
+export type Language = 
+  | 'en' | 'zh-cn' | 'zh-tw' | 'es' | 'fr' | 'de' | 'ja' | 'ko' | 'pt' | 'ru' 
+  | 'ar' | 'hi' | 'it' | 'nl' | 'tr' | 'sv' | 'pl' | 'da' | 'no' | 'fi' 
+  | 'vi' | 'th' | 'id' | 'sw' | 'bn' | 'ne' | 'ur' | 'my' | 'fil' | 'your-lang';
+```
+
+2. **Add import**:
+```typescript
+import { translations as yourLang } from './locales/your-lang';
+```
+
+3. **Add to allTranslations**:
+```typescript
+const allTranslations: Record<Language, Translation> = {
+  // ... existing languages
+  'your-lang': yourLang,
+};
+```
+
+4. **Update supported languages array**:
+```typescript
+const supportedLanguages: Language[] = [
+  'en', 'zh-cn', 'zh-tw', 'es', 'fr', 'de', 'ja', 'ko', 'pt', 'ru', 
+  'ar', 'hi', 'it', 'nl', 'tr', 'sv', 'pl', 'da', 'no', 'fi', 
+  'vi', 'th', 'id', 'sw', 'bn', 'ne', 'ur', 'my', 'fil', 'your-lang'
+];
+```
+
+5. **Add to languageMap**:
+```typescript
+const languageMap: Record<string, Language> = {
+  // ... existing mappings
+  'your-lang': 'your-lang',
+};
+```
+
+6. **Add to display names**:
+```typescript
+export function getLanguageDisplayName(lang: Language): string {
+  const displayNames: Record<Language, string> = {
+    // ... existing languages
+    'your-lang': 'Native Language Name',
+  };
+  return displayNames[lang];
+}
+```
+
+7. **Add to OpenGraph locale mapping**:
+```typescript
+export const getOgLocale = (language: Language): string => {
+  const localeMap: Record<Language, string> = {
+    // ... existing mappings
+    'your-lang': 'your_LOCALE',
+  };
+  return localeMap[language] || 'en_US';
+};
+```
+
+8. **Update language count**:
+```typescript
+export const SUPPORTED_LANGUAGES_COUNT = 30; // Increment by 1
+```
+
+#### Step 3: Update Library Files
+
+**Theme names** (`src/lib/theme.ts`):
+```typescript
+export function getThemeDisplayName(theme: Theme, language: Language): string {
+  const translations: Record<Language, Record<Theme, string>> = {
+    // ... existing languages
+    'your-lang': {
+      light: 'Light',
+      dark: 'Dark', 
+      system: 'System'
+    }
+  };
+  return translations[language]?.[theme] || theme;
+}
+```
+
+**Settings display names** (`src/lib/settings.ts`):
+```typescript
+export function getTwitterIconDisplayName(icon: TwitterIcon, language: Language): string {
+  const translations: Record<Language, Record<TwitterIcon, string>> = {
+    // ... existing languages
+    'your-lang': {
+      bird: 'Twitter Bird',
+      x: 'X Logo'
+    }
+  };
+  return translations[language]?.[icon] || icon;
+}
+```
+
+**Structured data** (`src/lib/structuredData.ts`):
+```typescript
+const descriptions: Record<Language, string> = {
+  // ... existing languages
+  'your-lang': 'Translated description...',
+};
+
+const names: Record<Language, string> = {
+  // ... existing languages  
+  'your-lang': 'YearProgress.org',
+};
+
+const homeNames: Record<Language, string> = {
+  // ... existing languages
+  'your-lang': 'Home',
+};
+
+export const inLanguage: Language[] = [
+  'en', 'zh-cn', 'zh-tw', 'es', 'fr', 'de', 'ja', 'ko', 'pt', 'ru', 
+  'ar', 'hi', 'it', 'nl', 'tr', 'sv', 'pl', 'da', 'no', 'fi', 
+  'vi', 'th', 'id', 'sw', 'bn', 'ne', 'ur', 'my', 'fil', 'your-lang'
+];
+```
+
+#### Step 4: SEO and Metadata Updates
+
+The following files should automatically pick up the new language:
+
+- **`src/app/sitemap.ts`**: Auto-includes via `Object.keys(translations)`
+- **`src/app/layout.tsx`**: Auto-generates hreflang tags
+- **`src/app/robots.ts`**: Uses centralized domain management
+
+#### Step 5: Cultural Considerations
+
+**Date and Number Formatting**:
+- Consider local date format preferences (MM/DD vs DD/MM vs YYYY-MM-DD)
+- Number formatting (comma vs period separators)
+- Add language-specific formatting to i18n helper functions if needed
+
+**Text Direction**:
+- For RTL languages (Arabic, Hebrew, Persian), add CSS direction support
+- Test with RTL text direction in browser
+
+**Cultural Adaptation**:
+- Adapt cultural references and examples
+- Consider local holidays and calendar systems
+- Verify color symbolism and imagery appropriateness
+
+#### Step 6: Testing
+
+1. **Build verification**:
+```bash
+npm run build --turbopack
+```
+
+2. **Language dropdown test**:
+- Open settings modal
+- Verify new language appears in dropdown
+- Test language selection and persistence
+
+3. **Text display test**:
+- Navigate through all UI elements
+- Verify all text is properly translated
+- Check for missing translation keys
+
+4. **OG image test**:
+- Test social media sharing
+- Verify OG image generates correctly
+- Check text formatting in social cards
+
+## DRY Principle: The Foundation of This Project
+
+### Why DRY is Critical
+
+This project strictly adheres to the **Don't Repeat Yourself (DRY)** principle. Violating DRY leads to:
+- **Maintenance nightmares**: Changes require updates in multiple places
+- **Inconsistency bugs**: Duplicated code diverges over time
+- **Feature gaps**: New features miss duplicated implementations
+- **Technical debt**: Accumulation of workarounds and fixes
+
+### Real-World Example: The SettingsModal Disaster
+
+**Problem**: SettingsModal.tsx had duplicate language definitions:
+```typescript
+// ❌ VIOLATION: Duplicate code in SettingsModal.tsx
+const languages = ['en', 'zh-cn', 'zh-tw', /*...*/];
+const getLanguageDisplayName = (lang: string): string => {
+  const names: Record<string, string> = { /*...*/ };
+  return names[lang] || lang;
+};
+```
+
+**Consequences**:
+- When new languages (ne, ur, my, fil) were added to the i18n system, they didn't appear in the UI
+- Users couldn't select the new languages despite them being fully supported
+- The bug existed because the duplicated code wasn't updated
+
+**Solution**:
+```typescript
+// ✅ CORRECT: Use centralized i18n functions
+import { getCachedLanguages, getLanguageDisplayName } from '@/lib/i18n';
+
+const languages = getCachedLanguages(); // Always current
+// getLanguageDisplayName imported from i18n module
+```
+
+### DRY Patterns in This Project
+
+#### 1. Single Source of Truth
+**Text Management**: All user-visible text defined in `src/lib/i18n/locales/`
+**Domain Management**: Single `PRODUCTION_URL` constant in `src/lib/utils/baseUrl.ts`
+**Configuration**: Centralized in respective `lib/` modules
+
+#### 2. Centralized Helper Functions
+```typescript
+// ✅ CORRECT: Reusable helper functions
+export const formatProgressTitle = (language: Language, year: number, percentage: number): string => {
   const template = getTranslation(language, 'progressTitle') as string;
   return template.replace('{year}', year.toString()).replace('{percentage}', percentage.toString());
 };
 
-title={formatProgressTitle(language, progress.year, progress.percentage)}
+// Used in: UI components, social sharing, OG images, SEO metadata
 ```
 
-A real-time yearly progress visualization app built with Next.js 15, TypeScript, and Tailwind CSS v4. Features 19-language internationalization, custom theme system, social sharing, and dynamic OG image generation.
-
-## Architecture & Key Systems
-
-### Theme System (`src/lib/theme.ts`)
-- **Custom implementation** bypassing Tailwind's `dark:` prefixes due to v4 compatibility issues
-- **Manual CSS overrides** in `globals.css` using `.dark` class selectors with `!important`
-- **Three modes**: `light`, `dark`, `system` with localStorage persistence
-- **Critical pattern**: Use `applyTheme()` function, not Tailwind classes, for theme switching
-- Theme state managed in main page component with system theme detection
-
-### Internationalization (`src/lib/i18n.ts`) 
-- **19 languages** with full translation support including RTL (Arabic)
-- **Chinese variants**: `zh-cn` (Simplified) and `zh-tw` (Traditional) with proper standards
-- **Template strings** with placeholders: `'{year} is {percentage}% complete'`
-- **Browser detection** with localStorage fallback and migration logic
-- **Language-specific formatting** for dates, numbers, and cultural content
-- All UI text must go through `getTranslation(lang, key)` function
-
-#### Language Standards & Migration
-- **Standard codes**: Use BCP 47 language tags (`zh-cn`, `zh-tw`, not just `zh`)
-- **Migration logic**: Automatically converts legacy language codes in `getInitialLanguage()`
-- **Browser detection**: Handles full locale codes (`zh-CN`, `zh-TW`, `zh-HK`, `zh-SG`)
-- **Regional mapping**: `zh-hk` → `zh-tw`, `zh-sg` → `zh-cn` for regional preferences
-
-#### Adding New Languages - Complete Checklist
-When adding a new language (e.g., `pt-br` for Brazilian Portuguese):
-
-1. **Core Translation (`src/lib/i18n.ts`)**
-   - Add new language object to `translations` with all required keys
-   - Update `Language` type to include new code
-   - Add to `languageMap` in `detectLanguage()` function
-   - Add display name in `getLanguageDisplayName()`
-
-2. **Component Files**
-   - **SettingsModal.tsx**: Add to `languages` array and `getLanguageDisplayName()` function
-   - **YearProgressClient.tsx**: Update language-specific logic (if needed)
-   - Consider special formatting needs (RTL, date formats, number formats)
-
-3. **Library Files Updates**
-   - **theme.ts**: Add translations for theme names (`light`, `dark`, `system`)
-   - **settings.ts**: Add translations for TwitterIcon display names (`x`, `bird`)
-   - **structuredData.ts**: Add to `descriptions`, `names`, `homeNames`, and `inLanguage` array
-
-4. **SEO & Metadata**
-   - **sitemap.ts**: Language will be auto-included via `Object.keys(translations)`
-   - **layout.tsx**: Hreflang tags generated automatically
-   - **og/route.tsx**: Consider if OG image needs language-specific formatting
-   - **structuredData.ts**: Update structured data language arrays
-
-5. **Cultural Considerations**
-   - Date formatting preferences (MM/DD vs DD/MM vs YYYY-MM-DD)
-   - Number formatting (comma vs period separators)
-   - RTL support (Arabic, Hebrew) requires CSS direction changes
-   - Cultural content adaptation (holidays, cultural references)
-
-#### Language-Specific Logic Pattern
+#### 3. Template System
 ```typescript
-// Helper function for date formatting (now centralized in i18n.ts)
-const formatMonthDay = (language: Language, date: Date): string => {
-  if (language === 'zh-cn' || language === 'zh-tw') {
-    return `${date.getMonth() + 1}月${date.getDate()}日`;
-  }
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-};
-
-// Use in components by importing from i18n.ts
-import { formatMonthDay } from '@/lib/i18n';
-```
-
-### Progress Calculation (`src/lib/yearProgress.ts`)
-- **Precise day counting** from Jan 1st, handling leap years correctly  
-- **Real-time updates** every hour via `setInterval`
-- Returns structured data: `{ year, totalDays, daysPassed, percentage, remainingDays }`
-- Progress grid visualization: 53×7 squares representing weeks/days
-
-### Styling Architecture
-- **Tailwind CSS v4** with custom CSS overrides for theme compatibility
-- **Manual dark mode**: `.dark` class with `!important` declarations in `globals.css`
-- **Responsive design**: Mobile-first with `sm:`, `md:`, `lg:` breakpoints
-- **Custom color scheme**: Specific hex values (#101828, #374151, #1e2939, etc.)
-- **Hover effects**: Dropdowns with 150ms delay for UX smoothness
-
-## Development Workflows
-
-### Running the App
-```bash
-npm run dev --turbopack  # Development with Turbopack
-npm run build --turbopack  # Production build
-npm run preview  # Build + start combo
-```
-
-### Critical Development Patterns
-1. **Theme changes**: Always test both light/dark modes and system preference switching
-2. **i18n updates**: Verify all 18 language files when adding new UI strings
-3. **CSS conflicts**: Check `globals.css` manual overrides don't break with Tailwind updates
-4. **Mobile responsive**: Progress grid auto-scales based on screen width calculations
-5. **Modal animations**: Use 50ms delay for open animations, 350ms for close timing
-6. **Portal dropdowns**: Calculate position with `getBoundingClientRect()` before rendering
-7. **Click-outside handling**: Account for Portal elements in event delegation logic
-
-### Component Architecture
-- **Single page app**: Main logic in `src/app/page.tsx` (610 lines)
-- **Settings system**: Complete modal in `src/components/SettingsModal.tsx` with Cookie persistence
-- **Hover-based UI**: Language/theme selectors appear on hover with timeout cleanup
-- **State management**: React hooks for theme, language, progress, UI states
-- **Social sharing**: React-share integration with custom styling overrides
-
-### Settings System (`src/components/SettingsModal.tsx`)
-- **Cookie-based persistence**: 365-day expiration with `js-cookie` library
-- **Animated modal**: iOS-style popup with backdrop blur and scale animation
-- **Three setting categories**: Theme switching, language selection, Twitter icon toggle
-- **Portal-based dropdowns**: Custom language selector using React Portal to avoid overflow clipping
-- **Click-outside handling**: Proper event management for dropdown closing
-
-#### Settings Modal Animation Pattern
-```typescript
-// Two-stage animation with proper timing
-useEffect(() => {
-  if (isOpen) {
-    setShouldRender(true);
-    const timer = setTimeout(() => setIsAnimating(true), 50); // 50ms delay crucial
-    return () => clearTimeout(timer);
-  } else {
-    setIsAnimating(false);
-    const timer = setTimeout(() => setShouldRender(false), 350);
-    return () => clearTimeout(timer);
-  }
-}, [isOpen]);
-```
-
-#### Portal-based Dropdown Pattern
-```typescript
-// State management for position calculation
-const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
-
-// Position calculation before opening
-const updateDropdownPosition = () => {
-  if (dropdownRef.current) {
-    const rect = dropdownRef.current.getBoundingClientRect();
-    setDropdownPosition({
-      top: rect.bottom + 4,
-      left: rect.left, 
-      width: rect.width
-    });
-  }
-};
-
-// Portal rendering outside modal
-{isOpen && typeof window !== 'undefined' && createPortal(
-  <div style={{ position: 'fixed', top: dropdownPosition.top, left: dropdownPosition.left }}>
-    {/* Dropdown content */}
-  </div>,
-  document.body
-)}
-```
-
-#### Custom Scrollbar Styling
-```css
-.scrollbar-thin::-webkit-scrollbar { width: 6px; }
-.scrollbar-thin::-webkit-scrollbar-thumb { background-color: #d1d5db; border-radius: 3px; }
-.dark .scrollbar-thin::-webkit-scrollbar-thumb { background-color: #4b5563; }
-```
-
-### OG Image Generation (`src/app/api/og/route.tsx`)
-- **Edge runtime** for performance
-- **Dynamic generation** based on current date/progress
-- **Pixel-perfect grid** matching main UI visualization
-- **Social media optimized** 1200×630 dimensions
-- **Parameterized URLs**: Supports `year`, `day`, `lang` parameters for historical accuracy
-- **Cache-friendly**: Each parameter combination creates unique URL to prevent social media cache conflicts
-
-### Social Sharing System
-- **Parameter-based sharing**: URLs include `?year=2024&day=249&lang=en` to lock progress at sharing time
-- **OG image consistency**: Shared links always show progress from the moment they were shared
-- **Language separation**: URL `lang` parameter only affects OG image, not page UI language
-- **Historical accuracy**: Past shares remain accurate even if accessed later
-- **Multi-language share text**: All social media platforms use `progressTitle` from `i18n.ts` for consistent localized sharing content
-- **Centralized text formatting**: `formatProgressTitle()` helper function ensures consistent progress text across UI and social sharing
-- **Social platform support**: Twitter/X, Facebook, Telegram, Reddit, Weibo, Instagram with localized content
-
-### SEO System (`src/app/robots.ts`, `src/app/sitemap.ts`, `src/app/manifest.ts`)
-- **Dynamic domain detection**: Automatically uses correct domain based on environment
-- **Multi-environment support**: Localhost for dev, production domain for live/preview environments
-- **robots.txt generation**: Next.js 15 MetadataRoute.Robots with crawl rules and sitemap reference
-- **sitemap.xml generation**: Automatic sitemap with all 19 languages and yearly variations
-- **PWA manifest**: Complete manifest.webmanifest for app installation support
-- **Production domain**: `https://www.yearprogress.org` (centralized in `src/lib/utils/baseUrl.ts`)
-
-#### Dynamic Domain Management (`src/lib/utils/baseUrl.ts`)
-- **DRY principle**: Single `PRODUCTION_URL` constant to avoid duplication
-- **Environment detection**: Automatic localhost detection for development
-- **Vercel preview handling**: Preview domains redirect to production domain for SEO consistency
-- **Environment variable support**: `NEXT_PUBLIC_SITE_URL` override capability
-- **Three functions**: `getBaseUrl()`, `getBaseUrlAsync()`, `getClientBaseUrl()` for different contexts
-
-#### SEO File Structure
-```
-src/app/
-├── robots.ts          # Dynamic robots.txt generation
-├── sitemap.ts         # Multi-language sitemap with yearly variations
-├── manifest.ts        # PWA manifest for app installation
-└── layout.tsx         # Enhanced metadata with hreflang and structured data
-
-src/lib/
-├── utils/baseUrl.ts   # Centralized domain management utilities
-└── structuredData.ts  # Schema.org JSON-LD structured data generation
-```
-
-#### SEO Best Practices Implemented
-- **Structured data**: Schema.org WebApplication and BreadcrumbList markup
-- **Multi-language hreflang**: All 19 languages properly declared in metadata
-- **Crawl optimization**: Different crawl delays for different search engines
-- **Cache-friendly URLs**: Parameterized OG images prevent social media cache conflicts
-- **Mobile optimization**: PWA manifest with proper icons and display modes
-- **Environment consistency**: Preview domains use production URLs to maintain SEO integrity
-
-## Common Gotchas & Solutions
-
-### Tailwind CSS v4 Dark Mode Issues
-- **Problem**: `dark:` prefixes don't work reliably
-- **Solution**: Use manual CSS classes in `globals.css` with `.dark` selectors
-- **Pattern**: Always add `!important` and test theme switching functionality
-
-### Theme State Hydration
-- **SSR mismatch**: Theme initialized after hydration to prevent flicker
-- **Pattern**: Use `useEffect` with `mounted` state for client-only theme logic
-- **System theme**: Listen to `prefers-color-scheme` media query changes
-
-### Internationalization Edge Cases  
-- **RTL languages**: Arabic needs special text direction handling
-- **Date formatting**: Use browser's `toLocaleDateString` with locale codes
-- **Template replacement**: Handle pluralization and cultural number formats
-- **Legacy migration**: Always provide migration path for old language codes (e.g., `zh` → `zh-cn`)
-- **Regional variations**: Consider country-specific variants (`zh-hk`, `zh-sg`, `pt-br`, `en-gb`)
-- **Helper functions**: Use centralized i18n helper functions instead of multiple equality checks
-- **OG locale mapping**: Map language codes to proper OpenGraph locales (`zh-cn` → `zh_CN`, `zh-tw` → `zh_TW`)
-
-#### Language Code Migration Pattern
-```typescript
-// Handle legacy settings during initialization
-export function getInitialLanguage(): Language {
-  const saved = localStorage.getItem('language');
-  
-  // Migrate legacy language codes
-  if (saved === 'zh') {
-    const migratedLang = 'zh-cn';
-    localStorage.setItem('language', migratedLang);
-    return migratedLang;
-  }
-  
-  return saved as Language || detectBrowserLanguage();
-}
-```
-
-#### Multi-Language Refactoring Checklist
-When restructuring language codes (e.g., splitting `zh` into `zh-cn`/`zh-tw`):
-
-1. **Update core translations object keys**
-2. **Add migration logic in `getInitialLanguage()`**
-3. **Update `languageMap` in `detectLanguage()`**
-4. **Update `getLanguageDisplayName()` function**
-5. **Replace direct language comparisons with helper functions**
-6. **Update all library files (theme.ts, settings.ts, structuredData.ts)**
-7. **Update component language arrays (SettingsModal, etc.)**
-8. **Test existing user settings migration**
-9. **Verify OG meta tag locale mappings**
-
-### Mobile Responsiveness
-- **Progress grid**: Calculate square size based on viewport width
-- **Touch targets**: Ensure 44px minimum for mobile accessibility  
-- **Copy container**: Fixed width prevents layout shift on different URL lengths
-
-### Social Media Sharing & OG Image Caching
-- **Cache problem**: Social platforms cache OG images by URL, fixed URLs cause incorrect shared content
-- **Solution**: Parameterized OG URLs with `year`, `day`, `lang` parameters for unique cache keys
-- **URL structure**: `/api/og?year=2024&day=249&lang=en` ensures each share has correct timestamp
-- **Language handling**: URL `lang` parameter only affects OG image language, not page UI language
-- **Historical preservation**: Past shared links remain accurate indefinitely with locked parameters
-
-### SEO Configuration & Domain Management
-- **Hardcoded URLs violation**: Never hardcode production URLs multiple times, use centralized constants
-- **Dynamic domain detection**: robots.txt and sitemap.xml must adapt to current environment automatically
-- **Environment consistency**: Preview domains should redirect to production URLs for SEO integrity
-- **DRY principle**: Extract repeated URLs into constants in `src/lib/utils/baseUrl.ts`
-- **Next.js 15 SEO**: Use MetadataRoute.Robots and MetadataRoute.Sitemap for type-safe generation
-- **Async header handling**: `headers()` returns Promise in Next.js 15, use `await headers()` pattern
-
-## Key Files to Understand
-- `src/app/page.tsx` - Main component with all state management
-- `src/app/globals.css` - Theme system CSS overrides + centralized color management
-- `src/components/SettingsModal.tsx` - Complete settings system with Portal dropdowns
-- `src/components/InfoModal.tsx` - Generic text-display modal for About/Help content
-- `src/components/YearProgressClient.tsx` - Main UI component with social sharing implementation using `formatProgressTitle()` helper
-- `src/lib/theme.ts` - Theme utilities and localStorage integration
-- `src/lib/i18n.ts` - 19-language translation system with `progressTitle` template strings
-- `src/lib/settings.ts` - Settings persistence with cookies
-- `src/app/api/og/route.tsx` - Dynamic social media card generation
-- `src/app/robots.ts` - Dynamic robots.txt with environment-specific domains
-- `src/app/sitemap.ts` - Multi-language sitemap generation
-- `src/app/manifest.ts` - PWA manifest for app installation
-- `src/lib/utils/baseUrl.ts` - Centralized domain management utilities
-- `src/lib/structuredData.ts` - Schema.org structured data generation
-
-When modifying this codebase, always consider theme compatibility, mobile responsiveness, and internationalization impact across all 18 supported languages.
-
-## Settings System Development Lessons
-1. **Modal Overflow**: Always use `overflow-hidden` for proper modal borders, render dropdowns via Portal
-2. **Animation Timing**: 50ms delay for open animations prevents visual glitches
-3. **Portal Dropdowns**: Essential for complex UI overlays that extend beyond parent containers
-4. **Click Detection**: Portal elements require special handling in click-outside logic
-5. **Position Calculation**: Use `getBoundingClientRect()` to dynamically position Portal elements
-6. **Theme Consistency**: All custom components must respect the global dark/light theme system
-
-### Critical Settings Modal State Management Issues
-- **State synchronization**: Settings modal internal state must sync with parent component props
-- **Language setting persistence**: Never override saved settings with `getInitialLanguage()` after loading from cookies
-- **Portal dropdown clicks**: Use specific IDs for Portal elements to avoid click-outside detection conflicts
-- **Click-outside logic**: Portal-rendered dropdowns need dedicated ID-based detection, not generic selectors
-
-#### Fixed Language Setting Bug Pattern
-```typescript
-// ❌ WRONG: This overwrites saved settings
-useEffect(() => {
-  const savedSettings = getSettings();
-  setLanguage(savedSettings.language);
-  setLanguage(getInitialLanguage()); // This overwrites the saved setting!
-}, []);
-
-// ✅ CORRECT: Only use saved settings
-useEffect(() => {
-  const savedSettings = getSettings();
-  setLanguage(savedSettings.language);
-  // Do not call getInitialLanguage() after loading saved settings
-}, []);
-```
-
-#### Portal Dropdown Click Detection Pattern
-```typescript
-// ❌ WRONG: Generic selector can fail
-const portalDropdown = document.querySelector('[style*="fixed"][style*="z-index: 9999"]');
-
-// ✅ CORRECT: Use specific ID for reliable detection
-const portalDropdown = document.getElementById('language-dropdown-portal');
-```
-
-## SEO System Development Lessons
-1. **Domain Management**: Always use centralized domain utilities, never hardcode URLs multiple times
-2. **Environment Detection**: robots.txt and sitemap.xml must dynamically detect localhost vs production
-3. **Vercel Preview Handling**: Preview domains should use production URLs for consistent SEO
-4. **Next.js 15 Changes**: `headers()` is async, requires `await` for robots.ts and sitemap.ts
-5. **Type Safety**: Use MetadataRoute.Robots and MetadataRoute.Sitemap for compile-time validation
-6. **Multi-language SEO**: Include all 19 languages in hreflang and sitemap generation
-7. **DRY Violations**: Extract repeated domain strings into constants to prevent inconsistencies
-
-### SEO Configuration Pattern
-```typescript
-// ✅ CORRECT: Centralized domain management
-const PRODUCTION_URL = 'https://www.yearprogress.org' // Single source of truth
-
-export async function robots(): Promise<MetadataRoute.Robots> {
-  const baseUrl = await getBaseUrlAsync() // Dynamic detection
-  return {
-    rules: [...],
-    sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl,
-  }
-}
-```
-
-### Environment-Specific Domain Logic
-- **Development**: Use `localhost:3000` for local testing
-- **Production**: Always use `https://www.yearprogress.org`
-- **Vercel Preview**: Redirect to production domain for SEO consistency  
-- **Custom domains**: Support via `NEXT_PUBLIC_SITE_URL` environment variable
-- **Error handling**: Fallback to production domain if headers unavailable during build
-
-## DRY Principle and Code Reuse Architecture (Don't Repeat Yourself)
-
-### Core DRY Principles
-This project strictly adheres to the DRY principle, avoiding duplication of code and logic to ensure maintainability and consistency:
-
-1. **Single Source of Truth**: All text, configuration, and constants must be defined in a single location.
-
-2. **Centralized Management**: Helper functions and utility classes are centralized in the `lib/` directory for global reuse.
-
-3. **Template System**: Use placeholder templates instead of string concatenation or hard-coding.
-
-4. **Type Safety**: Ensure consistency across all reusable components using TypeScript.
-
-### DRY Violations and Fixes
-
-#### ❌ Common DRY Violation Patterns
-```TypeScript
-// 1. Duplicate Text Generation Logic
-// Homepage Component
-const titleInMainPage = `${year} has passed ${percentage}%`;
-// OG API Component
-const titleInOgApi = `${year} is ${percentage}%` complete`;
-
-// 2. Hard-coded language selection
-if (language === 'zh-cn' || language === 'zh-tw') {
-return 'Chinese logic';
-} else if (language === 'ja') {
-return 'Japanese logic';
-}
-
-// 3. Duplicate domain configuration
-const domain1 = 'https://www.yearprogress.org'; // robots.ts
-const domain2 = 'https://www.yearprogress.org'; // sitemap.ts
-const domain3 = 'https://www.yearprogress.org'; // metadata.ts
-```
-
-#### ✅ Proper DRY architecture pattern
-```typescript
-// 1. Centralized text generation (src/lib/i18n.ts)
-export const formatProgressTitle = (language: Language, year: number, percentage: number): string => {
-const template = getTranslation(language, 'progressTitle') as string;
-
-return template.replace('{year}', year.toString()).replace('{percentage}', percentage.toString());
-};
-
-// 2. Templated Multi-Language Processing
-const template = getTranslation(language, 'weekDayStatus'); // "Today is week {weekNumber}, day {dayNumber}, year {year}"
+// ✅ CORRECT: Template placeholders
+const template = getTranslation(language, 'weekDayStatus');
+// "Today is week {weekNumber}, day {dayNumber} of {year}"
 return template.replace('{year}', year).replace('{weekNumber}', weekNumber).replace('{dayNumber}', dayNumber);
-
-// 3. Single Constant Source (src/lib/utils/baseUrl.ts)
-export const PRODUCTION_URL = 'https://www.yearprogress.org';
-export const getBaseUrl = () => PRODUCTION_URL;
 ```
 
-### DRY Implementation Strategy in the Project
-
-#### Text and Translations
-- **Location**: `src/lib/i18n.ts`
-- **Rule**: All user-visible text must be defined in the `translations` object
-- **Helper Function**: `formatProgressTitle()`, `formatWeekDayText()`, and other reusable functions
-
-#### Domain and URL Management
-- **Location**: `src/lib/utils/baseUrl.ts`
-- **Rule**: A single `PRODUCTION_URL` constant referenced by all files
-- **Application**: robots.ts, sitemap.ts, metadata.ts, structured data
-
-#### Social Sharing Logic
-- **Location**: Scattered across components, but using a unified helper function
-- **Rule**: Use the same `formatProgressTitle()` to generate titles across all platforms
-- **Avoid**: Implementing text logic separately for each social platform
-
-#### Theme and Style Management
-- **Location**: `src/lib/theme.ts` and `globals.css`
-- **Rule**: Centralize theme logic to avoid duplication within components
-- **Pattern**: Use the `applyTheme()` function instead of separate CSS class operations
+#### 4. Import-Based Architecture
+```typescript
+// ✅ CORRECT: Import and reuse
+import { getLanguageDisplayName, getCachedLanguages } from '@/lib/i18n';
+// No duplication, always current
+```
 
 ### DRY Violation Checklist
-During code reviews, check for the following common violations:
+
+During development, always check:
+
+**Code Duplication**:
 - [ ] Are there duplicate string literals?
 - [ ] Are the same URLs/domains used in multiple files?
 - [ ] Are there duplicate language check logic?
 - [ ] Are there duplicate calculation logic?
-- [ ] Do new features reuse existing helper functions?
 
-## Multi-Language System Management
+**Architecture Violations**:
+- [ ] Are UI components defining their own data instead of importing?
+- [ ] Are configuration values hardcoded instead of using constants?
+- [ ] Are helper functions recreated instead of imported?
+- [ ] Are translation keys duplicated instead of using the i18n system?
 
-### Language Refactoring & Migration Best Practices
-Based on the `zh` → `zh-cn`/`zh-tw` refactoring experience:
+**Maintenance Issues**:
+- [ ] Will future changes require updates in multiple files?
+- [ ] Is there a single source of truth for each piece of data?
+- [ ] Can new features be added by updating one central location?
 
-#### Critical Success Patterns
-1. **Backward Compatibility First**: Never break existing user settings
-2. **Migration Logic**: Auto-migrate old language codes in `getInitialLanguage()`
-3. **Helper Functions**: Create centralized i18n helper functions instead of multiple direct comparisons
-4. **Standard Language Codes**: Always use BCP 47 standards (`zh-cn`, `zh-tw`, `pt-br`)
-5. **Comprehensive Testing**: Test all language-dependent features after changes
+### The DRY Manifesto
 
-#### Complete Language Addition Workflow
-When adding any new language variant (e.g., `pt-br`, `es-mx`, `fr-ca`):
+1. **Every piece of knowledge must have a single, unambiguous, authoritative representation within a system**
+2. **If you find yourself copying and pasting code, you're probably doing something wrong**
+3. **Centralize, don't duplicate - import, don't redefine**
+4. **Template systems beat string concatenation**
+5. **Helper functions beat inline logic**
 
-**Phase 1: Core Translation System**
-1. Add complete translation object to `src/lib/i18n.ts`
-2. Update `Language` type definition
-3. Add to `languageMap` in `detectLanguage()` with regional mappings
-4. Update `getLanguageDisplayName()` with native language name
+### Consequences of Violating DRY
 
-**Phase 2: Component Integration**
-5. Update `SettingsModal.tsx` languages array and display names
-6. Add language-specific logic to `YearProgressClient.tsx` if needed
-7. Consider cultural formatting (dates, numbers, text direction)
+- **Bugs**: The SettingsModal language dropdown bug is a perfect example
+- **Maintenance overhead**: Every change requires finding and updating all duplicates
+- **Feature inconsistency**: New features miss duplicated implementations
+- **Technical debt**: Accumulation of fixes and workarounds
+- **Developer frustration**: Time wasted hunting down and updating duplicates
 
-**Phase 3: Library Files Synchronization**
-8. Update `src/lib/theme.ts` theme name translations
-9. Update `src/lib/settings.ts` setting option translations
-10. Update `src/lib/structuredData.ts` descriptions, names, and language arrays
+## Common Issues & Solutions
 
-**Phase 4: SEO & Metadata**
-11. Verify `src/app/sitemap.ts` auto-includes new language
-12. Check `src/app/layout.tsx` hreflang generation
-13. Test OG image generation for new language
-14. Update structured data language support
+### Tailwind CSS v4 Dark Mode
+- **Problem**: `dark:` prefixes don't work reliably
+- **Solution**: Use manual CSS classes in `globals.css` with `.dark` selectors
+- **Pattern**: Always add `!important` and test theme switching
 
-**Phase 5: Cultural Adaptation**
-15. Implement region-specific date/number formatting
-16. Add RTL support if needed (Arabic, Hebrew, Persian)
-17. Consider cultural content adaptation
-18. Test browser language detection edge cases
+### Theme State Hydration
+- **Problem**: SSR mismatch causing theme flicker
+- **Solution**: Use `useEffect` with `mounted` state for client-only theme logic
+- **Pattern**: Initialize theme after hydration, not during SSR
 
-#### Language Group Management Pattern
-```typescript
-// Use centralized i18n helper functions for maintainability
-// Import from i18n.ts instead of creating language-specific helpers
-import { formatMonthDay } from '@/lib/i18n';
+### Modal Overflow Issues
+- **Problem**: Modal borders clipped by dropdown content
+- **Solution**: Use React Portal to render dropdowns outside modal container
+- **Pattern**: Calculate position with `getBoundingClientRect()` before Portal render
 
-// Use in components
-const monthDay = formatMonthDay(language, date);
-```
+### Social Media OG Image Caching
+- **Problem**: Fixed URLs cause incorrect cached images
+- **Solution**: Parameterized URLs with `year`, `day`, `lang` parameters
+- **Pattern**: `/api/og?year=2024&day=249&lang=en` for unique cache keys
 
-#### Migration Logic Template
-```typescript
-export function getInitialLanguage(): Language {
-  if (typeof window === 'undefined') return 'en';
-  
-  const saved = localStorage.getItem('language');
-  
-  // Handle legacy language codes with migration
-  const migrations: { [key: string]: Language } = {
-    'zh': 'zh-cn',        // Legacy Chinese → Simplified Chinese
-    'pt': 'pt-br',        // Generic Portuguese → Brazilian Portuguese  
-    'es': 'es-mx',        // Generic Spanish → Mexican Spanish
-  };
-  
-  if (saved && migrations[saved]) {
-    const migratedLang = migrations[saved];
-    localStorage.setItem('language', migratedLang);
-    return migratedLang;
-  }
-  
-  if (saved && (Object.keys(translations) as Language[]).includes(saved as Language)) {
-    return saved as Language;
-  }
-  
-  return detectBrowserLanguage();
-}
-```
+### SEO Domain Management
+- **Problem**: Hardcoded URLs break in different environments
+- **Solution**: Centralized domain management in `src/lib/utils/baseUrl.ts`
+- **Pattern**: Single `PRODUCTION_URL` constant referenced by all files
 
-#### Regional Language Detection
-```typescript
-export function detectLanguage(browserLang: string): Language {
-  const fullLangCode = browserLang.toLowerCase();
-  const baseLangCode = browserLang.split('-')[0].toLowerCase();
-  
-  // Regional mappings for better UX
-  const regionalMappings: { [key: string]: Language } = {
-    'zh-cn': 'zh-cn', 'zh-hans': 'zh-cn', 'zh-sg': 'zh-cn',
-    'zh-tw': 'zh-tw', 'zh-hant': 'zh-tw', 'zh-hk': 'zh-tw', 'zh-mo': 'zh-tw',
-    'pt-br': 'pt-br', 'pt-pt': 'pt',
-    'es-mx': 'es-mx', 'es-ar': 'es-ar', 'es-es': 'es',
-  };
-  
-  // Check full locale first, then base language
-  return regionalMappings[fullLangCode] || regionalMappings[baseLangCode] || 'en';
-}
-```
+## Key Files Reference
 
-### Critical Files for Multi-Language Changes
-When adding/modifying languages, these files MUST be updated:
-- `src/lib/i18n.ts` (core translations)
-- `src/components/SettingsModal.tsx` (UI language selector)  
-- `src/components/YearProgressClient.tsx` (language-specific logic)
-- `src/lib/theme.ts` (theme name translations)
-- `src/lib/settings.ts` (setting translations)
-- `src/lib/structuredData.ts` (SEO metadata)
+### Core Application
+- `src/app/page.tsx` - Main component with state management
+- `src/app/globals.css` - Theme system CSS overrides
+- `src/lib/yearProgress.ts` - Progress calculation logic
 
-When modifying this codebase, always consider theme compatibility, mobile responsiveness, and internationalization impact across all supported languages.
+### Internationalization
+- `src/lib/i18n/index.ts` - Main i18n system (29 languages)
+- `src/lib/i18n/locales/` - Individual language translation files
+- `src/hooks/useTranslation.ts` - React translation hook
 
-## Social Media Sharing Multilingual Refactoring Experience (2025-09-07)
+### Components
+- `src/components/SettingsModal.tsx` - Settings modal with Portal dropdowns
+- `src/components/YearProgressClient.tsx` - Main UI with social sharing
+- `src/components/InfoModal.tsx` - Generic text-display modal
 
-### Problem Identified
-Social media sharing buttons were using hardcoded language-specific text instead of the centralized `progressTitle` from `i18n.ts`, creating maintenance issues and inconsistency with UI text.
+### Utilities & Configuration
+- `src/lib/theme.ts` - Theme management
+- `src/lib/settings.ts` - Settings persistence
+- `src/lib/utils/baseUrl.ts` - Centralized domain management
+- `src/lib/structuredData.ts` - SEO structured data
 
-### Solution Implemented
-1. **Created helper function**: `formatProgressTitle(language, year, percentage)` to centralize progress title formatting
-2. **Refactored all social platforms**: Twitter, Facebook, Telegram, Reddit, Weibo, Instagram to use `formatProgressTitle()`
-3. **Eliminated hardcoded conditionals**: Replaced `isChinese(language) ? '中文文本' : 'English text'` patterns
-4. **Unified title generation**: Both UI `<h1>` and social sharing now use the same helper function
+### API & SEO
+- `src/app/api/og/route.tsx` - Dynamic OG image generation
+- `src/app/sitemap.ts` - Multi-language sitemap
+- `src/app/robots.ts` - Dynamic robots.txt
+- `src/app/manifest.ts` - PWA manifest
 
-### Files Modified
-- `src/components/YearProgressClient.tsx`: Added `formatProgressTitle()` helper and updated all social sharing buttons
-- `.github/copilot-instructions.md`: Documented patterns and anti-patterns for future reference
+## Performance & Optimization
 
-### Key Lessons Learned
-1. **DRY Principle**: Never duplicate text generation logic between UI and social sharing
-2. **Template System**: Leverage existing `progressTitle` templates across all languages instead of recreating text
-3. **Helper Functions**: Create reusable formatters for consistent text generation across components
-4. **Anti-pattern Recognition**: Hardcoded language conditionals violate i18n architecture principles
-5. **Maintenance Benefits**: Centralized text changes now automatically apply to both UI and social sharing
+### Build Optimization
+- **Turbopack**: Use for both development and production builds
+- **Modular i18n**: Reduced from 114KB monolithic file to ~4KB per language
+- **Code splitting**: Automatic through Next.js dynamic imports
 
-### Critical Success Pattern for Multi-Language Features
-```typescript
-// ✅ CORRECT: Centralized, reusable, maintainable
-const formatProgressTitle = (language: Language, year: number, percentage: number): string => {
-  const template = getTranslation(language, 'progressTitle') as string;
-  return template.replace('{year}', year.toString()).replace('{percentage}', percentage.toString());
-};
+### Runtime Optimization
+- **Client-side only**: Theme and language detection after hydration
+- **Efficient re-renders**: React hooks with proper dependency management
+- **Memory management**: Cleanup timers and event listeners
 
-// Use everywhere: UI titles, social sharing, OG images, etc.
-<h1>{formatProgressTitle(language, progress.year, progress.percentage)}</h1>
-<TwitterShareButton title={formatProgressTitle(language, progress.year, progress.percentage)} />
-```
+### SEO Optimization
+- **Multi-language support**: Complete hreflang and structured data
+- **Dynamic domains**: Environment-specific URL generation
+- **Cache-friendly**: Parameterized OG images prevent social media conflicts
+
+## Development Best Practices
+
+### Code Quality
+- **TypeScript**: Strict type checking for all components
+- **ESLint**: Follow configured linting rules
+- **Component architecture**: Single responsibility, reusable components
+- **Error handling**: Graceful fallbacks for failed operations
+
+### Testing Checklist
+- [ ] Build verification: `npm run build --turbopack`
+- [ ] Theme switching: Test light/dark/system modes
+- [ ] Language switching: Test all 29 languages
+- [ ] Mobile responsiveness: Test on various screen sizes
+- [ ] Social sharing: Test OG image generation
+- [ ] Browser compatibility: Test across modern browsers
+
+### Deployment
+- **Environment detection**: Automatic domain and configuration management
+- **Static generation**: Optimize build for production deployment
+- **Performance monitoring**: Monitor load times and user experience
+
+---
+
+**Remember**: This project's success depends on strict adherence to the DRY principle. Always ask yourself: "Is this code duplicated somewhere else?" before implementing new features.

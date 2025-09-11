@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { type Theme, applyTheme, getThemeDisplayName } from '@/lib/theme';
-import { type Language, getTranslation, getLanguageDisplayName } from '@/lib/i18n';
+import { type Language, getTranslation, getLanguageDisplayName, getCachedLanguages } from '@/lib/i18n';
 import { type Settings, type TwitterIcon, getSettings, saveSettings, getTwitterIconDisplayName } from '@/lib/settings';
 import CloseButton from './CloseButton';
 
@@ -22,40 +22,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-    const languages = ['en', 'zh-cn', 'zh-tw', 'es', 'fr', 'de', 'ja', 'ko', 'pt', 'ru', 'ar', 'hi', 'it', 'nl', 'tr', 'sv', 'pl', 'da', 'no', 'fi', 'vi', 'th', 'id', 'sw', 'bn'];
-
-  // 获取语言显示名称
-  const getLanguageDisplayName = (lang: string): string => {
-    const names: Record<string, string> = {
-      'en': 'English',
-      'zh-cn': '简体中文',
-      'zh-tw': '繁體中文',
-      'es': 'Español', 
-      'fr': 'Français',
-      'de': 'Deutsch',
-      'ja': '日本語',
-      'ko': '한국어',
-      'pt': 'Português',
-      'ru': 'Русский',
-      'ar': 'العربية',
-      'hi': 'हिन्दी',
-      'it': 'Italiano',
-      'nl': 'Nederlands',
-      'tr': 'Türkçe',
-      'sv': 'Svenska',
-      'pl': 'Polski',
-      'da': 'Dansk',
-      'no': 'Norsk',
-      'fi': 'Suomi',
-      'vi': 'Tiếng Việt',
-      'th': 'ไทย',
-      'id': 'Bahasa Indonesia',
-      'sw': 'Kiswahili',
-      'bn': 'বাংলা'
-    };
-    return names[lang] || lang;
-  };
+  const languages = getCachedLanguages();
 
   // 计算下拉框位置
   const updateDropdownPosition = () => {
@@ -382,13 +349,13 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
               ? '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
               : '0 10px 25px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.25)',
             animation: 'dropdownSlideIn 0.2s ease-out forwards',
-            maxHeight: '352px' // 8个选项 × 44px = 352px
+            maxHeight: '400px' // 9个选项 × 44px = 396px，取整到400px
           }}
           onClick={(e) => {
             e.stopPropagation();
           }}
         >
-          <div className="overflow-y-auto scrollbar-thin" style={{ maxHeight: '352px' }}>
+          <div className="overflow-y-auto scrollbar-thin" style={{ maxHeight: '400px' }}>
             {languages.map((lang) => (
               <button
                 key={lang}
