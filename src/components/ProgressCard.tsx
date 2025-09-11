@@ -82,9 +82,7 @@ export default function ProgressCard() {
                 
                 {/* 中心百分比 */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className={`text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent ${
-                    progress.isMilestone ? 'animate-pulse' : ''
-                  }`}>
+                  <span className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     {progress.displayPercentage}%
                   </span>
                   <span className="text-sm text-gray-500 mt-1">已完成</span>

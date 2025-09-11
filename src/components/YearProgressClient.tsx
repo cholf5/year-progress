@@ -329,9 +329,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
       <div className="text-center space-y-4 sm:space-y-8 max-w-7xl w-full">
         {/* 标题 */}
-        <h1 className={`text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-8 px-2 leading-tight ${
-          progress.isMilestone ? 'animate-pulse text-blue-600 dark:text-blue-400' : ''
-        }`}>
+        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-8 px-2 leading-tight">
           {formatProgressTitle(language, progress.year, progress.displayPercentage)}
         </h1>
         
