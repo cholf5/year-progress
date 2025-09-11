@@ -56,4 +56,9 @@ Whether you're reflecting on past achievements, planning for the future, or simp
 
 Data Policy:
 We do not collect any personal information. All preferences (such as theme and language) are stored locally on your device.`,
+  currentWeekDayStatus: "Today is week {weekNumber}, day {dayNumber} of {year}",
+  historicalWeekDayStatus: "This is week {weekNumber}, day {dayNumber} of {year}",
+  viewToday: "View Today",
+  historicalProgressTooltip: "You are viewing past progress, click to return to today",
+  futureProgressTooltip: "You are viewing future progress, click to return to today",
 };

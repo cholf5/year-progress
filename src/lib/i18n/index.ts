@@ -159,6 +159,11 @@ const basicTranslations: Record<string, string> = {
   monthDayFormat: '{month} {day}',
   dayWeekInfoFormat: 'Day {dayNumber} • Week {weekNumber}',
   bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
+  currentWeekDayStatus: "Today is week {weekNumber}, day {dayNumber} of {year}",
+  historicalWeekDayStatus: "This is week {weekNumber}, day {dayNumber} of {year}",
+  viewToday: "View Today",
+  historicalProgressTooltip: "You are viewing past progress, click to return to today",
+  futureProgressTooltip: "You are viewing future progress, click to return to today",
 };
 
 // 预加载语言（用于性能优化）- 简化版本
@@ -384,6 +389,34 @@ export const formatBottomStats = (
     .replace('{daysCompleted}', daysCompleted)
     .replace('{daysRemaining}', (totalDays - daysPassed).toString())
     .replace('{daysRemainingUnit}', daysRemaining);
+};
+
+// 辅助函数：格式化当前状态的周/日信息
+export const formatCurrentWeekDayText = (
+  language: Language, 
+  weekNumber: number, 
+  dayNumber: number, 
+  year: number
+): string => {
+  const template = getTranslation(language, 'currentWeekDayStatus') as string;
+  return template
+    .replace('{weekNumber}', weekNumber.toString())
+    .replace('{dayNumber}', dayNumber.toString())
+    .replace('{year}', year.toString());
+};
+
+// 辅助函数：格式化历史状态的周/日信息
+export const formatHistoricalWeekDayText = (
+  language: Language, 
+  weekNumber: number, 
+  dayNumber: number, 
+  year: number
+): string => {
+  const template = getTranslation(language, 'historicalWeekDayStatus') as string;
+  return template
+    .replace('{weekNumber}', weekNumber.toString())
+    .replace('{dayNumber}', dayNumber.toString())
+    .replace('{year}', year.toString());
 };
 
 // 辅助函数：获取 OpenGraph locale 映射

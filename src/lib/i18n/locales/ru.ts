@@ -56,4 +56,9 @@ export const translations: Translation = {
 
 Информация о данных:
 Этот сайт не собирает никакой личной информации. Все настройки (тема, язык и т.д.) хранятся только на вашем устройстве.`,
+  currentWeekDayStatus: "Сегодня {year} год, {weekNumber} неделя, {dayNumber} день",
+  historicalWeekDayStatus: "Это {year} год, {weekNumber} неделя, {dayNumber} день",
+  viewToday: "Смотреть сегодня",
+  historicalProgressTooltip: "Вы просматриваете прошлый прогресс, нажмите чтобы вернуться к сегодняшнему дню",
+  futureProgressTooltip: "Вы просматриваете будущий прогресс, нажмите чтобы вернуться к сегодняшнему дню",
 };

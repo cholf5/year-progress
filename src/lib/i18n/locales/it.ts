@@ -56,4 +56,9 @@ Questo progetto è open-source e progettato per essere un promemoria utile che i
 
 Informazioni sui dati:
 Questo sito non raccoglie alcuna informazione personale. Tutte le impostazioni (tema, lingua, ecc.) sono memorizzate solo sul tuo dispositivo.`,
+  currentWeekDayStatus: "Oggi è la settimana {weekNumber}, giorno {dayNumber} di {year}",
+  historicalWeekDayStatus: "Questa è la settimana {weekNumber}, giorno {dayNumber} di {year}",
+  viewToday: "Vedi Oggi",
+  historicalProgressTooltip: "Stai visualizzando il progresso passato, clicca per tornare a oggi",
+  futureProgressTooltip: "Stai visualizzando il progresso futuro, clicca per tornare a oggi",
 };

@@ -56,4 +56,9 @@ export const translations: Translation = {
 
 ข้อมูลข้อมูล:
 เว็บไซต์นี้ไม่รวบรวมข้อมูลส่วนตัวใดๆ ทั้งสิ้น การตั้งค่าทั้งหมด (ธีม ภาษา ฯลฯ) จะถูกจัดเก็บไว้บนอุปกรณ์ของคุณเท่านั้น`,
+  currentWeekDayStatus: "วันนี้คือสัปดาห์ที่ {weekNumber} วันที่ {dayNumber} ของปี {year}",
+  historicalWeekDayStatus: "นี้คือสัปดาห์ที่ {weekNumber} วันที่ {dayNumber} ของปี {year}",
+  viewToday: "ดูวันนี้",
+  historicalProgressTooltip: "คุณกำลังดูความคืบหน้าในอดีต คลิกเพื่อกลับไปยังวันนี้",
+  futureProgressTooltip: "คุณกำลังดูความคืบหน้าในอนาคต คลิกเพื่อกลับไปยังวันนี้",
 };

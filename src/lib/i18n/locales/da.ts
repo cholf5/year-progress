@@ -56,4 +56,9 @@ Dette projekt er open-source og designet til at være en nyttig påmindelse om, 
 
 Dataoplysninger:
 Denne side indsamler ingen personlige oplysninger. Alle indstillinger (tema, sprog osv.) gemmes kun på din enhed.`,
+  currentWeekDayStatus: "I dag er det uge {weekNumber}, dag {dayNumber} af {year}",
+  historicalWeekDayStatus: "Dette er uge {weekNumber}, dag {dayNumber} af {year}",
+  viewToday: "Se I Dag",
+  historicalProgressTooltip: "Du kigger på historisk fremdrift, klik for at vende tilbage til i dag",
+  futureProgressTooltip: "Du kigger på fremtidig fremdrift, klik for at vende tilbage til i dag",
 };

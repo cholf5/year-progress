@@ -56,4 +56,9 @@ Mradi huu ni chanzo wazi na uliundwa kama kumbukumbu muhimu kuwa muda ni thamani
 
 Maelezo ya data:
 Tovuti hii hakusanyi habari yoyote binafsi. Mipangilio yote (mandhari, lugha, nk.) imerahisishwa kwenye kifaa chako pekee.`,
+  currentWeekDayStatus: "Leo ni wiki {weekNumber}, siku {dayNumber} ya mwaka {year}",
+  historicalWeekDayStatus: "Hii ni wiki {weekNumber}, siku {dayNumber} ya mwaka {year}",
+  viewToday: "Ona Leo",
+  historicalProgressTooltip: "Unatazama maendeleo yaliyopita, bonyeza kurudi leo",
+  futureProgressTooltip: "Unatazama maendeleo ya siku zijazo, bonyeza kurudi leo",
 };

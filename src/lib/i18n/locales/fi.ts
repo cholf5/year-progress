@@ -56,4 +56,9 @@ Tämä projekti on avointa lähdekoodia ja suunniteltu hyödylliseksi muistutuks
 
 Tietojen tiedot:
 Tämä sivusto ei kerää mitään henkilökohtaisia tietoja. Kaikki asetukset (teema, kieli jne.) tallennetaan vain laitteellesi.`,
+  currentWeekDayStatus: "Tänään on viikko {weekNumber}, päivä {dayNumber} vuodesta {year}",
+  historicalWeekDayStatus: "Tämä on viikko {weekNumber}, päivä {dayNumber} vuodesta {year}",
+  viewToday: "Katso Tänään",
+  historicalProgressTooltip: "Tarkastelet menneen edistymistä, klikkaa palataksesi tähän päivään",
+  futureProgressTooltip: "Tarkastelet tulevaa edistymistä, klikkaa palataksesi tähän päivään",
 };

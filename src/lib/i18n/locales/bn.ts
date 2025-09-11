@@ -56,4 +56,9 @@ export const translations: Translation = {
 
 ডেটা নীতি:
 আমরা কোনো ব্যক্তিগত তথ্য সংগ্রহ করি না। সমস্ত পছন্দ (যেমন থিম এবং ভাষা) আপনার ডিভাইসে স্থানীয়ভাবে সংরক্ষিত হয়।`,
+  currentWeekDayStatus: "আজ {year} সালের {weekNumber} সপ্তাহ, {dayNumber} তম দিন",
+  historicalWeekDayStatus: "এটি {year} সালের {weekNumber} সপ্তাহ, {dayNumber} তম দিন",
+  viewToday: "আজ দেখুন",
+  historicalProgressTooltip: "আপনি অতীতের অগ্রগতি দেখছেন, আজ ফিরে যেতে ক্লিক করুন",
+  futureProgressTooltip: "আপনি ভবিষ্যতের অগ্রগতি দেখছেন, আজ ফিরে যেতে ক্লিক করুন",
 };

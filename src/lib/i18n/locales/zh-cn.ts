@@ -56,4 +56,9 @@ export const translations: Translation = {
 
 数据说明：
 本站不收集任何个人信息，所有设置（主题、语言等）仅存储在您的设备上。`,
+  currentWeekDayStatus: "今天是{year}年第{weekNumber}周，第{dayNumber}天",
+  historicalWeekDayStatus: "这是{year}年第{weekNumber}周，第{dayNumber}天",
+  viewToday: "查看今天",
+  historicalProgressTooltip: "您查看的是过去的进度，点击可回到今天",
+  futureProgressTooltip: "您查看的是未来的进度，点击可回到今天",
 };

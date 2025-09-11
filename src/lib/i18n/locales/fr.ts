@@ -56,4 +56,9 @@ Ce projet est open-source et conçu comme un rappel utile que le temps est préc
 
 Note sur les données :
 Ce site ne collecte aucune information personnelle. Tous les paramètres (thème, langue, etc.) sont stockés uniquement sur votre appareil.`,
+  currentWeekDayStatus: "Aujourd'hui, c'est la semaine {weekNumber}, jour {dayNumber} de {year}",
+  historicalWeekDayStatus: "C'est la semaine {weekNumber}, jour {dayNumber} de {year}",
+  viewToday: "Voir Aujourd'hui",
+  historicalProgressTooltip: "Vous consultez la progression passée, cliquez pour revenir à aujourd'hui",
+  futureProgressTooltip: "Vous consultez la progression future, cliquez pour revenir à aujourd'hui",
 };

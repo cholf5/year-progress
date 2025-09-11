@@ -17,6 +17,8 @@ export {
   formatMonthDay,
   formatDayWeekInfo,
   formatBottomStats,
+  formatCurrentWeekDayText,
+  formatHistoricalWeekDayText,
   getOgLocale,
   preloadLanguage,
   preloadLanguages,

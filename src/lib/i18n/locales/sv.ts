@@ -56,4 +56,9 @@ Detta projekt är öppen källkod och utformat för att vara en användbar påmi
 
 Datainformation:
 Denna webbplats samlar inte in någon personlig information. Alla inställningar (tema, språk, etc.) lagras endast på din enhet.`,
+  currentWeekDayStatus: "Idag är det vecka {weekNumber}, dag {dayNumber} av {year}",
+  historicalWeekDayStatus: "Detta är vecka {weekNumber}, dag {dayNumber} av {year}",
+  viewToday: "Se Idag",
+  historicalProgressTooltip: "Du tittar på historiskt framsteg, klicka för att återvända till idag",
+  futureProgressTooltip: "Du tittar på framtida framsteg, klicka för att återvända till idag",
 };

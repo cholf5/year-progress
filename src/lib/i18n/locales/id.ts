@@ -56,4 +56,9 @@ Proyek ini bersumber terbuka dan dirancang sebagai pengingat yang berguna bahwa 
 
 Informasi data:
 Situs ini tidak mengumpulkan informasi pribadi apa pun. Semua pengaturan (tema, bahasa, dll.) hanya disimpan di perangkat Anda.`,
+  currentWeekDayStatus: "Hari ini adalah minggu {weekNumber}, hari {dayNumber} dari tahun {year}",
+  historicalWeekDayStatus: "Ini adalah minggu {weekNumber}, hari {dayNumber} dari tahun {year}",
+  viewToday: "Lihat Hari Ini",
+  historicalProgressTooltip: "Anda melihat kemajuan masa lalu, klik untuk kembali ke hari ini",
+  futureProgressTooltip: "Anda melihat kemajuan masa depan, klik untuk kembali ke hari ini",
 };

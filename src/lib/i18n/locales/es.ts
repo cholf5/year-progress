@@ -53,4 +53,9 @@ Características principales:
 • Interfaz limpia y sin distracciones
 
 Este proyecto es de código abierto y está diseñado para ser un recordatorio útil de que el tiempo es precioso. Ya sea que estés reflexionando sobre logros, planificando el futuro, o simplemente curioso sobre el progreso del año, esta herramienta proporciona una perspectiva clara y visual de dónde nos encontramos en el tiempo.`,
+  currentWeekDayStatus: "Hoy es la semana {weekNumber}, día {dayNumber} de {year}",
+  historicalWeekDayStatus: "Esta es la semana {weekNumber}, día {dayNumber} de {year}",
+  viewToday: "Ver Hoy",
+  historicalProgressTooltip: "Estás viendo el progreso pasado, haz clic para volver a hoy",
+  futureProgressTooltip: "Estás viendo el progreso futuro, haz clic para volver a hoy",
 };

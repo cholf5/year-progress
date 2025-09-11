@@ -56,4 +56,9 @@ export const translations: Translation = {
 
 データについて：
 このサイトは個人情報を一切収集しません。すべての設定（テーマ、言語など）はあなたのデバイスにのみ保存されます。`,
+  currentWeekDayStatus: "今日は{year}年の第{weekNumber}週、第{dayNumber}日です",
+  historicalWeekDayStatus: "これは{year}年の第{weekNumber}週、第{dayNumber}日です",
+  viewToday: "今日を見る",
+  historicalProgressTooltip: "過去の進捗を表示中、クリックで今日に戻る",
+  futureProgressTooltip: "未来の進捗を表示中、クリックで今日に戻る",
 };

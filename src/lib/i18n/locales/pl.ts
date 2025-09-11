@@ -56,4 +56,9 @@ Ten projekt jest open-source i zaprojektowany jako pomocne przypomnienie, że cz
 
 Informacje o danych:
 Ta strona nie zbiera żadnych informacji osobistych. Wszystkie ustawienia (motyw, język itp.) są przechowywane tylko na Twoim urządzeniu.`,
+  currentWeekDayStatus: "Dziś jest tydzień {weekNumber}, dzień {dayNumber} roku {year}",
+  historicalWeekDayStatus: "To jest tydzień {weekNumber}, dzień {dayNumber} roku {year}",
+  viewToday: "Zobacz Dziś",
+  historicalProgressTooltip: "Przeglądasz postęp z przeszłości, kliknij aby wrócić do dzisiaj",
+  futureProgressTooltip: "Przeglądasz przyszły postęp, kliknij aby wrócić do dzisiaj",
 };

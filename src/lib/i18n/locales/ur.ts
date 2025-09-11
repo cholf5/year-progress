@@ -56,4 +56,9 @@ export const translations: Translation = {
 
 ڈیٹا معلومات:
 یہ سائٹ کوئی ذاتی معلومات جمع نہیں کرتی۔ تمام ترتیبات (تھیم، زبان، وغیرہ) صرف آپ کے آلے پر محفوظ ہیں۔`,
+  currentWeekDayStatus: "آج {year} کا {weekNumber} واں ہفتہ، {dayNumber} واں دن ہے",
+  historicalWeekDayStatus: "یہ {year} کا {weekNumber} واں ہفتہ، {dayNumber} واں دن ہے",
+  viewToday: "آج دیکھیں",
+  historicalProgressTooltip: "آپ ماضی کی پیشرفت دیکھ رہے ہیں، آج واپس جانے کے لیے کلک کریں",
+  futureProgressTooltip: "آپ مستقبل کی پیشرفت دیکھ رہے ہیں، آج واپس جانے کے لیے کلک کریں",
 };

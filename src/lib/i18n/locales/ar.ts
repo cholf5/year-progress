@@ -56,4 +56,9 @@ export const translations: Translation = {
 
 معلومات البيانات:
 هذا الموقع لا يجمع أي معلومات شخصية. جميع الإعدادات (المظهر، اللغة، إلخ) مُخزنة فقط على جهازك.`,
+  currentWeekDayStatus: "اليوم هو الأسبوع {weekNumber}، اليوم {dayNumber} من عام {year}",
+  historicalWeekDayStatus: "هذا هو الأسبوع {weekNumber}، اليوم {dayNumber} من عام {year}",
+  viewToday: "عرض اليوم",
+  historicalProgressTooltip: "أنت تتصور تقدم الماضي، انقر للعودة إلى اليوم",
+  futureProgressTooltip: "أنت تتصور تقدم المستقبل، انقر للعودة إلى اليوم",
 };

@@ -606,6 +606,22 @@ html {
   scrollbar-width: thin;
 }
 
+/* 修复提示文本颜色 - 覆盖全局 dark 模式颜色设置 */
+.dark .tooltip-text {
+  color: #ffffff !important;
+}
+
+/* View Today 按钮按下状态的样式 */
+.view-today-button:active {
+  background-color: #d1d5db !important;
+  transform: scale(0.9) translateY(2px) !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.dark .view-today-button:active {
+  background-color: #4b5563 !important;
+}
+
 .scrollbar-thin::-webkit-scrollbar {
   width: 6px;
 }

@@ -56,4 +56,9 @@ Dit project is open-source en ontworpen als een nuttige herinnering dat tijd kos
 
 Data-informatie:
 Deze site verzamelt geen persoonlijke informatie. Alle instellingen (thema, taal, enz.) worden alleen op je apparaat opgeslagen.`,
+  currentWeekDayStatus: "Vandaag is het week {weekNumber}, dag {dayNumber} van {year}",
+  historicalWeekDayStatus: "Dit is week {weekNumber}, dag {dayNumber} van {year}",
+  viewToday: "Vandaag Bekijken",
+  historicalProgressTooltip: "U bekijkt verleden voortgang, klik om terug te keren naar vandaag",
+  futureProgressTooltip: "U bekijkt toekomstige voortgang, klik om terug te keren naar vandaag",
 };

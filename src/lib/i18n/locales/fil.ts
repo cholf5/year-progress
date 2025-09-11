@@ -56,4 +56,9 @@ Ang proyektong ito ay open-source at idinisenyo bilang isang kapaki-pakinabang p
 
 Impormasyon sa Data:
 Ang site na ito ay hindi nangongolekta ng anumang personal na impormasyon. Lahat ng mga setting (tema, wika, etc.) ay naka-imbak lamang sa iyong device.`,
+  currentWeekDayStatus: "Ngayon ay linggo {weekNumber}, araw {dayNumber} ng taong {year}",
+  historicalWeekDayStatus: "Ito ay linggo {weekNumber}, araw {dayNumber} ng taong {year}",
+  viewToday: "Tingnan ang Ngayon",
+  historicalProgressTooltip: "Nakikita mo ang progress sa nakaraan, i-click para bumalik sa ngayon",
+  futureProgressTooltip: "Nakikita mo ang progress sa hinaharap, i-click para bumalik sa ngayon",
 };

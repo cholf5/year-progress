@@ -56,4 +56,9 @@ Bu proje açık kaynaklıdır ve zamanın değerli olduğunu hatırlatan yararl�
 
 Veri Bilgisi:
 Bu site hiçbir kişisel bilgi toplamaz. Tüm ayarlar (tema, dil vb.) yalnızca cihazınızda saklanır.`,
+  currentWeekDayStatus: "Bugün {year} yılının {weekNumber}. haftası, {dayNumber}. günü",
+  historicalWeekDayStatus: "Bu {year} yılının {weekNumber}. haftası, {dayNumber}. günü",
+  viewToday: "Bugünü Gör",
+  historicalProgressTooltip: "Geçmiş ilerlemeyi görüntülüyorsunuz, bugüne dönmek için tıklayın",
+  futureProgressTooltip: "Gelecek ilerlemeyi görüntülüyorsunuz, bugüne dönmek için tıklayın",
 };

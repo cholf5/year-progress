@@ -56,4 +56,9 @@ Dự án này là mã nguồn mở và được thiết kế như một lời nh
 
 Thông tin dữ liệu:
 Trang web này không thu thập bất kỳ thông tin cá nhân nào. Tất cả cài đặt (chủ đề, ngôn ngữ, v.v.) chỉ được lưu trữ trên thiết bị của bạn.`,
+  currentWeekDayStatus: "Hôm nay là tuần {weekNumber}, ngày {dayNumber} của năm {year}",
+  historicalWeekDayStatus: "Đây là tuần {weekNumber}, ngày {dayNumber} của năm {year}",
+  viewToday: "Xem Hôm Nay",
+  historicalProgressTooltip: "Bạn đang xem tiến độ quá khứ, nhấp để quay về hôm nay",
+  futureProgressTooltip: "Bạn đang xem tiến độ tương lai, nhấp để quay về hôm nay",
 };

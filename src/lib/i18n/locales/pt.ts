@@ -56,4 +56,9 @@ Este projeto é código aberto e projetado para ser um lembrete útil de que o t
 
 Informações sobre dados:
 Este site não coleta nenhuma informação pessoal. Todas as configurações (tema, idioma, etc.) são armazenadas apenas em seu dispositivo.`,
+  currentWeekDayStatus: "Hoje é a semana {weekNumber}, dia {dayNumber} de {year}",
+  historicalWeekDayStatus: "Esta é a semana {weekNumber}, dia {dayNumber} de {year}",
+  viewToday: "Ver Hoje",
+  historicalProgressTooltip: "Você está visualizando o progresso passado, clique para voltar a hoje",
+  futureProgressTooltip: "Você está visualizando o progresso futuro, clique para voltar a hoje",
 };

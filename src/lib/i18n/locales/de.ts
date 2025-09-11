@@ -56,4 +56,9 @@ Dieses Projekt ist Open-Source und als hilfreiche Erinnerung konzipiert, dass Ze
 
 Datenschutz:
 Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (Theme, Sprache usw.) werden nur auf Ihrem Gerät gespeichert.`,
+  currentWeekDayStatus: "Es ist Woche {weekNumber}, Tag {dayNumber} von {year}",
+  historicalWeekDayStatus: "Das ist Woche {weekNumber}, Tag {dayNumber} von {year}",
+  viewToday: "Heute anzeigen",
+  historicalProgressTooltip: "Sie betrachten vergangenen Fortschritt, klicken Sie um zu heute zurückzukehren",
+  futureProgressTooltip: "Sie betrachten zukünftigen Fortschritt, klicken Sie um zu heute zurückzukehren",
 };

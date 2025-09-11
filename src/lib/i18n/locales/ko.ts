@@ -56,4 +56,9 @@ export const translations: Translation = {
 
 데이터 정보:
 이 사이트는 개인 정보를 수집하지 않습니다. 모든 설정(테마, 언어 등)은 사용자의 기기에만 저장됩니다.`,
+  currentWeekDayStatus: "{year}년 {weekNumber}주차, {dayNumber}일차입니다",
+  historicalWeekDayStatus: "{year}년 {weekNumber}주차, {dayNumber}일차입니다",
+  viewToday: "오늘 보기",
+  historicalProgressTooltip: "과거의 진행률을 보고 계십니다, 클릭하여 오늘로 돌아가기",
+  futureProgressTooltip: "미래의 진행률을 보고 계십니다, 클릭하여 오늘로 돌아가기",
 };

@@ -42,4 +42,9 @@ export interface Translation {
   termsOfService: string;
   aboutSiteTitle: string;
   aboutSiteContent: string;
+  currentWeekDayStatus: string;
+  historicalWeekDayStatus: string;
+  viewToday: string;
+  historicalProgressTooltip: string;
+  futureProgressTooltip: string;
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { calculateYearProgress, calculateDisplayPercentage } from '@/lib/yearProgress';
-import { type Language, getTranslation, getInitialLanguage, saveLanguage, getLanguageDisplayName, formatProgressTitle, formatWeekDayText, formatPageTitle, formatMonthDay, formatDayWeekInfo, formatBottomStats, getOgLocale, translations } from '@/lib/i18n';
+import { type Language, getTranslation, getInitialLanguage, saveLanguage, getLanguageDisplayName, formatProgressTitle, formatWeekDayText, formatPageTitle, formatMonthDay, formatDayWeekInfo, formatBottomStats, formatCurrentWeekDayText, formatHistoricalWeekDayText, getOgLocale, translations } from '@/lib/i18n';
 import { type Theme, getInitialTheme, saveTheme, applyTheme, getThemeDisplayName, getSystemTheme, getEffectiveTheme } from '@/lib/theme';
 import { type Settings, type TwitterIcon as TwitterIconType, getSettings, saveSettings } from '@/lib/settings';
 import SettingsModal from '@/components/SettingsModal';
@@ -60,9 +60,46 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [infoModalTitle, setInfoModalTitle] = useState('');
   const [infoModalContent, setInfoModalContent] = useState('');
+  const [isHistoricalData, setIsHistoricalData] = useState(false);
 
   // 从设置中获取当前值（用于新功能）
   const twitterIcon = settings.twitterIcon;
+
+  // 检查当前显示的日期是否是今天
+  const checkIfCurrentDate = () => {
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const startOfYear = new Date(currentYear, 0, 1);
+    const dayOfYear = Math.ceil((today.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+    
+    return progress.year === currentYear && progress.daysPassed === dayOfYear;
+  };
+
+  // 检查是历史还是未来
+  const getProgressType = () => {
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const startOfYear = new Date(currentYear, 0, 1);
+    const dayOfYear = Math.ceil((today.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+    
+    if (progress.year < currentYear || (progress.year === currentYear && progress.daysPassed < dayOfYear)) {
+      return 'past';
+    } else if (progress.year > currentYear || (progress.year === currentYear && progress.daysPassed > dayOfYear)) {
+      return 'future';
+    }
+    return 'current';
+  };
+
+  // 回到今天的函数
+  const navigateToToday = () => {
+    if (typeof window !== 'undefined') {
+      // 清除URL参数，回到首页
+      window.location.href = window.location.pathname;
+    }
+  };
+
+  // 按钮状态管理
+  const [isButtonPressed, setIsButtonPressed] = useState(false);
 
   // 生成带进度参数的分享URL
   const getShareUrl = () => {
@@ -158,14 +195,23 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
             displayPercentage,
             isMilestone
           });
+          
+          // 检查是否是历史数据
+          const today = new Date();
+          const currentYear = today.getFullYear();
+          const startOfYear = new Date(currentYear, 0, 1);
+          const dayOfYear = Math.ceil((today.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+          setIsHistoricalData(year !== currentYear || daysPassed !== dayOfYear);
         }
       } else {
         // 没有URL参数，使用当前时间并设置定时更新
         setProgress(calculateYearProgress());
+        setIsHistoricalData(false);
         
         // 每小时更新一次进度（仅在没有URL参数时）
         const interval = setInterval(() => {
           setProgress(calculateYearProgress());
+          setIsHistoricalData(false); // 没有URL参数时总是当前数据
         }, 60 * 60 * 1000);
         
         // 清理定时器
@@ -513,9 +559,38 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
         </div>
 
         {/* 统计信息 */}
-        <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 px-2 transition-colors duration-300">
-          {formatWeekDayText(language, Math.ceil(daysPassed / 7), daysPassed, progress.year)}
-        </p>
+        <div className="text-center px-2">
+          {isHistoricalData ? (
+            <div className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+              <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 transition-colors duration-300">
+                {formatHistoricalWeekDayText(language, Math.ceil(daysPassed / 7), daysPassed, progress.year)}
+              </p>
+              <div className="relative group">
+                <button
+                  onMouseUp={navigateToToday}
+                  onTouchEnd={navigateToToday}
+                  className="view-today-button px-4 py-1.5 bg-gray-100 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 text-sm font-medium rounded-full transition-all duration-200 border-gray-300 dark:border-gray-700 hover:shadow-md transform hover:scale-105"
+                >
+                  {getTranslation(language, 'viewToday')}
+                </button>
+                {/* Hover提示 */}
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-900 text-white dark:text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10 tooltip-text">
+                  {getProgressType() === 'past' 
+                    ? getTranslation(language, 'historicalProgressTooltip') as string
+                    : getTranslation(language, 'futureProgressTooltip') as string
+                  }
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
+                    <div className="border-4 border-transparent border-t-gray-900"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 px-2 transition-colors duration-300">
+              {formatCurrentWeekDayText(language, Math.ceil(daysPassed / 7), daysPassed, progress.year)}
+            </p>
+          )}
+        </div>
 
         {/* 分享说明 */}
         <div className="bg-gray-900 p-4 sm:p-6 rounded-xl border border-gray-700 max-w-2xl mx-auto">
