@@ -10,7 +10,7 @@ import SettingsButton from '@/components/SettingsButton';
 import InfoModal from '@/components/InfoModal';
 
 // 三个共用的 hashtag 常量
-const COMMON_HASHTAGS = ['YearProgress', 'YearProgressOrg', 'YearProgressBar'];
+const COMMON_HASHTAGS = ['YearProgress', 'YearProgressBar', 'YearProgressOrg'];
 
 import {
   TwitterShareButton,
@@ -528,14 +528,18 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
           
           {/* 社交媒体分享按钮 */}
           <div id="social-share-buttons" className="flex flex-wrap justify-center items-center gap-3">
-            <TwitterShareButton
-              url={getShareUrl()}
-              title={formatProgressTitle(language, progress.year, progress.displayPercentage)}
-              hashtags={[...COMMON_HASHTAGS, ...getTranslation(language, 'socialHashtags') as string[]]}
+            <button
+              onClick={() => {
+                const text = formatProgressTitle(language, progress.year, progress.displayPercentage);
+                const hashtags = [...COMMON_HASHTAGS, ...getTranslation(language, 'socialHashtags') as string[]].map(tag => `#${tag}`).join(' ');
+                const shareText = `${text}\n${hashtags}\n${getShareUrl()}`;
+                const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+                window.open(twitterUrl, '_blank', 'width=550,height=420');
+              }}
               className="hover:scale-110 transition-transform social-share-button"
             >
               {twitterIcon === 'x' ? <XIcon size={40} round /> : <TwitterIcon size={40} round />}
-            </TwitterShareButton>
+            </button>
 
             <FacebookShareButton
               url={getShareUrl()}
