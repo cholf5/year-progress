@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { calculateYearProgress } from '@/lib/yearProgress';
+import { calculateYearProgress, calculateDisplayPercentage } from '@/lib/yearProgress';
 import { type Language, getTranslation, getInitialLanguage, saveLanguage, getLanguageDisplayName, formatProgressTitle, formatWeekDayText, formatPageTitle, formatMonthDay, formatDayWeekInfo, formatBottomStats, getOgLocale, translations } from '@/lib/i18n';
 import { type Theme, getInitialTheme, saveTheme, applyTheme, getThemeDisplayName, getSystemTheme, getEffectiveTheme } from '@/lib/theme';
 import { type Settings, type TwitterIcon as TwitterIconType, getSettings, saveSettings } from '@/lib/settings';
@@ -146,12 +146,17 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
           const percentage = Math.round((daysPassed / totalDays) * 100 * 100) / 100;
           const remainingDays = totalDays - daysPassed;
           
+          // 使用纯函数计算显示百分比
+          const { displayPercentage, isMilestone } = calculateDisplayPercentage(daysPassed, totalDays);
+          
           setProgress({
             year,
             totalDays,
             daysPassed,
             percentage,
-            remainingDays
+            remainingDays,
+            displayPercentage,
+            isMilestone
           });
         }
       } else {
@@ -324,8 +329,10 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
       <div className="text-center space-y-4 sm:space-y-8 max-w-7xl w-full">
         {/* 标题 */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-8 px-2 leading-tight">
-          {formatProgressTitle(language, progress.year, progress.percentage)}
+        <h1 className={`text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-8 px-2 leading-tight ${
+          progress.isMilestone ? 'animate-pulse text-blue-600 dark:text-blue-400' : ''
+        }`}>
+          {formatProgressTitle(language, progress.year, progress.displayPercentage)}
         </h1>
         
         {/* 进度网格 */}
@@ -525,7 +532,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
           <div id="social-share-buttons" className="flex flex-wrap justify-center items-center gap-3">
             <TwitterShareButton
               url={getShareUrl()}
-              title={formatProgressTitle(language, progress.year, progress.percentage)}
+              title={formatProgressTitle(language, progress.year, progress.displayPercentage)}
               hashtags={[...COMMON_HASHTAGS, ...getTranslation(language, 'socialHashtags') as string[]]}
               className="hover:scale-110 transition-transform social-share-button"
             >
@@ -541,7 +548,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
             <TelegramShareButton
               url={getShareUrl()}
-              title={formatProgressTitle(language, progress.year, progress.percentage)}
+              title={formatProgressTitle(language, progress.year, progress.displayPercentage)}
               className="hover:scale-110 transition-transform social-share-button"
             >
               <TelegramIcon size={40} round />
@@ -549,7 +556,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
             <RedditShareButton
               url={getShareUrl()}
-              title={formatProgressTitle(language, progress.year, progress.percentage)}
+              title={formatProgressTitle(language, progress.year, progress.displayPercentage)}
               className="hover:scale-110 transition-transform social-share-button"
             >
               <RedditIcon size={40} round />
@@ -557,7 +564,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
             <WeiboShareButton
               url={getShareUrl()}
-              title={`${formatProgressTitle(language, progress.year, progress.percentage)} ${getTranslation(language, 'socialHashtags') ? '#' + (getTranslation(language, 'socialHashtags') as string[]).join(' #') : ''}`}
+              title={`${formatProgressTitle(language, progress.year, progress.displayPercentage)} ${getTranslation(language, 'socialHashtags') ? '#' + (getTranslation(language, 'socialHashtags') as string[]).join(' #') : ''}`}
               className="hover:scale-110 transition-transform social-share-button"
             >
               <WeiboIcon size={40} round />
@@ -566,7 +573,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
             {/* Instagram 分享（使用自定义按钮，因为 react-share 不直接支持 Instagram） */}
             <button
               onClick={() => {
-                const text = formatProgressTitle(language, progress.year, progress.percentage);
+                const text = formatProgressTitle(language, progress.year, progress.displayPercentage);
                 const url = getShareUrl();
                 
                 // 检测是否为移动设备
