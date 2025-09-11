@@ -5,7 +5,10 @@
       "Bash(npm run dev:*)",
       "Bash(curl:*)",
       "Bash(npx tsc:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(powershell:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []

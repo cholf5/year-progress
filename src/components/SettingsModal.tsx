@@ -146,7 +146,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
 
   if (!shouldRender) return null;
 
-  const t = (key: keyof typeof import('@/lib/i18n').translations.en) => getTranslation(currentLanguage, key);
+  const t = (key: keyof import('@/lib/i18n').Translation) => getTranslation(currentLanguage, key);
   
   // 根据当前主题计算背景色
   const isDark = currentTheme === 'dark' || (currentTheme === 'system' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);

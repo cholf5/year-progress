@@ -295,7 +295,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
     );
   }
 
-  const t = (key: keyof typeof translations.en) => getTranslation(language, key);
+  const t = (key: keyof import('@/lib/i18n').Translation) => getTranslation(language, key);
 
   // 创建像素网格数据
   const totalDays = progress.totalDays;

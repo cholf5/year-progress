@@ -26,7 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   languages.forEach(lang => {
     if (lang !== 'en') { // 英文版已经在上面添加了
       // 使用encodeURIComponent确保URL参数正确编码
-      const encodedLang = encodeURIComponent(lang)
+      const encodedLang = encodeURIComponent(String(lang))
       sitemap.push({
         url: `${baseUrl}?lang=${encodedLang}`,
         lastModified: new Date(),
