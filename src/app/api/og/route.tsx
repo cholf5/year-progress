@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og';
-import { type Language, formatProgressTitle, formatWeekDayText, translations } from '@/lib/i18n';
+import { type Language, formatProgressTitle, formatWeekDayText, getCachedLanguages } from '@/lib/i18n';
 import { calculateYearProgressForParams, calculateYearProgressForDate } from '@/lib/progressCalculation';
 
 export const runtime = 'edge';
@@ -29,13 +29,14 @@ export async function GET(request: Request) {
     
     // Get translations for the specified language
     const lang = langParam as Language;
-    const isValidLang = Object.keys(translations).includes(lang);
-    
+    const supportedLanguages = getCachedLanguages();
+    const isValidLang = supportedLanguages.includes(lang);
+
     // Fallback problematic languages to English for OG image generation
     // Arabic font rendering causes "lookupType: 5 - substFormat: 3" error in Next.js OG
     const problematicLanguages: Language[] = ['ar'];
     const shouldFallbackToEn = problematicLanguages.includes(lang);
-    
+
     const currentLang: Language = isValidLang && !shouldFallbackToEn ? lang : 'en';
     
     // Create pixel grid for progress visualization
