@@ -1,5 +1,6 @@
 'use client';
 
+import moment from 'moment';
 import { useEffect, useState, useRef } from 'react';
 import { calculateYearProgress, calculateDisplayPercentage } from '@/lib/yearProgress';
 import { type Language, getTranslation, getInitialLanguage, saveLanguage, getLanguageDisplayName, formatProgressTitle, formatWeekDayText, formatPageTitle, formatMonthDay, formatDayWeekInfo, formatBottomStats, formatCurrentWeekDayText, formatHistoricalWeekDayText, getOgLocale, translations } from '@/lib/i18n';
@@ -65,26 +66,26 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
   // 从设置中获取当前值（用于新功能）
   const twitterIcon = settings.twitterIcon;
 
-  // 检查当前显示的日期是否是今天
-  const checkIfCurrentDate = () => {
+  const getCurrentYearAndDay = () => {
     const today = new Date();
     const currentYear = today.getFullYear();
-    const startOfYear = new Date(currentYear, 0, 1);
-    const dayOfYear = Math.ceil((today.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-    
-    return progress.year === currentYear && progress.daysPassed === dayOfYear;
+    const currentDayOfYear = moment(today).dayOfYear();
+    return { currentYear, currentDayOfYear };
+  }
+
+  // 检查当前显示的日期是否是今天
+  const checkIfCurrentDate = (year: number, day: number) => {
+    const { currentYear, currentDayOfYear } = getCurrentYearAndDay();
+    return year === currentYear && day === currentDayOfYear;
   };
 
   // 检查是历史还是未来
   const getProgressType = () => {
-    const today = new Date();
-    const currentYear = today.getFullYear();
-    const startOfYear = new Date(currentYear, 0, 1);
-    const dayOfYear = Math.ceil((today.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+    const { currentYear, currentDayOfYear } = getCurrentYearAndDay();
     
-    if (progress.year < currentYear || (progress.year === currentYear && progress.daysPassed < dayOfYear)) {
+    if (progress.year < currentYear || (progress.year === currentYear && progress.daysPassed < currentDayOfYear)) {
       return 'past';
-    } else if (progress.year > currentYear || (progress.year === currentYear && progress.daysPassed > dayOfYear)) {
+    } else if (progress.year > currentYear || (progress.year === currentYear && progress.daysPassed > currentDayOfYear)) {
       return 'future';
     }
     return 'current';
@@ -170,38 +171,36 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
       
       if (yearParam && dayParam) {
         // 使用URL中的参数计算进度（这是分享时的固定时间）
-        const year = parseInt(yearParam);
-        const daysPassed = parseInt(dayParam);
+        const nYearParam = parseInt(yearParam);
+        const nDayOfYearParam = parseInt(dayParam);
         
         // 基本验证
-        if (!isNaN(year) && !isNaN(daysPassed) && 
-            year > 0 && year < 30000 && 
-            daysPassed >= 1 && daysPassed <= 366) {
-          
-          const isLeapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
-          const totalDays = isLeapYear ? 366 : 365;
-          const percentage = Math.round((daysPassed / totalDays) * 100 * 100) / 100;
-          const remainingDays = totalDays - daysPassed;
+        if (!isNaN(nYearParam) && !isNaN(nDayOfYearParam) &&
+            nYearParam > 0 && nYearParam < 30000 &&
+            nDayOfYearParam >= 1 && nDayOfYearParam <= 366) {
+
+          // 使用 moment.js 计算是否为闰年
+          const totalDays = moment([nYearParam]).isLeapYear() ? 366 : 365;
+          const percentage = Math.round((nDayOfYearParam / totalDays) * 100 * 100) / 100;
+          const remainingDays = totalDays - nDayOfYearParam;
           
           // 使用纯函数计算显示百分比
-          const { displayPercentage, isMilestone } = calculateDisplayPercentage(daysPassed, totalDays);
+          const { displayPercentage, isMilestone } = calculateDisplayPercentage(nDayOfYearParam, totalDays);
           
           setProgress({
-            year,
+            year: nYearParam,
             totalDays,
-            daysPassed,
+            daysPassed: nDayOfYearParam,
             percentage,
             remainingDays,
             displayPercentage,
             isMilestone
           });
+
+          console.log(`Loaded progress from URL: Year ${nYearParam}, Day ${nDayOfYearParam}, Percentage ${percentage}%, IsCurrent: ${checkIfCurrentDate(nYearParam, nDayOfYearParam)}`);
           
           // 检查是否是历史数据
-          const today = new Date();
-          const currentYear = today.getFullYear();
-          const startOfYear = new Date(currentYear, 0, 1);
-          const dayOfYear = Math.ceil((today.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-          setIsHistoricalData(year !== currentYear || daysPassed !== dayOfYear);
+          setIsHistoricalData(!checkIfCurrentDate(nYearParam, nDayOfYearParam));
         }
       } else {
         // 没有URL参数，使用当前时间并设置定时更新

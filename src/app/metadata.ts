@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import moment from 'moment'
 import { getSeoBaseUrl } from '@/lib/utils/baseUrl'
 import { formatPageTitle, getTranslation, Language } from '@/lib/i18n'
 
@@ -11,7 +12,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   
   // 获取URL参数
   const year = searchParams.year ? parseInt(searchParams.year as string) : new Date().getFullYear()
-  const day = searchParams.day ? parseInt(searchParams.day as string) : Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 1).getTime()) / (1000 * 60 * 60 * 24)) + 1
+  const day = searchParams.day ? parseInt(searchParams.day as string) : moment().dayOfYear()
   const lang = (searchParams.lang as string) || 'en'
   
   // 确保语言类型正确
