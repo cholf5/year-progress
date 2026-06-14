@@ -61,4 +61,9 @@ Ce site ne collecte aucune information personnelle. Tous les paramètres (thème
   viewToday: "Voir Aujourd'hui",
   historicalProgressTooltip: "Vous consultez la progression passée, cliquez pour revenir à aujourd'hui",
   futureProgressTooltip: "Vous consultez la progression future, cliquez pour revenir à aujourd'hui",
+  themeLight: 'Mode Clair',
+  themeDark: 'Mode Sombre',
+  themeSystem: 'Suivre Système',
+  twitterIconX: 'Logo X',
+  twitterIconBird: 'Oiseau Classique',
 };

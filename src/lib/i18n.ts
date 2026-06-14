@@ -20,12 +20,10 @@ export {
   formatCurrentWeekDayText,
   formatHistoricalWeekDayText,
   getOgLocale,
-  preloadLanguage,
-  preloadLanguages,
-  clearTranslationCache,
   getCachedLanguages,
-  isLanguageCached,
-  translations
+  resolveServerLanguage,
+  parseAcceptLanguage,
+  readLanguageFromSettingsCookie
 } from './i18n/index';
 
 // 重新导出所有类型和函数以保持兼容性

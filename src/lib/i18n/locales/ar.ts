@@ -61,4 +61,9 @@ export const translations: Translation = {
   viewToday: "عرض اليوم",
   historicalProgressTooltip: "أنت تتصور تقدم الماضي، انقر للعودة إلى اليوم",
   futureProgressTooltip: "أنت تتصور تقدم المستقبل، انقر للعودة إلى اليوم",
+  themeLight: 'الوضع النهاري',
+  themeDark: 'الوضع الليلي',
+  themeSystem: 'تتبع النظام',
+  twitterIconX: 'شعار X',
+  twitterIconBird: 'الطائر الكلاسيكي',
 };

@@ -61,4 +61,9 @@ export const translations: Translation = {
   viewToday: "ယနေ့ကြည့်ရန်",
   historicalProgressTooltip: "သင်သည် လွန်ခဲ့သော အောင်မြင်မှုကို ကြည့်နေပါသည်၊ ယနေ့သို့ ပြန်ရန် နှိပ်ပါ",
   futureProgressTooltip: "သင်သည် အနာဂတ် အောင်မြင်မှုကို ကြည့်နေပါသည်၊ ယနေ့သို့ ပြန်ရန် နှိပ်ပါ",
+  themeLight: 'အလင်းမုဒ်',
+  themeDark: 'အမှောင်မုဒ်',
+  themeSystem: 'စနစ်ကိုလိုက်မည်',
+  twitterIconX: 'X လိုဂို',
+  twitterIconBird: 'ဂန္ထဝင်ငှက်',
 };

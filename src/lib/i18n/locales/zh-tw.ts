@@ -61,4 +61,9 @@ export const translations: Translation = {
   viewToday: "查看今天",
   historicalProgressTooltip: "您正在查看過去的進度，點擊返回今天",
   futureProgressTooltip: "您正在查看未來的進度，點擊返回今天",
+  themeLight: '日間模式',
+  themeDark: '夜間模式',
+  themeSystem: '跟隨系統',
+  twitterIconX: 'X 標誌',
+  twitterIconBird: '經典藍鳥',
 };

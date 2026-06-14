@@ -47,4 +47,11 @@ export interface Translation {
   viewToday: string;
   historicalProgressTooltip: string;
   futureProgressTooltip: string;
+  // 主题名（从 lib/theme.ts 收编）
+  themeLight: string;
+  themeDark: string;
+  themeSystem: string;
+  // Twitter 图标名（从 lib/settings.ts 收编）
+  twitterIconX: string;
+  twitterIconBird: string;
 }

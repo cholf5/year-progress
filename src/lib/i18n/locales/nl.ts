@@ -61,4 +61,9 @@ Deze site verzamelt geen persoonlijke informatie. Alle instellingen (thema, taal
   viewToday: "Vandaag Bekijken",
   historicalProgressTooltip: "U bekijkt verleden voortgang, klik om terug te keren naar vandaag",
   futureProgressTooltip: "U bekijkt toekomstige voortgang, klik om terug te keren naar vandaag",
+  themeLight: 'Lichte Modus',
+  themeDark: 'Donkere Modus',
+  themeSystem: 'Volg Systeem',
+  twitterIconX: 'X Logo',
+  twitterIconBird: 'Klassieke Vogel',
 };

@@ -61,4 +61,9 @@ export const translations: Translation = {
   viewToday: "আজ দেখুন",
   historicalProgressTooltip: "আপনি অতীতের অগ্রগতি দেখছেন, আজ ফিরে যেতে ক্লিক করুন",
   futureProgressTooltip: "আপনি ভবিষ্যতের অগ্রগতি দেখছেন, আজ ফিরে যেতে ক্লিক করুন",
+  themeLight: 'লাইট মোড',
+  themeDark: 'ডার্ক মোড',
+  themeSystem: 'সিস্টেম অনুসরণ করুন',
+  twitterIconX: 'X লোগো',
+  twitterIconBird: 'ক্লাসিক পাখি',
 };

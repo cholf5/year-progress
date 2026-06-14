@@ -61,4 +61,9 @@ We do not collect any personal information. All preferences (such as theme and l
   viewToday: "View Today",
   historicalProgressTooltip: "You are viewing past progress, click to return to today",
   futureProgressTooltip: "You are viewing future progress, click to return to today",
+  themeLight: 'Light Mode',
+  themeDark: 'Dark Mode',
+  themeSystem: 'Follow System',
+  twitterIconX: 'X Logo',
+  twitterIconBird: 'Classic Bird',
 };

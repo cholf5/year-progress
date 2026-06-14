@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { type Language, formatProgressTitle, formatWeekDayText, getCachedLanguages } from '@/lib/i18n';
-import { calculateYearProgressForParams, calculateYearProgressForDate } from '@/lib/progressCalculation';
+import { calculateYearProgressForParams, calculateYearProgressForDate, getIsoWeekForDayOfYear } from '@/lib/progressCalculation';
+import { loadFonts } from './fonts';
 
 export const runtime = 'edge';
 
@@ -32,12 +33,7 @@ export async function GET(request: Request) {
     const supportedLanguages = getCachedLanguages();
     const isValidLang = supportedLanguages.includes(lang);
 
-    // Fallback problematic languages to English for OG image generation
-    // Arabic font rendering causes "lookupType: 5 - substFormat: 3" error in Next.js OG
-    const problematicLanguages: Language[] = ['ar'];
-    const shouldFallbackToEn = problematicLanguages.includes(lang);
-
-    const currentLang: Language = isValidLang && !shouldFallbackToEn ? lang : 'en';
+    const currentLang: Language = isValidLang ? lang : 'en';
     
     // Create pixel grid for progress visualization
     const squaresPerRow = 53; // Weeks in a year
@@ -50,7 +46,7 @@ export async function GET(request: Request) {
           width: '100%',
           display: 'flex',
           backgroundColor: '#000000',
-          fontFamily: 'system-ui',
+          fontFamily: 'notoSansLatin, notoSansSC, notoSansArabic',
           color: 'white',
           padding: 60,
         }}
@@ -147,13 +143,14 @@ export async function GET(request: Request) {
               marginTop: 20,
             }}
           >
-            {formatWeekDayText(currentLang, Math.ceil(daysPassed / 7), daysPassed, year)}
+            {formatWeekDayText(currentLang, getIsoWeekForDayOfYear(year, daysPassed), daysPassed, year)}
           </div>
         </div>
       </div>,
       {
         width: 1200,
         height: 630,
+        fonts: await loadFonts(),
       }
     );
   } catch (e) {

@@ -61,4 +61,9 @@ Denna webbplats samlar inte in någon personlig information. Alla inställningar
   viewToday: "Se Idag",
   historicalProgressTooltip: "Du tittar på historiskt framsteg, klicka för att återvända till idag",
   futureProgressTooltip: "Du tittar på framtida framsteg, klicka för att återvända till idag",
+  themeLight: 'Ljust läge',
+  themeDark: 'Mörkt läge',
+  themeSystem: 'Följ systemet',
+  twitterIconX: 'X-logotyp',
+  twitterIconBird: 'Klassisk fågel',
 };

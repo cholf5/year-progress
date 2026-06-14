@@ -61,4 +61,9 @@ Ta strona nie zbiera żadnych informacji osobistych. Wszystkie ustawienia (motyw
   viewToday: "Zobacz Dziś",
   historicalProgressTooltip: "Przeglądasz postęp z przeszłości, kliknij aby wrócić do dzisiaj",
   futureProgressTooltip: "Przeglądasz przyszły postęp, kliknij aby wrócić do dzisiaj",
+  themeLight: 'Tryb jasny',
+  themeDark: 'Tryb ciemny',
+  themeSystem: 'Podążaj za systemem',
+  twitterIconX: 'Logo X',
+  twitterIconBird: 'Klasyczny ptak',
 };

@@ -61,4 +61,9 @@ Este site não coleta nenhuma informação pessoal. Todas as configurações (te
   viewToday: "Ver Hoje",
   historicalProgressTooltip: "Você está visualizando o progresso passado, clique para voltar a hoje",
   futureProgressTooltip: "Você está visualizando o progresso futuro, clique para voltar a hoje",
+  themeLight: 'Modo Claro',
+  themeDark: 'Modo Escuro',
+  themeSystem: 'Seguir Sistema',
+  twitterIconX: 'Logo X',
+  twitterIconBird: 'Pássaro Clássico',
 };

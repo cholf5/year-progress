@@ -61,4 +61,9 @@ Trang web này không thu thập bất kỳ thông tin cá nhân nào. Tất c�
   viewToday: "Xem Hôm Nay",
   historicalProgressTooltip: "Bạn đang xem tiến độ quá khứ, nhấp để quay về hôm nay",
   futureProgressTooltip: "Bạn đang xem tiến độ tương lai, nhấp để quay về hôm nay",
+  themeLight: 'Chế độ Sáng',
+  themeDark: 'Chế độ Tối',
+  themeSystem: 'Theo Hệ thống',
+  twitterIconX: 'Logo X',
+  twitterIconBird: 'Chim Biểu tượng',
 };

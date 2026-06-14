@@ -58,4 +58,9 @@ Este proyecto es de código abierto y está diseñado para ser un recordatorio �
   viewToday: "Ver Hoy",
   historicalProgressTooltip: "Estás viendo el progreso pasado, haz clic para volver a hoy",
   futureProgressTooltip: "Estás viendo el progreso futuro, haz clic para volver a hoy",
+  themeLight: 'Modo Claro',
+  themeDark: 'Modo Oscuro',
+  themeSystem: 'Seguir Sistema',
+  twitterIconX: 'Logo X',
+  twitterIconBird: 'Pájaro Clásico',
 };

@@ -61,4 +61,9 @@ export const translations: Translation = {
   viewToday: "今日を見る",
   historicalProgressTooltip: "過去の進捗を表示中、クリックで今日に戻る",
   futureProgressTooltip: "未来の進捗を表示中、クリックで今日に戻る",
+  themeLight: 'ライトモード',
+  themeDark: 'ダークモード',
+  themeSystem: 'システムに従う',
+  twitterIconX: 'X ロゴ',
+  twitterIconBird: 'クラシックバード',
 };

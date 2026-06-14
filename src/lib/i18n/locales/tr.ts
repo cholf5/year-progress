@@ -61,4 +61,9 @@ Bu site hiçbir kişisel bilgi toplamaz. Tüm ayarlar (tema, dil vb.) yalnızca 
   viewToday: "Bugünü Gör",
   historicalProgressTooltip: "Geçmiş ilerlemeyi görüntülüyorsunuz, bugüne dönmek için tıklayın",
   futureProgressTooltip: "Gelecek ilerlemeyi görüntülüyorsunuz, bugüne dönmek için tıklayın",
+  themeLight: 'Açık Mod',
+  themeDark: 'Koyu Mod',
+  themeSystem: 'Sistemi Takip Et',
+  twitterIconX: 'X Logosu',
+  twitterIconBird: 'Klasik Kuş',
 };

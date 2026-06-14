@@ -1,21 +1,19 @@
 'use client';
 
 import moment from 'moment';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { track } from '@vercel/analytics';
 import { calculateYearProgress, calculateDisplayPercentage } from '@/lib/yearProgress';
-import { type Language, getTranslation, getInitialLanguage, saveLanguage, getLanguageDisplayName, formatProgressTitle, formatWeekDayText, formatPageTitle, formatMonthDay, formatDayWeekInfo, formatBottomStats, formatCurrentWeekDayText, formatHistoricalWeekDayText, getOgLocale, translations } from '@/lib/i18n';
-import { type Theme, getInitialTheme, saveTheme, applyTheme, getThemeDisplayName, getSystemTheme, getEffectiveTheme } from '@/lib/theme';
-import { type Settings, type TwitterIcon as TwitterIconType, getSettings, saveSettings } from '@/lib/settings';
+import { getIsoWeekForDayOfYear } from '@/lib/progressCalculation';
+import { type Language, getTranslation, formatProgressTitle, formatPageTitle, formatMonthDay, formatDayWeekInfo, formatBottomStats, formatCurrentWeekDayText, formatHistoricalWeekDayText } from '@/lib/i18n';
+import { type Theme, applyTheme } from '@/lib/theme';
+import { type Settings, getSettings } from '@/lib/settings';
 import SettingsModal from '@/components/SettingsModal';
 import SettingsButton from '@/components/SettingsButton';
 import InfoModal from '@/components/InfoModal';
-
-// 三个共用的 hashtag 常量
-const COMMON_HASHTAGS = ['YearProgress', 'YearProgressBar', 'YearProgressOrg'];
+import { formatSharedHashtags, formatLocaleHashtags } from '@/lib/utils/socialShare';
 
 import {
-  TwitterShareButton,
   FacebookShareButton,
   TelegramShareButton,
   RedditShareButton,
@@ -36,7 +34,7 @@ const getDateInfo = (dayNumber: number, year: number, language: Language) => {
   const date = new Date(startOfYear);
   date.setDate(date.getDate() + dayNumber - 1); // dayNumber-1 因为第1天是1月1日
   
-  const weekNumber = Math.ceil(dayNumber / 7);
+  const weekNumber = getIsoWeekForDayOfYear(year, dayNumber);
   const weekDays = getTranslation(language, 'weekDays') as string[];
   const dayOfWeek = weekDays[date.getDay()];
   
@@ -49,7 +47,8 @@ interface YearProgressClientProps {
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export default function YearProgressClient({ searchParams }: YearProgressClientProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function YearProgressClient({ searchParams: _searchParams }: YearProgressClientProps) {
   const [progress, setProgress] = useState(calculateYearProgress());
   const [settings, setSettings] = useState<Settings>(getSettings());
   const [language, setLanguage] = useState<Language>('en');
@@ -100,29 +99,12 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
     }
   };
 
-  // 按钮状态管理
-  const [isButtonPressed, setIsButtonPressed] = useState(false);
-
   // 生成带进度参数的分享URL
   const getShareUrl = () => {
     if (typeof window === 'undefined') return '';
     const baseUrl = window.location.origin + window.location.pathname;
     // 添加时间进度参数，确保分享时的OG图片显示正确的进度
     return `${baseUrl}?year=${progress.year}&day=${progress.daysPassed}&lang=${language}`;
-  };
-
-  // 生成OG图片URL（带当前进度参数）
-  const getOgImageUrl = () => {
-    if (typeof window === 'undefined') return '/api/og';
-    const baseUrl = window.location.origin;
-    
-    // 如果URL中有lang参数（分享链接访问），优先使用它来保持OG图片的语言一致性
-    // 否则使用当前页面的语言设置
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlLang = urlParams.get('lang');
-    const ogLang = urlLang || language;
-    
-    return `${baseUrl}/api/og?year=${progress.year}&day=${progress.daysPassed}&lang=${ogLang}`;
   };
 
   // 处理设置变更
@@ -154,27 +136,28 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
     setShowInfoModal(true);
   };
 
+  // useEffect 1: 初始化设置 + 加载初始进度（含 URL 参数解析）
   useEffect(() => {
     setMounted(true);
-    
+
     // 从Cookie/localStorage加载设置
     const savedSettings = getSettings();
     setSettings(savedSettings);
     setLanguage(savedSettings.language);
     setTheme(savedSettings.theme);
     applyTheme(savedSettings.theme);
-    
+
     // 检查URL参数，如果有时间参数则使用，否则使用当前时间
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
       const yearParam = urlParams.get('year');
       const dayParam = urlParams.get('day');
-      
+
       if (yearParam && dayParam) {
         // 使用URL中的参数计算进度（这是分享时的固定时间）
         const nYearParam = parseInt(yearParam);
         const nDayOfYearParam = parseInt(dayParam);
-        
+
         // 基本验证
         if (!isNaN(nYearParam) && !isNaN(nDayOfYearParam) &&
             nYearParam > 0 && nYearParam < 30000 &&
@@ -184,10 +167,10 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
           const totalDays = moment([nYearParam]).isLeapYear() ? 366 : 365;
           const percentage = Math.round((nDayOfYearParam / totalDays) * 100 * 100) / 100;
           const remainingDays = totalDays - nDayOfYearParam;
-          
+
           // 使用纯函数计算显示百分比
           const { displayPercentage, isMilestone } = calculateDisplayPercentage(nDayOfYearParam, totalDays);
-          
+
           setProgress({
             year: nYearParam,
             totalDays,
@@ -198,104 +181,60 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
             isMilestone
           });
 
-          console.log(`Loaded progress from URL: Year ${nYearParam}, Day ${nDayOfYearParam}, Percentage ${percentage}%, IsCurrent: ${checkIfCurrentDate(nYearParam, nDayOfYearParam)}`);
-          
           // 检查是否是历史数据
           setIsHistoricalData(!checkIfCurrentDate(nYearParam, nDayOfYearParam));
         }
       } else {
-        // 没有URL参数，使用当前时间并设置定时更新
+        // 没有URL参数，使用当前时间
         setProgress(calculateYearProgress());
         setIsHistoricalData(false);
-        
-        // 每小时更新一次进度（仅在没有URL参数时）
-        const interval = setInterval(() => {
-          setProgress(calculateYearProgress());
-          setIsHistoricalData(false); // 没有URL参数时总是当前数据
-        }, 60 * 60 * 1000);
-        
-        // 清理定时器
-        return () => {
-          clearInterval(interval);
-        };
       }
     }
-    
-    // 更新窗口宽度
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    
-    // 设置初始窗口宽度
-    if (typeof window !== 'undefined') {
-      setWindowWidth(window.innerWidth);
-      window.addEventListener('resize', handleResize);
-    }
-
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('resize', handleResize);
-      }
-    };
   }, []);
 
-  // 动态更新OG meta标签和浏览器标题
+  // useEffect 2: 仅当无 URL 参数（实时模式）时，每小时自动刷新进度
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasTimeParam = urlParams.get('year') && urlParams.get('day');
+    if (hasTimeParam) return;
+
+    const interval = setInterval(() => {
+      setProgress(calculateYearProgress());
+      setIsHistoricalData(false);
+    }, 60 * 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // useEffect 3: 监听窗口尺寸变化，重排方块尺寸
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 用户切换语言时更新浏览器标题与 <html lang>
+  // SSR 已经渲染了正确的 <html lang>（见 src/app/layout.tsx），这里只负责处理"运行时切换语言"的同步，
+  // 与 SSR 一致时是 no-op，不会触发 hydration mismatch。
   useEffect(() => {
     if (!mounted || typeof window === 'undefined') return;
 
-    // 更新或创建OG meta标签
-    const updateOrCreateMeta = (property: string, content: string) => {
-      let meta = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement;
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.setAttribute('property', property);
-        document.head.appendChild(meta);
-      }
-      meta.setAttribute('content', content);
-    };
-
-    // 更新Twitter meta标签
-    const updateOrCreateTwitterMeta = (name: string, content: string) => {
-      let meta = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement;
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.setAttribute('name', name);
-        document.head.appendChild(meta);
-      }
-      meta.setAttribute('content', content);
-    };
-
-    const ogImageUrl = getOgImageUrl();
-    
-    // 更新浏览器标题
     document.title = formatPageTitle(language);
-    
-    // 更新Apple Web App标题
-    const appleTitleMeta = document.querySelector('meta[name="apple-mobile-web-app-title"]') as HTMLMetaElement;
+    if (document.documentElement.lang !== language) {
+      document.documentElement.lang = language;
+    }
+
+    const appleTitleMeta = document.querySelector('meta[name="apple-mobile-web-app-title"]') as HTMLMetaElement | null;
     if (appleTitleMeta) {
       appleTitleMeta.setAttribute('content', getTranslation(language, 'siteName') as string);
     }
-    
-    // 更新OG标签
-    updateOrCreateMeta('og:type', 'website');
-    updateOrCreateMeta('og:locale', getOgLocale(language));
-    updateOrCreateMeta('og:url', window.location.href);
-    updateOrCreateMeta('og:title', formatPageTitle(language));
-    updateOrCreateMeta('og:description', getTranslation(language, 'description') as string);
-    updateOrCreateMeta('og:site_name', getTranslation(language, 'siteName') as string);
-    updateOrCreateMeta('og:image', ogImageUrl);
-    updateOrCreateMeta('og:image:width', '1200');
-    updateOrCreateMeta('og:image:height', '630');
-    updateOrCreateMeta('og:image:alt', formatPageTitle(language));
-
-    // 更新Twitter标签
-    updateOrCreateTwitterMeta('twitter:card', 'summary_large_image');
-    updateOrCreateTwitterMeta('twitter:title', formatPageTitle(language));
-    updateOrCreateTwitterMeta('twitter:description', getTranslation(language, 'description') as string);
-    updateOrCreateTwitterMeta('twitter:image', ogImageUrl);
-    updateOrCreateTwitterMeta('twitter:creator', '@yearofprogress');
-
-  }, [mounted, language, progress.year, progress.daysPassed, getOgImageUrl]);
+  }, [mounted, language]);
 
   // 单独的useEffect用于系统主题监听
   useEffect(() => {
@@ -315,15 +254,6 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
     return () => {
       mediaQuery.removeEventListener('change', handleSystemThemeChange);
     };
-  }, []);
-
-  // 主题初始化 - 只在组件挂载时执行一次
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const initialTheme = getInitialTheme();
-      setTheme(initialTheme);
-      applyTheme(initialTheme);
-    }
   }, []);
 
   const copyToClipboard = async () => {
@@ -564,7 +494,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
           {isHistoricalData ? (
             <div className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
               <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 transition-colors duration-300">
-                {formatHistoricalWeekDayText(language, Math.ceil(daysPassed / 7), daysPassed, progress.year)}
+                {formatHistoricalWeekDayText(language, getIsoWeekForDayOfYear(progress.year, daysPassed), daysPassed, progress.year)}
               </p>
               <div className="relative group">
                 <button
@@ -588,7 +518,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
             </div>
           ) : (
             <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 px-2 transition-colors duration-300">
-              {formatCurrentWeekDayText(language, Math.ceil(daysPassed / 7), daysPassed, progress.year)}
+              {formatCurrentWeekDayText(language, getIsoWeekForDayOfYear(progress.year, daysPassed), daysPassed, progress.year)}
             </p>
           )}
         </div>
@@ -607,7 +537,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
             <button
               onClick={() => {
                 const text = formatProgressTitle(language, progress.year, progress.displayPercentage);
-                const hashtags = [...COMMON_HASHTAGS, ...getTranslation(language, 'socialHashtags') as string[]].map(tag => `#${tag}`).join(' ');
+                const hashtags = formatSharedHashtags(language);
                 const shareText = `${text}\n${hashtags}\n${getShareUrl()}`;
                 const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
                 window.open(twitterUrl, '_blank', 'width=550,height=420');
@@ -646,7 +576,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
             <WeiboShareButton
               url={getShareUrl()}
-              title={`${formatProgressTitle(language, progress.year, progress.displayPercentage)} ${getTranslation(language, 'socialHashtags') ? '#' + (getTranslation(language, 'socialHashtags') as string[]).join(' #') : ''}`}
+              title={`${formatProgressTitle(language, progress.year, progress.displayPercentage)} ${formatLocaleHashtags(language)}`.trim()}
               onClick={() => track('share', { platform: 'weibo', language })}
               className="hover:scale-110 transition-transform social-share-button"
             >

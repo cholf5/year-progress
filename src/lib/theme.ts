@@ -1,5 +1,8 @@
 export type Theme = 'light' | 'dark' | 'system';
 
+import type { Language } from './i18n';
+import { getTranslation } from './i18n';
+
 export const getInitialTheme = (): Theme => {
   if (typeof window === 'undefined') return 'light';
   
@@ -46,90 +49,11 @@ export const applyTheme = (theme: Theme) => {
   document.body.classList.add(effectiveTheme);
 };
 
-export const getThemeDisplayName = (theme: Theme, language: string): string => {
-  const names: { [key in Theme]: { [lang: string]: string } } = {
-    light: {
-      en: 'Light Mode',
-      'zh-cn': '日间模式',
-      'zh-tw': '日間模式',
-      es: 'Modo Claro',
-      fr: 'Mode Clair',
-      de: 'Heller Modus',
-      ja: 'ライトモード',
-      ko: '라이트 모드',
-      pt: 'Modo Claro',
-      ru: 'Светлый режим',
-      ar: 'الوضع النهاري',
-      hi: 'दिन मोड',
-      it: 'Modalità Chiara',
-      nl: 'Lichte Modus',
-      tr: 'Açık Mod',
-      sv: 'Ljust läge',
-      pl: 'Tryb jasny',
-      da: 'Lys tilstand',
-      no: 'Lys modus',
-      fi: 'Valoisa tila',
-      vi: 'Chế độ Sáng',
-      th: 'โหมดสว่าง',
-      id: 'Mode Terang',
-      sw: 'Hali ya Nuru',
-      bn: 'লাইট মোড'
-    },
-    dark: {
-      en: 'Dark Mode',
-      'zh-cn': '夜间模式',
-      'zh-tw': '夜間模式',
-      es: 'Modo Oscuro',
-      fr: 'Mode Sombre',
-      de: 'Dunkler Modus',
-      ja: 'ダークモード',
-      ko: '다크 모드',
-      pt: 'Modo Escuro',
-      ru: 'Тёмный режим',
-      ar: 'الوضع الليلي',
-      hi: 'रात मोड',
-      it: 'Modalità Scura',
-      nl: 'Donkere Modus',
-      tr: 'Koyu Mod',
-      sv: 'Mörkt läge',
-      pl: 'Tryb ciemny',
-      da: 'Mørk tilstand',
-      no: 'Mørk modus',
-      fi: 'Tumma tila',
-      vi: 'Chế độ Tối',
-      th: 'โหมดมืด',
-      id: 'Mode Gelap',
-      sw: 'Hali ya Giza',
-      bn: 'ডার্ক মোড'
-    },
-    system: {
-      en: 'Follow System',
-      'zh-cn': '跟随系统',
-      'zh-tw': '跟隨系統',
-      es: 'Seguir Sistema',
-      fr: 'Suivre Système',
-      de: 'System folgen',
-      ja: 'システムに従う',
-      ko: '시스템 따라가기',
-      pt: 'Seguir Sistema',
-      ru: 'Следовать системе',
-      ar: 'تتبع النظام',
-      hi: 'सिस्टम का पालन करें',
-      it: 'Segui Sistema',
-      nl: 'Volg Systeem',
-      tr: 'Sistemi Takip Et',
-      sv: 'Följ systemet',
-      pl: 'Podążaj za systemem',
-      da: 'Følg systemet',
-      no: 'Følg systemet',
-      fi: 'Seuraa järjestelmää',
-      vi: 'Theo Hệ thống',
-      th: 'ตามระบบ',
-      id: 'Ikuti Sistem',
-      sw: 'Fuata Mfumo',
-      bn: 'সিস্টেম অনুসরণ করুন'
-    }
+export const getThemeDisplayName = (theme: Theme, language: Language): string => {
+  const keyMap: Record<Theme, 'themeLight' | 'themeDark' | 'themeSystem'> = {
+    light: 'themeLight',
+    dark: 'themeDark',
+    system: 'themeSystem',
   };
-  
-  return names[theme][language] || names[theme]['en'];
+  return getTranslation(language, keyMap[theme]) as string;
 };

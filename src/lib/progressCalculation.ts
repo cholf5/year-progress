@@ -91,3 +91,8 @@ export function calculateYearProgressForParams(year: number, daysPassed: number)
     isMilestone,
   };
 }
+
+// 计算指定年份某一天所属的 ISO-8601 周编号（与 moment.isoWeek 一致）
+export function getIsoWeekForDayOfYear(year: number, dayOfYear: number): number {
+  return moment([year]).dayOfYear(dayOfYear).isoWeek();
+}

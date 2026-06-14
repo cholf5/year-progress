@@ -61,4 +61,9 @@ export const translations: Translation = {
   viewToday: "오늘 보기",
   historicalProgressTooltip: "과거의 진행률을 보고 계십니다, 클릭하여 오늘로 돌아가기",
   futureProgressTooltip: "미래의 진행률을 보고 계십니다, 클릭하여 오늘로 돌아가기",
+  themeLight: '라이트 모드',
+  themeDark: '다크 모드',
+  themeSystem: '시스템 따라가기',
+  twitterIconX: 'X 로고',
+  twitterIconBird: '클래식 새',
 };

@@ -61,4 +61,9 @@ Tovuti hii hakusanyi habari yoyote binafsi. Mipangilio yote (mandhari, lugha, nk
   viewToday: "Ona Leo",
   historicalProgressTooltip: "Unatazama maendeleo yaliyopita, bonyeza kurudi leo",
   futureProgressTooltip: "Unatazama maendeleo ya siku zijazo, bonyeza kurudi leo",
+  themeLight: 'Hali ya Nuru',
+  themeDark: 'Hali ya Giza',
+  themeSystem: 'Fuata Mfumo',
+  twitterIconX: 'Alama ya X',
+  twitterIconBird: 'Ndege ya Klasiki',
 };

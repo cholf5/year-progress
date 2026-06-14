@@ -61,4 +61,9 @@ export const translations: Translation = {
   viewToday: "Смотреть сегодня",
   historicalProgressTooltip: "Вы просматриваете прошлый прогресс, нажмите чтобы вернуться к сегодняшнему дню",
   futureProgressTooltip: "Вы просматриваете будущий прогресс, нажмите чтобы вернуться к сегодняшнему дню",
+  themeLight: 'Светлый режим',
+  themeDark: 'Тёмный режим',
+  themeSystem: 'Следовать системе',
+  twitterIconX: 'Логотип X',
+  twitterIconBird: 'Классическая птичка',
 };

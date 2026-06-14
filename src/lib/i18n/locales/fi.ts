@@ -61,4 +61,9 @@ Tämä sivusto ei kerää mitään henkilökohtaisia tietoja. Kaikki asetukset (
   viewToday: "Katso Tänään",
   historicalProgressTooltip: "Tarkastelet menneen edistymistä, klikkaa palataksesi tähän päivään",
   futureProgressTooltip: "Tarkastelet tulevaa edistymistä, klikkaa palataksesi tähän päivään",
+  themeLight: 'Valoisa tila',
+  themeDark: 'Tumma tila',
+  themeSystem: 'Seuraa järjestelmää',
+  twitterIconX: 'X-logo',
+  twitterIconBird: 'Klassinen lintu',
 };

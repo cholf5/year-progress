@@ -61,4 +61,9 @@ Denne side indsamler ingen personlige oplysninger. Alle indstillinger (tema, spr
   viewToday: "Se I Dag",
   historicalProgressTooltip: "Du kigger på historisk fremdrift, klik for at vende tilbage til i dag",
   futureProgressTooltip: "Du kigger på fremtidig fremdrift, klik for at vende tilbage til i dag",
+  themeLight: 'Lys tilstand',
+  themeDark: 'Mørk tilstand',
+  themeSystem: 'Følg systemet',
+  twitterIconX: 'X-logo',
+  twitterIconBird: 'Klassisk fugl',
 };

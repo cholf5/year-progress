@@ -61,4 +61,9 @@ Denne siden samler ikke inn noen personlig informasjon. Alle innstillinger (tema
   viewToday: "Se I Dag",
   historicalProgressTooltip: "Du ser på historisk fremgang, klikk for å returnere til i dag",
   futureProgressTooltip: "Du ser på fremtidig fremgang, klikk for å returnere til i dag",
+  themeLight: 'Lys modus',
+  themeDark: 'Mørk modus',
+  themeSystem: 'Følg systemet',
+  twitterIconX: 'X-logo',
+  twitterIconBird: 'Klassisk fugl',
 };

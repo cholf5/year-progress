@@ -61,4 +61,9 @@ Questo sito non raccoglie alcuna informazione personale. Tutte le impostazioni (
   viewToday: "Vedi Oggi",
   historicalProgressTooltip: "Stai visualizzando il progresso passato, clicca per tornare a oggi",
   futureProgressTooltip: "Stai visualizzando il progresso futuro, clicca per tornare a oggi",
+  themeLight: 'Modalità Chiara',
+  themeDark: 'Modalità Scura',
+  themeSystem: 'Segui Sistema',
+  twitterIconX: 'Logo X',
+  twitterIconBird: 'Uccello Classico',
 };

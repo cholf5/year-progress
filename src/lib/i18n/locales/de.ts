@@ -61,4 +61,9 @@ Diese Website sammelt keine persönlichen Informationen. Alle Einstellungen (The
   viewToday: "Heute anzeigen",
   historicalProgressTooltip: "Sie betrachten vergangenen Fortschritt, klicken Sie um zu heute zurückzukehren",
   futureProgressTooltip: "Sie betrachten zukünftigen Fortschritt, klicken Sie um zu heute zurückzukehren",
+  themeLight: 'Heller Modus',
+  themeDark: 'Dunkler Modus',
+  themeSystem: 'System folgen',
+  twitterIconX: 'X Logo',
+  twitterIconBird: 'Klassischer Vogel',
 };

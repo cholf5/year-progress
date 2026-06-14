@@ -61,4 +61,9 @@ Ang site na ito ay hindi nangongolekta ng anumang personal na impormasyon. Lahat
   viewToday: "Tingnan ang Ngayon",
   historicalProgressTooltip: "Nakikita mo ang progress sa nakaraan, i-click para bumalik sa ngayon",
   futureProgressTooltip: "Nakikita mo ang progress sa hinaharap, i-click para bumalik sa ngayon",
+  themeLight: 'Light Mode',
+  themeDark: 'Dark Mode',
+  themeSystem: 'Sundin ang System',
+  twitterIconX: 'X Logo',
+  twitterIconBird: 'Klasikong Ibon',
 };

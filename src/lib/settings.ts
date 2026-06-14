@@ -1,5 +1,5 @@
 import { Theme } from './theme';
-import { Language } from './i18n';
+import { Language, getTranslation } from './i18n';
 
 export type TwitterIcon = 'x' | 'bird';
 
@@ -119,63 +119,10 @@ export const saveTwitterIconSetting = (twitterIcon: TwitterIcon) => {
 };
 
 // Twitter图标显示名称
-export const getTwitterIconDisplayName = (icon: TwitterIcon, language: string): string => {
-  const names: { [key in TwitterIcon]: { [lang: string]: string } } = {
-    x: {
-      en: 'X Logo',
-      'zh-cn': 'X 标志',
-      'zh-tw': 'X 標誌',
-      es: 'Logo X',
-      fr: 'Logo X',
-      de: 'X Logo',
-      ja: 'X ロゴ',
-      ko: 'X 로고',
-      pt: 'Logo X',
-      ru: 'Логотип X',
-      ar: 'شعار X',
-      hi: 'X लोगो',
-      it: 'Logo X',
-      nl: 'X Logo',
-      tr: 'X Logosu',
-      sv: 'X-logotyp',
-      pl: 'Logo X',
-      da: 'X-logo',
-      no: 'X-logo',
-      fi: 'X-logo',
-      vi: 'Logo X',
-      th: 'โลโก้ X',
-      id: 'Logo X',
-      sw: 'Alama ya X',
-      bn: 'X লোগো'
-    },
-    bird: {
-      en: 'Classic Bird',
-      'zh-cn': '经典蓝鸟',
-      'zh-tw': '經典藍鳥',
-      es: 'Pájaro Clásico',
-      fr: 'Oiseau Classique',
-      de: 'Klassischer Vogel',
-      ja: 'クラシックバード',
-      ko: '클래식 새',
-      pt: 'Pássaro Clássico',
-      ru: 'Классическая птичка',
-      ar: 'الطائر الكلاسيكي',
-      hi: 'क्लासिक पक्षी',
-      it: 'Uccello Classico',
-      nl: 'Klassieke Vogel',
-      tr: 'Klasik Kuş',
-      sv: 'Klassisk fågel',
-      pl: 'Klasyczny ptak',
-      da: 'Klassisk fugl',
-      no: 'Klassisk fugl',
-      fi: 'Klassinen lintu',
-      vi: 'Chim Biểu tượng',
-      th: 'นกคลาสสิก',
-      id: 'Burung Klasik',
-      sw: 'Ndege ya Klasiki',
-      bn: 'ক্লাসিক পাখি'
-    }
+export const getTwitterIconDisplayName = (icon: TwitterIcon, language: Language): string => {
+  const keyMap: Record<TwitterIcon, 'twitterIconX' | 'twitterIconBird'> = {
+    x: 'twitterIconX',
+    bird: 'twitterIconBird',
   };
-  
-  return names[icon][language] || names[icon]['en'];
+  return getTranslation(language, keyMap[icon]) as string;
 };

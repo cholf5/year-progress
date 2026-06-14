@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { headers, cookies } from "next/headers";
 import "./globals.css";
 import { generateWebApplicationSchema } from "../lib/structuredData";
 import { getSeoBaseUrl } from "../lib/utils/baseUrl";
+import { getCachedLanguages, resolveServerLanguage } from "../lib/i18n";
+
+// 中间件注入的请求头：URL 中 ?lang= 的原始值
+const URL_LANG_HEADER = "x-url-lang";
+// 用户偏好 cookie（与 src/lib/settings.ts 写入的键保持一致）
+const SETTINGS_COOKIE = "yearProgressSettings";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,26 +35,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(getSeoBaseUrl()),
   alternates: {
     canonical: '/',
-    languages: {
-      'en': '/',
-      'zh': '/?lang=zh',
-      'es': '/?lang=es',
-      'ja': '/?lang=ja',
-      'de': '/?lang=de',
-      'fr': '/?lang=fr',
-      'ru': '/?lang=ru',
-      'ko': '/?lang=ko',
-      'ar': '/?lang=ar',
-      'hi': '/?lang=hi',
-      'pt': '/?lang=pt',
-      'it': '/?lang=it',
-      'tr': '/?lang=tr',
-      'vi': '/?lang=vi',
-      'th': '/?lang=th',
-      'pl': '/?lang=pl',
-      'bn': '/?lang=bn',
-      'jv': '/?lang=jv',
-    }
+    languages: Object.fromEntries(
+      getCachedLanguages().map(lang => [
+        lang,
+        lang === 'en' ? '/' : `/?lang=${encodeURIComponent(lang)}`,
+      ])
+    ),
   },
   manifest: '/manifest.webmanifest',
   // OpenGraph 和 Twitter 卡片信息将在 page.tsx 中动态设置
@@ -63,21 +56,32 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'your-google-verification-code',
-  },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    },
+  }),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // 生成结构化数据
-  const structuredData = generateWebApplicationSchema('en');
-  
+  // 在服务端解析当前请求的目标语言（URL > cookie > Accept-Language > 'en'）
+  // 这是 <html lang> 的真实值，让爬虫与屏幕阅读器在 SSR 阶段就拿到正确语言
+  const [hdrs, cookieStore] = await Promise.all([headers(), cookies()]);
+  const language = resolveServerLanguage({
+    urlLang: hdrs.get(URL_LANG_HEADER),
+    settingsCookie: cookieStore.get(SETTINGS_COOKIE)?.value,
+    acceptLanguage: hdrs.get("accept-language"),
+  });
+
+  // 生成结构化数据（用解析出的实际语言）
+  const structuredData = generateWebApplicationSchema(language);
+
   return (
-    <html lang="en">
+    <html lang={language}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
         <meta name="theme-color" content="#000000" />

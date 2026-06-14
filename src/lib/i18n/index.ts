@@ -1,15 +1,5 @@
-// 支持的语言数量常量
-// 每次添加新语言时，只需要更新这个常量即可
-export const SUPPORTED_LANGUAGES_COUNT = 29;
-
 // 导入类型定义
 import type { Translation } from './locales/types';
-
-// 支持的语言类型
-export type Language = 
-  | 'en' | 'zh-cn' | 'zh-tw' | 'es' | 'fr' | 'de' | 'ja' | 'ko' | 'pt' | 'ru' 
-  | 'ar' | 'hi' | 'it' | 'nl' | 'tr' | 'sv' | 'pl' | 'da' | 'no' | 'fi' 
-  | 'vi' | 'th' | 'id' | 'sw' | 'bn' | 'ne' | 'ur' | 'my' | 'fil';
 
 // 重新导出类型
 export type { Translation };
@@ -45,7 +35,13 @@ import { translations as ur } from './locales/ur';
 import { translations as my } from './locales/my';
 import { translations as fil } from './locales/fil';
 
-// 所有翻译的集合
+// 支持的语言类型（手写联合，唯一手写来源；新增语言时改这里 + allTranslations + import）
+export type Language =
+  | 'en' | 'zh-cn' | 'zh-tw' | 'es' | 'fr' | 'de' | 'ja' | 'ko' | 'pt' | 'ru'
+  | 'ar' | 'hi' | 'it' | 'nl' | 'tr' | 'sv' | 'pl' | 'da' | 'no' | 'fi'
+  | 'vi' | 'th' | 'id' | 'sw' | 'bn' | 'ne' | 'ur' | 'my' | 'fil';
+
+// 所有翻译的集合（运行时单一来源）
 const allTranslations: Record<Language, Translation> = {
   'en': en,
   'zh-cn': zhCn,
@@ -78,9 +74,15 @@ const allTranslations: Record<Language, Translation> = {
   'fil': fil
 };
 
+// 派生：支持的语言列表（运行时使用）
+const SUPPORTED_LANGUAGES = Object.keys(allTranslations) as Language[];
+
+// 派生：支持的语言数量（用于 i18n 占位符 {supportedLanguagesCount}）
+export const SUPPORTED_LANGUAGES_COUNT = SUPPORTED_LANGUAGES.length;
+
 // 获取翻译（同步版本）
 export function getTranslation(
-  lang: Language, 
+  lang: Language,
   key: keyof Translation
 ): string | readonly string[] {
   // 处理旧版本的 'zh' 语言代码，自动迁移为 'zh-cn'
@@ -92,133 +94,47 @@ export function getTranslation(
       localStorage.setItem('language', 'zh-cn');
     }
   }
-  
+
   // 确保语言存在，否则使用英语
-  const supportedLanguages: Language[] = [
-    'en', 'zh-cn', 'zh-tw', 'es', 'fr', 'de', 'ja', 'ko', 'pt', 'ru', 
-    'ar', 'hi', 'it', 'nl', 'tr', 'sv', 'pl', 'da', 'no', 'fi', 
-    'vi', 'th', 'id', 'sw', 'bn', 'ne', 'ur', 'my', 'fil'
-  ];
-  
-  if (!supportedLanguages.includes(actualLang)) {
+  if (!(actualLang in allTranslations)) {
     actualLang = 'en';
   }
-  
+
   // 获取翻译
   const translation = allTranslations[actualLang];
   const result = translation[key];
-  
+
   // 如果是字符串，进行占位符替换
+  // 注意：{year} 故意不在这里替换，由业务层 helper（formatProgressTitle 等）按调用方传入的年份替换
   if (typeof result === 'string') {
-    return result
-      .replace('{supportedLanguagesCount}', SUPPORTED_LANGUAGES_COUNT.toString())
-      .replace('{year}', new Date().getFullYear().toString());
+    return result.replace('{supportedLanguagesCount}', SUPPORTED_LANGUAGES_COUNT.toString());
   }
-  
+
   return result;
 }
 
-// 为了向后兼容，保留一个简化的同步翻译对象
-// 注意：这只会包含基本的英语翻译，完整翻译需要使用异步函数
-const basicTranslations: Record<string, string> = {
-  title: 'YearProgress.org',
-  siteName: 'YearProgress.org',
-  description: 'Real-time yearly progress visualization. See how much of the year has passed and how much time remains.',
-  yearProgress: 'Year Progress',
-  subtitle: 'Real-time Yearly Progress Visualization',
-  complete: 'complete',
-  progressTitle: '{year} is {percentage}% complete',
-  week: 'week',
-  day: 'day',
-  of: 'of',
-  daysCompleted: 'days completed',
-  daysRemaining: 'days remaining',
-  shareInstructions: 'Share this link on X (Twitter) to generate a beautiful progress card!',
-  currentDate: 'Current Date',
-  timeWaits: 'Time waits for no one, cherish every day!',
-  shareUrl: 'Share URL',
-  copyLink: 'Copy Link',
-  linkCopied: 'Link copied to clipboard!',
-  past: 'Past',
-  current: 'Current',
-  future: 'Future',
-  shareToSocialMedia: 'Share to Social Media',
-  clickToShare: 'Click below to share on social media and generate beautiful progress cards!',
-  orCopyLink: 'Or copy link to share',
-  copy: 'Copy',
-  copied: 'Copied!',
-  settings: 'Settings',
-  theme: 'Theme',
-  language: 'Language',
-  twitterIcon: 'Twitter Icon',
-  close: 'Close',
-  aboutSite: 'About',
-  privacyPolicy: 'Privacy Policy',
-  termsOfService: 'Terms of Service',
-  aboutSiteTitle: 'About YearProgress.org',
-  monthDayFormat: '{month} {day}',
-  dayWeekInfoFormat: 'Day {dayNumber} • Week {weekNumber}',
-  bottomStatsFormat: '{daysPassed} {daysCompleted} • {daysRemaining} {daysRemainingUnit}',
-  currentWeekDayStatus: "Today is week {weekNumber}, day {dayNumber} of {year}",
-  historicalWeekDayStatus: "This is week {weekNumber}, day {dayNumber} of {year}",
-  viewToday: "View Today",
-  historicalProgressTooltip: "You are viewing past progress, click to return to today",
-  futureProgressTooltip: "You are viewing future progress, click to return to today",
-};
-
-// 预加载语言（用于性能优化）- 简化版本
-export function preloadLanguage(lang: Language): void {
-  // 由于我们现在使用同步导入，所有语言都已预加载
-  // 这个函数保留是为了API兼容性
-}
-
-// 预加载多种语言 - 简化版本
-export function preloadLanguages(languages: Language[]): void {
-  // 由于我们现在使用同步导入，所有语言都已预加载
-  // 这个函数保留是为了API兼容性
-}
-
-// 清理缓存（用于内存管理）- 简化版本
-export function clearTranslationCache(): void {
-  // 由于我们现在使用同步导入，不需要缓存清理
-  // 这个函数保留是为了API兼容性
-}
-
-// 获取已缓存的语言列表 - 简化版本
+// 获取已缓存的语言列表（运行时统一来源）
 export function getCachedLanguages(): Language[] {
-  // 由于我们现在使用同步导入，所有语言都已"缓存"
-  return Object.keys(allTranslations) as Language[];
-}
-
-// 检查语言是否已缓存 - 简化版本
-export function isLanguageCached(lang: Language): boolean {
-  // 由于我们现在使用同步导入，所有语言都已"缓存"
-  return lang in allTranslations;
+  return SUPPORTED_LANGUAGES;
 }
 
 export function getInitialLanguage(): Language {
   if (typeof window === 'undefined') return 'en';
-  
+
   // 首先检查本地存储
   const saved = localStorage.getItem('language');
-  
+
   // 处理旧版本的 'zh' 设置，迁移为 'zh-cn'
   if (saved === 'zh') {
     const migratedLang = 'zh-cn';
     localStorage.setItem('language', migratedLang);
     return migratedLang;
   }
-  
-  const supportedLanguages: Language[] = [
-    'en', 'zh-cn', 'zh-tw', 'es', 'fr', 'de', 'ja', 'ko', 'pt', 'ru', 
-    'ar', 'hi', 'it', 'nl', 'tr', 'sv', 'pl', 'da', 'no', 'fi', 
-    'vi', 'th', 'id', 'sw', 'bn', 'ne', 'ur', 'my', 'fil'
-  ];
-  
-  if (saved && supportedLanguages.includes(saved as Language)) {
+
+  if (saved && SUPPORTED_LANGUAGES.includes(saved as Language)) {
     return saved as Language;
   }
-  
+
   // 如果没有保存的语言，检查浏览器语言
   const browserLang = navigator.language;
   return detectLanguage(browserLang);
@@ -230,53 +146,126 @@ export function saveLanguage(language: Language) {
   }
 }
 
+// 浏览器语言代码到内部 Language 的映射（detectLanguage 与服务端解析共用）
+const BROWSER_LANG_MAP: Record<string, Language> = {
+  'en': 'en',
+  'zh': 'zh-cn',
+  'zh-cn': 'zh-cn',
+  'zh-tw': 'zh-tw',
+  'zh-hk': 'zh-tw',
+  'zh-sg': 'zh-cn',
+  'es': 'es',
+  'fr': 'fr',
+  'de': 'de',
+  'ja': 'ja',
+  'ko': 'ko',
+  'pt': 'pt',
+  'ru': 'ru',
+  'ar': 'ar',
+  'hi': 'hi',
+  'it': 'it',
+  'nl': 'nl',
+  'tr': 'tr',
+  'sv': 'sv',
+  'pl': 'pl',
+  'da': 'da',
+  'no': 'no',
+  'fi': 'fi',
+  'vi': 'vi',
+  'th': 'th',
+  'id': 'id',
+  'sw': 'sw',
+  'bn': 'bn',
+  'ne': 'ne',
+  'ur': 'ur',
+  'my': 'my',
+  'fil': 'fil',
+};
+
 // 浏览器语言检测
 export function detectLanguage(browserLang: string): Language {
-  const langCode = browserLang.split('-')[0].toLowerCase();
   const fullLangCode = browserLang.toLowerCase();
-  
-  // 支持的语言映射
-  const languageMap: Record<string, Language> = {
-    'zh': 'zh-cn',
-    'zh-cn': 'zh-cn',
-    'zh-tw': 'zh-tw',
-    'zh-hk': 'zh-tw',
-    'zh-sg': 'zh-cn',
-    'es': 'es',
-    'fr': 'fr',
-    'de': 'de',
-    'ja': 'ja',
-    'ko': 'ko',
-    'pt': 'pt',
-    'ru': 'ru',
-    'ar': 'ar',
-    'hi': 'hi',
-    'it': 'it',
-    'nl': 'nl',
-    'tr': 'tr',
-    'sv': 'sv',
-    'pl': 'pl',
-    'da': 'da',
-    'no': 'no',
-    'fi': 'fi',
-    'vi': 'vi',
-    'th': 'th',
-    'id': 'id',
-    'sw': 'sw',
-    'bn': 'bn',
-    'ne': 'ne',
-    'ur': 'ur',
-    'my': 'my',
-    'fil': 'fil',
-  };
+  const langCode = fullLangCode.split('-')[0];
 
-  // 先检查完整的语言代码
-  if (languageMap[fullLangCode]) {
-    return languageMap[fullLangCode];
+  // 先检查完整的语言代码（zh-cn 等带区域的）
+  if (BROWSER_LANG_MAP[fullLangCode]) {
+    return BROWSER_LANG_MAP[fullLangCode];
   }
 
   // 再检查基本语言代码
-  return languageMap[langCode] || 'en';
+  return BROWSER_LANG_MAP[langCode] || 'en';
+}
+
+// 解析 Accept-Language 头，按 q 值排序后取第一个能识别的语言
+// 头部格式：'fr-CH, fr;q=0.9, en;q=0.8, *;q=0.5'
+export function parseAcceptLanguage(header: string | null | undefined): Language | null {
+  if (!header) return null;
+  const entries = header
+    .split(',')
+    .map(part => {
+      const [tag, ...params] = part.trim().split(';');
+      const qParam = params.find(p => p.trim().startsWith('q='));
+      const q = qParam ? parseFloat(qParam.trim().slice(2)) : 1;
+      return { tag: tag.trim().toLowerCase(), q: isNaN(q) ? 0 : q };
+    })
+    .filter(e => e.tag && e.tag !== '*')
+    .sort((a, b) => b.q - a.q);
+
+  for (const { tag } of entries) {
+    if (BROWSER_LANG_MAP[tag]) return BROWSER_LANG_MAP[tag];
+    const base = tag.split('-')[0];
+    if (BROWSER_LANG_MAP[base]) return BROWSER_LANG_MAP[base];
+  }
+  return null;
+}
+
+// 从 cookie 字符串中提取 yearProgressSettings.language（容忍 JSON 解析失败）
+// cookie 值与 src/lib/settings.ts 写入的格式保持一致
+export function readLanguageFromSettingsCookie(cookieValue: string | null | undefined): Language | null {
+  if (!cookieValue) return null;
+  try {
+    const parsed = JSON.parse(cookieValue);
+    const candidate = parsed?.language;
+    // 处理历史 'zh' → 'zh-cn'
+    if (candidate === 'zh') return 'zh-cn';
+    if (typeof candidate === 'string' && SUPPORTED_LANGUAGES.includes(candidate as Language)) {
+      return candidate as Language;
+    }
+  } catch {
+    // 旧版本可能直接存了语言代码字符串
+    const trimmed = cookieValue.trim();
+    if (trimmed === 'zh') return 'zh-cn';
+    if (SUPPORTED_LANGUAGES.includes(trimmed as Language)) return trimmed as Language;
+  }
+  return null;
+}
+
+// 服务端解析请求的目标语言：URL 参数 > cookie > Accept-Language > 'en'
+// 该函数是纯函数，便于单测；调用方负责从 Next 的 headers()/cookies() 取值后传入
+export function resolveServerLanguage(input: {
+  urlLang?: string | null;
+  settingsCookie?: string | null;
+  acceptLanguage?: string | null;
+}): Language {
+  // 1. URL 参数（分享链接、爬虫走 hreflang 时落到这里）
+  if (input.urlLang) {
+    const normalized = input.urlLang.toLowerCase();
+    if (normalized === 'zh') return 'zh-cn';
+    if (SUPPORTED_LANGUAGES.includes(normalized as Language)) {
+      return normalized as Language;
+    }
+  }
+
+  // 2. Cookie 偏好（回访用户）
+  const fromCookie = readLanguageFromSettingsCookie(input.settingsCookie);
+  if (fromCookie) return fromCookie;
+
+  // 3. Accept-Language（首次访问）
+  const fromAccept = parseAcceptLanguage(input.acceptLanguage);
+  if (fromAccept) return fromAccept;
+
+  // 4. 默认英语
+  return 'en';
 }
 
 export function getLanguageDisplayName(lang: Language): string {
@@ -455,8 +444,3 @@ export const getOgLocale = (language: Language): string => {
   
   return localeMap[language] || 'en_US';
 };
-
-// 为了向后兼容的翻译对象（仅包含基本内容）
-export const translations = {
-  en: basicTranslations,
-} as const;
