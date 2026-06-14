@@ -2,6 +2,7 @@
 
 import moment from 'moment';
 import { useEffect, useState, useRef } from 'react';
+import { track } from '@vercel/analytics';
 import { calculateYearProgress, calculateDisplayPercentage } from '@/lib/yearProgress';
 import { type Language, getTranslation, getInitialLanguage, saveLanguage, getLanguageDisplayName, formatProgressTitle, formatWeekDayText, formatPageTitle, formatMonthDay, formatDayWeekInfo, formatBottomStats, formatCurrentWeekDayText, formatHistoricalWeekDayText, getOgLocale, translations } from '@/lib/i18n';
 import { type Theme, getInitialTheme, saveTheme, applyTheme, getThemeDisplayName, getSystemTheme, getEffectiveTheme } from '@/lib/theme';
@@ -330,6 +331,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
       await navigator.clipboard.writeText(getShareUrl());
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
+      track('share', { platform: 'copy_link', language });
     } catch (err) {
       console.error('Failed to copy: ', err);
     }
@@ -609,6 +611,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
                 const shareText = `${text}\n${hashtags}\n${getShareUrl()}`;
                 const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
                 window.open(twitterUrl, '_blank', 'width=550,height=420');
+                track('share', { platform: 'twitter', language });
               }}
               className="hover:scale-110 transition-transform social-share-button"
             >
@@ -617,6 +620,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
 
             <FacebookShareButton
               url={getShareUrl()}
+              onClick={() => track('share', { platform: 'facebook', language })}
               className="hover:scale-110 transition-transform social-share-button"
             >
               <FacebookIcon size={40} round />
@@ -625,6 +629,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
             <TelegramShareButton
               url={getShareUrl()}
               title={formatProgressTitle(language, progress.year, progress.displayPercentage)}
+              onClick={() => track('share', { platform: 'telegram', language })}
               className="hover:scale-110 transition-transform social-share-button"
             >
               <TelegramIcon size={40} round />
@@ -633,6 +638,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
             <RedditShareButton
               url={getShareUrl()}
               title={formatProgressTitle(language, progress.year, progress.displayPercentage)}
+              onClick={() => track('share', { platform: 'reddit', language })}
               className="hover:scale-110 transition-transform social-share-button"
             >
               <RedditIcon size={40} round />
@@ -641,6 +647,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
             <WeiboShareButton
               url={getShareUrl()}
               title={`${formatProgressTitle(language, progress.year, progress.displayPercentage)} ${getTranslation(language, 'socialHashtags') ? '#' + (getTranslation(language, 'socialHashtags') as string[]).join(' #') : ''}`}
+              onClick={() => track('share', { platform: 'weibo', language })}
               className="hover:scale-110 transition-transform social-share-button"
             >
               <WeiboIcon size={40} round />
@@ -651,10 +658,10 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
               onClick={() => {
                 const text = formatProgressTitle(language, progress.year, progress.displayPercentage);
                 const url = getShareUrl();
-                
+
                 // 检测是否为移动设备
                 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                
+
                 if (isMobile) {
                   // 尝试打开 Instagram App
                   window.open(`instagram://camera`, '_blank');
@@ -665,6 +672,7 @@ export default function YearProgressClient({ searchParams }: YearProgressClientP
                   window.open('https://www.instagram.com/', '_blank');
                   navigator.clipboard.writeText(`${text}\n${url}`);
                 }
+                track('share', { platform: 'instagram', language, mobile: isMobile });
               }}
               className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 flex items-center justify-center hover:scale-110 transition-transform"
               title="Share to Instagram"

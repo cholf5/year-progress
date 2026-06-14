@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { track } from '@vercel/analytics';
 import { type Theme, applyTheme, getThemeDisplayName } from '@/lib/theme';
 import { type Language, getTranslation, getLanguageDisplayName, getCachedLanguages } from '@/lib/i18n';
 import { type Settings, type TwitterIcon, getSettings, saveSettings, getTwitterIconDisplayName } from '@/lib/settings';
@@ -95,6 +96,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
     saveSettings(newSettings);
     applyTheme(theme);
     onSettingsChange(newSettings);
+    track('theme_change', { theme });
   };
 
   const handleLanguageChange = (language: Language) => {
@@ -102,6 +104,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
     setSettings(newSettings);
     saveSettings(newSettings);
     onSettingsChange(newSettings);
+    track('language_change', { language });
   };
 
   const handleTwitterIconChange = (twitterIcon: TwitterIcon) => {
@@ -109,6 +112,7 @@ export default function SettingsModal({ isOpen, onClose, currentLanguage, curren
     setSettings(newSettings);
     saveSettings(newSettings);
     onSettingsChange(newSettings);
+    track('twitter_icon_change', { icon: twitterIcon });
   };
 
   if (!shouldRender) return null;
